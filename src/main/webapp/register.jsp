@@ -1,7 +1,7 @@
 <%-- 
-    Document   : login
-    Created on : 23/03/2021, 12:08:00 AM
-    Author     : hlong
+    Document   : register
+    Created on : Mar 28, 2021, 3:57:06 PM
+    Author     : namlo
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,19 +13,46 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
               integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
               crossorigin="anonymous"/>
-        <title>Login</title>
+        <title>Register Page</title>
     </head>
     <body>
-        <div class="text-center">
+            <div class="text-center">
             <form class="form" method="post">
             <div>
-                <h1 class="mb-3">Login</h1>
+                <h1 class="mb-3">Register</h1>
             </div>
             <div>
-                <label for="email" class="sr-only">Email address</label>
-                <input type="email" 
-                       placeholder="Enter your email" 
+                <label for="fname" class="sr-only"></label>
+                <input type="text" 
+                       placeholder="First Name" 
+                       name="fname" 
+                       class="form-control"
+                       required autofocus>
+                </input>
+            </div>
+            <div>
+                <label for="lname" class="sr-only"></label>
+                <input type="text" 
+                       placeholder="Last Name" 
+                       name="lname" 
+                       class="form-control"
+                       required autofocus>
+                </input>
+            </div>
+            <div>
+                <label for="email" class="sr-only"></label>
+                <input type="text" 
+                       placeholder="Email Address" 
                        name="email" 
+                       class="form-control"
+                       required autofocus>
+                </input>
+            </div>
+            <div>
+                <label for="phone" class="sr-only"></label>
+                <input type="text" 
+                       placeholder="Phone Number" 
+                       name="phone" 
                        class="form-control"
                        required autofocus>
                 </input>
@@ -47,8 +74,8 @@
             </div>
             <div>
                 <div>
-                    New customer?
-                    <a href="register.jsp">Register Here</a>
+                    Already has an account?
+                    <a href="login.jsp">Login here</a>
                 </div>
             </div>
         </form> 
