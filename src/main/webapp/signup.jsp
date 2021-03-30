@@ -1,7 +1,7 @@
 <%-- 
-    Document   : login
-    Created on : 23/03/2021, 12:08:00 AM
-    Author     : hlong
+    Document   : signup
+    Created on : 27 Mar 2021, 1:01:42 pm
+    Author     : simon
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,14 +13,24 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
               integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
               crossorigin="anonymous"/>
-        <title>Login</title>
+        <title>Register</title>
     </head>
     <body>
         <div class="signup-wrapper">
             <div class="signup-box">
                 <div class="signup-form container">
                     <form method="post">
-                        <h2>Sign In</h2>
+                        <h2>Sign Up</h2>
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="first-name" 
+                                   placeholder="First Name" required>
+                            </input>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="last-name" 
+                                   placeholder="Last Name" required>
+                            </input>
+                        </div>
                         <div class="form-group">
                             <input class="form-control" type="email" name="email" 
                                    placeholder="Email" required>
@@ -32,19 +42,22 @@
                             </input>
                         </div>
                         <div class="form-group">
+                            <input class="form-control" type="password" name="confirm-password" 
+                                   placeholder="Confirm Password" required>
+                            </input>
+                        </div>
+                        <div class="form-group">
                             <button class="btn btn-success btn-block btn-lg" type="submit" >
-                                Sign In 
+                                Sign Up 
                             </button>
                         </div>
                     </form>
-                    <div class="sign-in-actions">
-                        <a href="">Forgot Password?</a>
-                        <a href="signup.jsp">Sign up</a>
+                    <div>
+                        Already have an account? <a href="login.jsp">Sign in</a>
                     </div>
                     <div>
                 </div>
             </div>
         </div>
     </body>
-
 </html>

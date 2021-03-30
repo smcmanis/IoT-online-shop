@@ -75,7 +75,7 @@
             <div>
                 <div>
                     Already has an account?
-                    <a href="login.jsp">Login here</a>
+                    <a href="login-hlong.jsp">Login here</a>
                 </div>
             </div>
         </form> 
