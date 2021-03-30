@@ -48,7 +48,7 @@
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success btn-block btn-lg" type="submit" >
-                                Sign Up 
+                                Sign Up Now
                             </button>
                         </div>
                     </form>
