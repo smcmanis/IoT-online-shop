@@ -37,7 +37,7 @@ and open the template in the editor.
                   <a class="nav-link" href="">About</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="patientlogin.html">Login</a>
+                  <a class="nav-link" href="login.jsp">Login</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="register.jsp">Register</a>
