@@ -15,19 +15,27 @@
               crossorigin="anonymous"/>
         <title>Welcome!</title>
     </head>
-    
+
     <body>
+        <%
+            String firstName = request.getParameter("first-name");
+            String lastName = request.getParameter("last-name");
+            String email = request.getParameter("email");
+        %>
         <div class="container"> 
             <div class="center">
-            <form class="form" method="post">
-                <div>
-                    <h1 class="mb-3">Welcome Maisie!</h1>
+                <div class="form" method="post" >
+                    <div>
+                        <h1 class="mb-3">Welcome <% out.print(firstName); %>!</h1>
+                    </div>
+                    <div> Name: <% out.print(firstName + " " + lastName); %>!</div>
+                    <div> Email: <% out.print(email);%>!</div>
+
+                    <div class="mt-3"> 
+                        <a class="btn btn-lg btn-primary btn-block">Go to Account Settings"</a>
+                        <a class="btn btn-lg btn-primary btn-block" href="<%=request.getContextPath()%>/main.jsp"> Proceed to store </a>
+                    </div>           
                 </div>
-                <div class="mt-3"> 
-                    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Go to Account Settings">
-                    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Go to Store">
-                </div>           
-            </form>
             </div>
         </div>
     </body>

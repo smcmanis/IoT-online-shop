@@ -50,14 +50,16 @@
                             <input type="password"
                                    placeholder="Password"
                                    name="password"
-                                   class="form-control">
+                                   class="form-control"
+                                   required>
                             </input>
                         </div>
                         <div class="form-group">
                             <input type="password"
                                    placeholder="Confirm Password"
                                    name="confirm-password"
-                                   class="form-control">
+                                   class="form-control"
+                                   required>
                             </input>
                         </div>
                         <div class="form-group">
@@ -68,7 +70,7 @@
                     </form>
                     <div>
                         Have an account?
-                        <a href="login.jsp">Sign in</a>
+                        <a href="login.jsp">Sign in</a>                            
                     </div>
                 </div>
             </div>
