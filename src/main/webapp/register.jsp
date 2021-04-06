@@ -68,7 +68,7 @@
             </div>
             <div class="mt-3">
                 <button class="btn btn-lg btn-primary btn-block" 
-                        type="submit">
+                        type="submit" action="welcome.jsp">
                     Sign in
                 </button>
             </div>

@@ -19,7 +19,7 @@
         <div class="signup-wrapper">
             <div class="signup-box">
                 <div class="signup-form container">
-                    <form method="post">
+                    <form method="post" action="main.jsp">
                         <h2>Sign Up</h2>
                         <div class="form-group">
                             <input class="form-control" type="text" name="first-name" 
@@ -47,7 +47,8 @@
                             </input>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-success btn-block btn-lg" type="submit" >
+                            <button class="btn btn-success btn-block btn-lg" 
+                                    type="submit" action="welcome.jsp">
                                 Sign Up Now
                             </button>
                         </div>
