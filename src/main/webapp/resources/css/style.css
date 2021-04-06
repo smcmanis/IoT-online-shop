@@ -8,19 +8,59 @@ and open the template in the editor.
     Author     : hlong
 */
 
-.form {
-    max-width: 60rem;
+
+
+.signup-form {
+    max-width: 350px;
     margin: 0 auto;
+    padding: 30px;
+    background: #f2f3f7;  
+    text-align: center; 
 }
 
-.form > div {
-    display: flex;
+.signup-box {
+    width: 400px;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    margin: 0 auto;
+    background: #f2f3f7;    
+
+}
+
+.signup-wrapper {
+    padding: 40px 0 33px 0;
     flex-direction: column;
-    margin: 1rem;
+    flex: 1 0 auto;
 }
 
-.form label {
-    margin: 1rem 0;
-    display: block;
+
+
+.signup-form h2 {
+    color: #636363;
+    margin: 0 0 15px;
+    position: relative;
+    text-align: center;
 }
 
+.signup-form h2::before {
+    left: 0;
+}
+
+.signup-form h2::after {
+    right: 0;
+}
+
+.signup-form h2::before, .signup-form h2::after {
+    content: "";
+    height: 2px;
+    width: 30%;
+    background: #d4d4d4;
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+}
+
+.sign-in-actions {
+    display: flex;
+    justify-content: space-between;
+}

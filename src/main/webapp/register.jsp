@@ -13,72 +13,66 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
               integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
               crossorigin="anonymous"/>
-        <title>Register Page</title>
+        <title>Register</title>
     </head>
+
     <body>
-            <div class="text-center">
-            <form class="form" method="post" action="welcome.jsp">
-            <div>
-                <h1 class="mb-3">Register</h1>
-            </div>
-            <div>
-                <label for="fname" class="sr-only"></label>
-                <input type="text" 
-                       placeholder="First Name" 
-                       name="fname" 
-                       class="form-control"
-                       required autofocus>
-                </input>
-            </div>
-            <div>
-                <label for="lname" class="sr-only"></label>
-                <input type="text" 
-                       placeholder="Last Name" 
-                       name="lname" 
-                       class="form-control"
-                       required autofocus>
-                </input>
-            </div>
-            <div>
-                <label for="email" class="sr-only"></label>
-                <input type="text" 
-                       placeholder="Email Address" 
-                       name="email" 
-                       class="form-control"
-                       required autofocus>
-                </input>
-            </div>
-            <div>
-                <label for="phone" class="sr-only"></label>
-                <input type="text" 
-                       placeholder="Phone Number" 
-                       name="phone" 
-                       class="form-control"
-                       required autofocus>
-                </input>
-            </div>
-            <div>
-                <label for="password" class="sr-only">Password</label>
-                <input 
-                    type="password" 
-                    placeholder="Enter your password" 
-                    name="password"
-                    class="form-control">
-                </input>
-            </div>
-            <div class="mt-3">
-                <button class="btn btn-lg btn-primary btn-block" 
-                        type="submit" action="welcome.jsp">
-                    Sign in
-                </button>
-            </div>
-            <div>
-                <div>
-                    Already has an account?
-                    <a href="login.jsp">Login here</a>
+        <div class="signup-wrapper">
+            <div class="signup-box">
+                <div class="signup-form container">
+                    <form method="post" action="welcome.jsp">
+                        <h2>Register</h2>
+                        <div class="form-group">
+                            <input type="text"
+                                   placeholder="First Name"
+                                   name="first-name"
+                                   class="form-control"
+                                   required autofocus>
+                            </input>
+                        </div>
+                        <div class="form-group">
+                            <input type="text"
+                                   placeholder="Last Name"
+                                   name="last-name"
+                                   class="form-control"
+                                   required autofocus>
+                            </input>
+                        </div>
+                        <div class="form-group">
+                            <input type="email"
+                                   placeholder="Email"
+                                   name="email"
+                                   class="form-control"
+                                   required autofocus>
+                            </input>
+                        </div>
+                        <div class="form-group">
+                            <input type="password"
+                                   placeholder="Password"
+                                   name="password"
+                                   class="form-control">
+                            </input>
+                        </div>
+                        <div class="form-group">
+                            <input type="password"
+                                   placeholder="Confirm Password"
+                                   name="confirm-password"
+                                   class="form-control">
+                            </input>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-block btn-lg">
+                                Sign Up Now
+                            </button>
+                        </div>
+                    </form>
+                    <div>
+                        Have an account?
+                        <a href="login.jsp">Sign in</a>
+                    </div>
                 </div>
             </div>
-        </form> 
         </div>
     </body>
+
 </html>

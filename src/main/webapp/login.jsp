@@ -15,42 +15,42 @@
               crossorigin="anonymous"/>
         <title>Login</title>
     </head>
+
     <body>
-        <div class="text-center">
-            <form class="form" method="post">
-            <div>
-                <h1 class="mb-3">Login</h1>
-            </div>
-            <div>
-                <label for="email" class="sr-only">Email address</label>
-                <input type="email" 
-                       placeholder="Enter your email" 
-                       name="email" 
-                       class="form-control"
-                       required autofocus>
-                </input>
-            </div>
-            <div>
-                <label for="password" class="sr-only">Password</label>
-                <input 
-                    type="password" 
-                    placeholder="Enter your password" 
-                    name="password"
-                    class="form-control">
-                </input>
-            </div>
-            <div class="mt-3">
-                <button class="btn btn-lg btn-primary btn-block" 
-                        type="submit" action="welcome.jsp">
-                    Sign in
-                </button>
-            </div>
-            <div>
-                <div>
-                    New customer?
+        <div class="signup-wrapper">
+            <div class="signup-box">
+                <div class="signup-form container">
+                    <form class="form" method="post">
+                        <h2>Sign In</h2>
+                        <div class="form-group">
+                            <input type="email" 
+                                   class="form-control" 
+                                   name="email" 
+                                   placeholder="Email" 
+                                   required>
+                            </input>
+                        </div>
+                        <div class="form-group">
+                            <input type="password"
+                                   class="form-control"  
+                                   name="password" 
+                                   placeholder="Password"
+                                   required>
+                            </input>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-block btn-lg">
+                                Sign In 
+                            </button>
+                        </div>
+                    </form>
+                    <div class="sign-in-actions">
+                        <a href="">Forgot Password?</a>
+                        <a href="register.jsp">Sign up</a>
+                    </div>
                 </div>
             </div>
-        </form> 
         </div>
     </body>
+
 </html>

@@ -9,30 +9,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/loginstyle.css"/>
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
               integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
               crossorigin="anonymous"/>
-        <style>
-            table {margin-left:auto}
-            table{margin-right: auto}
-            .container {
-                height: 200px;
-                position: relative;
-                
-              }
-
-            .center {
-              margin: 0;
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              -ms-transform: translate(-50%, -50%);
-              transform: translate(-50%, -50%);
-            }
-        </style> 
-        <title>Welcome</title>
+        <title>Welcome!</title>
     </head>
+    
     <body>
         <div class="container"> 
             <div class="center">
