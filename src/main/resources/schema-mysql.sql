@@ -59,12 +59,12 @@ CREATE TABLE IF NOT EXISTS categories(
 
 CREATE TABLE IF NOT EXISTS items(
     item_id SERIAL PRIMARY KEY,
-    category_id_fk bigint(20) unsigned,
+    category_id_fk bigint(20) unsigned DEFAULT 1,
     item_name text,
     title text,
     item_description text,
-    base_price text,
-    current_price text,
+    base_price decimal(2) DEFAULT 0,
+    current_price decimal(2),
     discounted boolean DEFAULT FALSE,
     shippable boolean DEFAULT TRUE,
     discount_start_date date,
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS items(
 CREATE TABLE IF NOT EXISTS orders(
     order_id SERIAL PRIMARY KEY,
     user_id_fk bigint(20) unsigned NOT NULL,
-    order_status text,
+    order_status_id bigint(20) unsigned DEFAULT 1,
     date_of_order timestamp,
     date_last_updated timestamp DEFAULT CURRENT_TIMESTAMP,
     total_price decimal(2) NOT NULL,
@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS transaction_types(
 CREATE TABLE IF NOT EXISTS transactions(
     transaction_id SERIAL PRIMARY KEY,
     transaction_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    transaction_type_id_fk bigint(20) unsigned DEFAULT 0,
+    transaction_type_id_fk bigint(20) unsigned DEFAULT 1,
     FOREIGN KEY (transaction_type_id_fk) REFERENCES transaction_types (transaction_type_id)
 );
 
