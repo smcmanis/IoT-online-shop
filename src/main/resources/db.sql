@@ -4,7 +4,10 @@ CREATE DATABASE iotbay;
 CREATE TABLE users(
     user_id SERIAL PRIMARY KEY,
     email text NOT NULL,
-    -- password text,
+    first_name text,
+    last_name text,
+    password text,
+    preferred_name text,
     salt text,
     passhash text,
     active boolean DEFAULT FALSE,
@@ -13,14 +16,12 @@ CREATE TABLE users(
 
 CREATE TABLE access_logs(
     access_id SERIAL PRIMARY KEY,
+    
     user_id int REFERENCES users (user_id)
 );
 
 CREATE TABLE employees(
     employee_id SERIAL PRIMARY KEY,
-    first_name text,
-    last_name text,
-    preferred_name text,
     phone_number char(10),
     contact_email text,
     currently_employed boolean DEFAULT TRUE,
@@ -35,9 +36,6 @@ CREATE TABLE employees(
 
 CREATE TABLE customers(
     customer_id SERIAL PRIMARY KEY,
-    first_name text,
-    last_name text,
-    preferred_name text,
     phone_number text,
     company_name text,
     date_of_birth date,
