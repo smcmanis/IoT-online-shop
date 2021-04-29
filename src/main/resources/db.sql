@@ -157,16 +157,29 @@ CREATE TABLE order_payments(
     payment_type_id int REFERENCES payment_types (payment_type_id)
 );
 
-CREATE TABLE order_shipments(
-    shipment_id SERIAL PRIMARY KEY,
-    shipping_fee decimal(2),
-    shipping_address text,
-    city text,
-    state_abbreviation char(3),
-    country varchar(20),
-    expected_delivery_date date,
-    recipient text,
-    order_id int REFERENCES orders (order_id),
-    tracking_id int REFERENCES order_tracking (tracking_id),
-    payment_type_id int REFERENCES payment_types (payment_type_id)
+CREATE Table Shipment (
+    shipment_id int NOT NULL 
+    GENERATED ALWAYS AS IDENTITY,
+    tracking_number varchar (30),
+    shipment_date date,
+    shipment_status varchar (20),
+    shipment_details_id int,
+    order_id int,
+    PRIMARY KEY (shipment_id),
+    FOREIGN KEY (shipment_details_id) REFERENCES shipment_details(shipment_details_id),
+    FOREIGN KEY (order_id) REFERENCES orders(id)
+);
+
+CREATE TABLE Shipment_Details (
+    shipment_details_id int NOT NULL 
+    GENERATED ALWAYS AS IDENTITY,
+    country varchar(20)
+    address_line_1 varchar(200),
+    address_line_2 varchar(200),
+    postcode int,
+    suburb varchar(20),
+    state char(3),
+    user_id int,
+    PRIMARY KEY (shipment_details_id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
