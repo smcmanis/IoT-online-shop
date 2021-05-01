@@ -1,12 +1,14 @@
 package com.iotbay.shop.controller;
 
-import com.fasterxml.classmate.AnnotationConfiguration;
-import com.iotbay.shop.dao.OrderDao;
-import com.iotbay.shop.model.*;
+import com.iotbay.shop.model.User;
 import com.iotbay.shop.service.*;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 
 import javax.servlet.ServletException;
@@ -17,20 +19,34 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-// Create new order
 @WebServlet(
-        name = "OrderServlet",
-        urlPatterns = {"/orders"})
-public class OrderServlet extends HttpServlet {
-
-    private OrderDao orderDao;
-    private CartService cartService;
+        name = "OrderListServlet",
+        urlPatterns = {"/customer/orders"})
+public class OrderListServlet extends HttpServlet {
+    
+    private OrderService orderService = new OrderService();
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        orderDao.getOrders();
         HttpSession session = request.getSession();
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/orders.jsp");
-        dispatcher.forward(request, response);
+        RequestDispatcher dispatcher;
+        User user = (User) session.getAttribute("user");
+        // Should check authentication here
+//        if (user == null) {
+        if (false) {
+            dispatcher = request.getRequestDispatcher("/index.html");
+        } else {
+            List orders = (List) request.getAttribute("orders");
+            if (orders == null) {     
+                try {
+                    orders = orderService.getOrders();
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Logger.getLogger(OrderListServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+            }
+            session.setAttribute("orders", orders);
+            dispatcher = request.getRequestDispatcher("/orderList.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     @Override

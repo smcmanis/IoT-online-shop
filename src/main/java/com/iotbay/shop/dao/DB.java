@@ -10,5 +10,11 @@ public abstract class DB {
     protected String dbpass = "224dbdf2774b22a03953d02ca9add37da800df25d1711bd4a4b7cc62b5d6826b";
     protected String driver = "org.postgresql.Driver";
     protected Connection conn;
+    
+    protected String localURL = "jdbc:postgresql://localhost:5432/iotbay";
+    protected String localDbuser = "simon";
+    protected String localDbpass = "";
+    protected String localDriver = "org.postgresql.Driver";
+    protected Connection localConn;
 
 }

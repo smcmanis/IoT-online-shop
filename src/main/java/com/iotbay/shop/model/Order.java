@@ -4,41 +4,32 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
-@Entity(name = "orders")
+
 public class Order implements Serializable {
     
-    @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; 
     
-    @Column( name = "order_date")
     private Date orderDate;
     
-    @Column( name = "order_status")
     private String orderStatus;    
     
-    @Column( name = "total_price" )
     private BigDecimal totalPrice;
     
-    @OneToOne
-    @JoinColumn( name = "cart_id" )
     private Cart cart;
     
-    @OneToOne
-    @JoinColumn( name = "customer_id" )
-    private Customer customer;
+    private User user;
     
-    @OneToOne( mappedBy = "order" )
     private Shipment shipping;
+
+    public Order(Integer id, Date orderDate, String orderStatus, BigDecimal totalPrice, Cart cart, User user) {
+        this.id = id;
+        this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
+        this.totalPrice = totalPrice;
+        this.cart = cart;
+        this.user = user;
+    }
     
     
     public Integer getId() {
@@ -74,20 +65,13 @@ public class Order implements Serializable {
     }
 
     
-//    public Integer getCustomerId() {
-//        return userId;
-//    }
-//
-//    public void setCustomerId(Integer userId) {
-//        this.userId = userId;
-//    }
 
-    public Customer getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Cart getCart() {
