@@ -20,8 +20,6 @@ CREATE TABLE access_logs(
 CREATE TABLE employees(
     id SERIAL PRIMARY KEY,
     employeeRole text,
-    phoneNumber text,
-    isActiveEmployee boolean DEFAULT TRUE,
     userId int NOT NULL REFERENCES users (id),
     UNIQUE(userId)
 );
@@ -32,14 +30,9 @@ CREATE TABLE addresses(
     city text,
     postcode text,
     region text,
-    country text
-);
-
-CREATE TABLE shipping_addresses(
-    addressId int NOT NULL REFERENCES addresses (id),
-    userId int NOT NULL REFERENCES users (id),
-    isPrimary boolean DEFAULT FALSE,
-    PRIMARY KEY (userId, addressId)
+    country text,
+    isPrimary boolean,
+    userId int NOT NULL REFERENCES users (id)
 );
 
 CREATE TABLE suppliers(
@@ -87,32 +80,32 @@ CREATE TABLE credit_cards(
     cardNumber text,
     expirationMonth text,
     expirationYear text,
-    cardOwner text
-);
-
-CREATE TABLE user_credit_cards(
-    cardId int NOT NULL REFERENCES credit_cards (id),
+    cardOwner text,
     userId int NOT NULL REFERENCES users (id),
-    isPrimary boolean DEFAULT FALSE,
-    PRIMARY KEY (userId, cardId)
+    isPrimary boolean,
+    UNIQUE(cardNumber)
 );
 
 CREATE TABLE credit_card_payments(
     id SERIAL PRIMARY KEY,
-    cardId int REFERENCES credit_cards (id),
+    cardNumber TEXT,
     orderId int NOT NULL REFERENCES orders (id)
 );
 
 CREATE TABLE shipping(
     id SERIAL PRIMARY KEY,
-    addressId int NOT NULL REFERENCES addresses (id),
+    address text,
+    city text,
+    postcode text,
+    region text,
+    country text,
     recipient text,
     trackingNumber text,
     orderId int NOT NULL REFERENCES orders (id)
 );
 
-CREATE UNIQUE INDEX primary_address_index ON shipping_addresses (userId) WHERE isPrimary is true;
-CREATE UNIQUE INDEX primary_card_index ON user_credit_cards (userId) WHERE isPrimary is true;
+CREATE UNIQUE INDEX primary_address_index ON addresses (userId) WHERE isPrimary is true;
+CREATE UNIQUE INDEX primary_card_index ON credit_cards (userId) WHERE isPrimary is true;
 
 INSERT INTO users (email, firstName, lastName, passwordPlaintext, isAdmin, isActive) VALUES
     ('admin.sam@gmail.com', 'Sam', 'Smith', 'abc123', TRUE, TRUE),
@@ -158,48 +151,30 @@ INSERT INTO access_logs(accessTimestamp, userId) VALUES
     (TIMESTAMP '2021-05-06 10:23:54', 12),
     (TIMESTAMP '2021-05-06 10:23:54', 13);
 
-INSERT INTO employees (employeeRole, phoneNumber, isActiveEmployee, userId) VALUES
-    ('ADMIN', '0404456123', TRUE, 1),
-    ('STAFF', '0404123456',TRUE, 2),
-    ('STAFF', '0404456140', TRUE, 3),
-    ('STAFF', '0405456140', FALSE, 19),
-    ('STAFF', '0406456140', FALSE, 20);
+INSERT INTO employees (employeeRole, userId) VALUES
+    ('ADMIN', 1),
+    ('STAFF', 2),
+    ('STAFF', 3),
+    ('STAFF', 19),
+    ('STAFF', 20);
 
-INSERT INTO addresses (address, city, postcode, region, country) VALUES 
-    ('123 Fake Street', 'Sydney', '2000', 'NSW', 'Australia'),
-    ('32 Real Street', 'Brisbane', '4000', 'QLD', 'Australia'),
-    ('22 Pacific Road', 'Chatswood', '2067', 'NSW', 'Australia' ),
-    ('1 Albert Avenue', 'Hornsby', '2077', 'NSW', 'Australia' ),
-    ('22 Anthony Road', 'Chatswood', '2067', 'NSW', 'Australia' ),
-    ('3 Riddles Street', 'Bankstown', '2200', 'NSW', 'Australia' ),
-    ('262 Pacific Road', 'Blacktown', '2148', 'NSW', 'Australia' ),
-    ('4 Albert Avenue', 'Hornsby', '2077', 'NSW', 'Australia' ),
-    ('5 Riddles Street', 'Bankstown', '2200', 'NSW', 'Australia'),
-    ('6 Anthony Road', 'Chatswood', '2067', 'NSW', 'Australia'),
-    ('7 Pacific Highway', 'Sydney', '2000', 'NSW', 'Australia'),
-    ('8 Albert Avenue', 'Hornsby', '2077', 'NSW', 'Australia'),
-    ('9 Archer Street', 'North Bondi', '2026', 'NSW', 'Australia'),
-    ('8 Riddles Road', 'Bankstown', '2200', 'NSW', 'Australia'),
-    ('77 Pacific Road', 'Blacktown', '2148', 'NSW', 'Australia'),
-    ('66 Archer Street', 'North Bondi', '2026', 'NSW', 'Australia');
-
-INSERT INTO shipping_addresses (userId, addressId, isPrimary) VALUES
-    (1, 2, TRUE),
-    (2, 3, TRUE),
-    (3, 4, TRUE),
-    (4, 4, FALSE),
-    (5, 5, FALSE),
-    (6, 5, TRUE),
-    (7, 6, FALSE),
-    (8, 7, FALSE),
-    (9, 8, TRUE),
-    (10, 8, FALSE),
-    (11, 8, FALSE),
-    (12, 9, FALSE),
-    (13, 10, FALSE),
-    (14, 11, FALSE),
-    (15, 12, FALSE),
-    (16, 13, FALSE);
+INSERT INTO addresses (address, city, postcode, region, country, userId, isPrimary) VALUES 
+    ('123 Fake Street', 'Sydney', '2000', 'NSW', 'Australia',2, TRUE),
+    ('32 Real Street', 'Brisbane', '4000', 'QLD', 'Australia',3, TRUE),
+    ('22 Pacific Road', 'Chatswood', '2067', 'NSW', 'Australia',4, TRUE ),
+    ('1 Albert Avenue', 'Hornsby', '2077', 'NSW', 'Australia',4, FALSE ),
+    ('22 Anthony Road', 'Chatswood', '2067', 'NSW', 'Australia',5, TRUE),
+    ('3 Riddles Street', 'Bankstown', '2200', 'NSW', 'Australia',5, FALSE ),
+    ('262 Pacific Road', 'Blacktown', '2148', 'NSW', 'Australia',6, TRUE ),
+    ('4 Albert Avenue', 'Hornsby', '2077', 'NSW', 'Australia',7, TRUE ),
+    ('5 Riddles Street', 'Bankstown', '2200', 'NSW', 'Australia',8, FALSE),
+    ('6 Anthony Road', 'Chatswood', '2067', 'NSW', 'Australia',8, FALSE),
+    ('7 Pacific Highway', 'Sydney', '2000', 'NSW', 'Australia',8, TRUE),
+    ('8 Albert Avenue', 'Hornsby', '2077', 'NSW', 'Australia',9, TRUE),
+    ('9 Archer Street', 'North Bondi', '2026', 'NSW', 'Australia',10, TRUE),
+    ('8 Riddles Road', 'Bankstown', '2200', 'NSW', 'Australia', 11, TRUE),
+    ('77 Pacific Road', 'Blacktown', '2148', 'NSW', 'Australia',12, TRUE),
+    ('66 Archer Street', 'North Bondi', '2026', 'NSW', 'Australia',13, TRUE);
 
 INSERT INTO suppliers (supplierName, company, email) VALUES
     ('Tech Pty', 'Tech', 'suppliers@tech.com.au'),
@@ -292,58 +267,48 @@ INSERT INTO cart_items (itemId, quantity, itemPrice, cartId) VALUES
     (24, 1, 24.95, 16),
     (24, 2, 24.95, 20);
 
-INSERT INTO credit_cards (cardNumber, expirationMonth, expirationYear, cardOwner) VALUES
-    ('1234-5678-1234-1234', '01', '23', 'Jane Smath'),
-    ('1234-5678-1234-5678', '09', '22', 'Brad Smoth'),
-    ('1234-5678-1234-5678', '09', '22', 'Brad Smoth'),
-    ('1234-5673-1234-5678', '06', '25', 'Bill Smoth'),
-    ('4234-5428-1234-5678', '07', '21', 'Joey Mings'),
-    ('6234-5678-1234-5678', '08', '21', 'Joey Mings'),
-    ('7234-5642-1234-5678', '09', '23', 'Gilbert Lee'),
-    ('6666-1234-1234-5555', '09', '23', 'Foo Bar'),
-    ('6666-1234-1234-6666', '09', '23', 'Foo Bar'),
-    ('6666-1234-1234-7777', '09', '23', 'Foo Bar'),
-    ('6666-1234-1234-8888', '09', '23', 'Foo Bar'),
-    ('6666-1234-1234-8899', '09', '23', 'Foo Bar'),
-    ('6666-1234-1234-0000', '09', '23', 'Foo Bar'),
-    ('6666-1234-1234-9999', '09', '23', 'Foo Bar'),
-    ('6666-1234-1234-9876', '09', '23', 'Foo Bar'),
-    ('6666-1234-1234-6543', '09', '23', 'Foo Bar'),
-    ('6666-1234-1234-3245', '09', '23', 'Foo Bar'),
-    ('6666-1234-1234-3466', '09', '23', 'Foo Bar');
+INSERT INTO credit_cards (cardNumber, expirationMonth, expirationYear, cardOwner, userId, isPrimary) VALUES
+    ('1234-5678-1234-1234', '01', '23', 'Jane Smath',2, TRUE),
+    ('1234-5678-1234-5678', '09', '22', 'Brad Smoth',4, FALSE),
+    ('9234-5678-1234-5678', '09', '22', 'Brad Smoth',4, TRUE),
+    ('8234-5673-1234-5678', '06', '25', 'Bill Smoth',6, TRUE),
+    ('4234-5428-1234-5678', '07', '21', 'Joey Mings',7, TRUE),
+    ('6234-5678-1234-5678', '08', '21', 'Joey Mings',7, FALSE),
+    ('7234-5642-1234-5678', '09', '23', 'Gilbert Lee',8, TRUE),
+    ('6666-1234-1234-5555', '09', '23', 'Foo Bar',15, FALSE),
+    ('6666-1234-1234-6666', '09', '23', 'Foo Bar',15, FALSE),
+    ('6666-1234-1234-7777', '09', '23', 'Foo Bar',15, FALSE),
+    ('6666-1234-1234-8888', '09', '23', 'Foo Bar',15, FALSE),
+    ('6666-1234-1234-8899', '09', '23', 'Foo Bar',15, FALSE),
+    ('6666-1234-1234-0000', '09', '23', 'Foo Bar',15, FALSE),
+    ('6666-1234-1234-9999', '09', '23', 'Foo Bar',15, FALSE),
+    ('6666-1234-1234-9876', '09', '23', 'Foo Bar',15, FALSE),
+    ('6666-1234-1234-6543', '09', '23', 'Foo Bar',15, FALSE),
+    ('6666-1234-1234-3245', '09', '23', 'Foo Bar',15, FALSE),
+    ('6666-1234-1234-3466', '09', '23', 'Foo Bar',15, TRUE);
 
-INSERT INTO user_credit_cards (userId, cardId, isPrimary) VALUES
-    (1, 2, TRUE),
-    (2, 4, TRUE),
-    (3, 4, FALSE),
-    (4, 6, TRUE),
-    (5, 8, FALSE),
-    (6, 8, TRUE),
-    (7, 9, TRUE);
+INSERT INTO credit_card_payments (cardNumber, orderId) VALUES
+    ('1234-5678-1234-1234', 1),
+    ('1234-5678-1234-1234', 2),
+    ('6666-1234-1234-0000', 3),
+    ('6666-1234-1234-0000', 5),
+    ('6666-1234-1234-0000', 6),
+    ('6666-1234-1234-0000', 7),
+    ('6666-1234-1234-0000', 8),
+    ('6666-1234-1234-0000', 9),
+    ('6666-1234-1234-0000', 10),
+    ('6666-1234-1234-0000', 11),
+    ('6666-1234-1234-0000', 12),
+    ('6666-1234-1234-0000', 13),
+    ('6666-1234-1234-0000', 14),
+    ('6666-1234-1234-0000', 15),
+    ('6666-1234-1234-0000', 16),
+    ('6666-1234-1234-0000', 17),
+    ('6666-1234-1234-0000', 18),
+    ('6666-1234-1234-0000', 19),
+    ('6666-1234-1234-0000', 20);
 
-INSERT INTO credit_card_payments (cardId, orderId) VALUES
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5),
-    (6, 6),
-    (7, 7),
-    (8, 8),
-    (9, 9),
-    (10, 10),
-    (11, 11),
-    (12, 12),
-    (13, 13),
-    (14, 14),
-    (15, 15),
-    (16, 16),
-    (17, 17),
-    (18, 18),
-    (4, 19),
-    (15, 20);
-
-INSERT INTO shipping (addressId, recipient, trackingNumber, orderId) VALUES
-    (2, 'Jane Smath', 'S0230HGTY', 2),
-    (4, 'Brad Smoth', 'Y000GH1', 4),
-    (4, 'Brad Smoth', 'S00001', 4);
+INSERT INTO shipping (address, city, postcode, region, country, recipient, trackingNumber, orderId) VALUES
+    ('32 Real Street', 'Brisbane', '4000', 'QLD', 'Australia', 'Jane Smath', 'S0230HGTY', 2),
+    ('22 Pacific Road', 'Chatswood', '2067', 'NSW', 'Australia' , 'Brad Smoth', 'Y000GH1', 4),
+    ('22 Pacific Road', 'Chatswood', '2067', 'NSW', 'Australia' , 'Brad Smoth', 'S00001', 4);
