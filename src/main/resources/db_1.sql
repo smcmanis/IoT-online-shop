@@ -1,193 +1,310 @@
 CREATE TABLE users(
     id SERIAL PRIMARY KEY,
     email text NOT NULL,
-    first_name text,
-    last_name text,
-    phone_number text,
-    password_plaintext text,
+    firstName text,
+    lastName text,
+    passwordPlaintext text,
     salt text,
     passhash text,
-    active boolean DEFAULT TRUE,
-    is_employee boolean,
-    is_admin boolean DEFAULT FALSE,
+    isActive boolean DEFAULT TRUE,
+    isAdmin boolean DEFAULT FALSE,
     UNIQUE(email) 
 );
 
 CREATE TABLE access_logs(
     id SERIAL PRIMARY KEY,
-    access_timestamp timestamp,
-    user_id int NOT NULL REFERENCES users (id)
+    accessTimestamp timestamp DEFAULT CURRENT_TIMESTAMP,
+    userId int NOT NULL REFERENCES users (id)
+);
+
+CREATE TABLE employees(
+    id SERIAL PRIMARY KEY,
+    employeeRole text,
+    phoneNumber text,
+    isActiveEmployee boolean DEFAULT TRUE,
+    userId int NOT NULL REFERENCES users (id),
+    UNIQUE(userId)
 );
 
 CREATE TABLE user_address(
     id SERIAL PRIMARY KEY,
-    street_address text,
+    address text,
     city text,
     postcode text,
-    state_abbreviation text,
+    region text,
     country text,
-    user_id int NOT NULL REFERENCES users (id)
+    isPrimary BOOLEAN,
+    userId int NOT NULL REFERENCES users (id)
 );
 
+CREATE TABLE suppliers(
+    id serial PRIMARY KEY,
+    supplierName TEXT,
+    company TEXT,
+    email TEXT
+);
 
 CREATE TABLE items(
     id SERIAL PRIMARY KEY,
-    item_name text,
-    quantity int NOT NULL,
+    itemName text,
     price decimal(11,2),
-    image_url text,
-    category text
+    quantity int,
+    imageUrl text,
+    category text,
+    supplierId int REFERENCES suppliers (id)
 );
 
 CREATE TABLE carts(
     id SERIAL PRIMARY KEY,
-    user_id int DEFAULT NULL REFERENCES users (id)
+    userId int DEFAULT NULL REFERENCES users (id)
 );
 
 CREATE TABLE orders(
     id SERIAL PRIMARY KEY,
-    order_date date DEFAULT NULL,
-    order_status text,
-    total_price decimal(11,2),
-    cart_id int DEFAULT NULL REFERENCES carts (id),
-    user_id int DEFAULT NULL REFERENCES users (id)
+    orderDate date,
+    orderTime time,
+    orderStatus text,
+    isPaid boolean DEFAULT FALSE,
+    cartId int NOT NULL REFERENCES carts (id),
+    userId int DEFAULT NULL REFERENCES users (id)
 );
-
 
 CREATE TABLE cart_items(
-    id SERIAL PRIMARY KEY,
+    itemId int NOT NULL REFERENCES items (id),
+    cartId int NOT NULL REFERENCES carts (id),
     quantity int NOT NULL,
-    price decimal(11,2),
-    subtotal decimal(11,2),    
-    item_id int NOT NULL REFERENCES items (id),
-    cart_id int NOT NULL REFERENCES carts (id),
-    UNIQUE(cart_id, item_id)
+    itemPrice decimal(11,2),
+    PRIMARY KEY(cartId, itemId)
 );
-
 
 CREATE TABLE credit_cards(
     id SERIAL PRIMARY KEY,
-    card_number text,
-    card_validation_number text,
-    expiration_date text,
-    card_owner text,
-    user_id int REFERENCES users (id)
+    cardNumber text,
+    expirationMonth text,
+    expirationYear text,
+    cardOwner text,
+    isPrimary boolean,
+    userId int NOT NULL REFERENCES users (id)
 );
-
 
 CREATE TABLE order_payments(
     id SERIAL PRIMARY KEY,
-    payment_amount decimal(11,2) NOT NULL,
-    card_number text,
-    card_expiration_date text,
-    order_id int REFERENCES orders (id)
+    cardNumber text,
+    cardExpirationDate text,
+    orderId int NOT NULL REFERENCES orders (id)
 );
-
 
 CREATE TABLE shipping(
     id SERIAL PRIMARY KEY,
-    shipping_address text,
+    phoneNumber TEXT,
+    address text,
     city text,
-    state_abbreviation text,
+    region text,
     postcode text,
     country text,
-    expected_delivery_date date,
     recipient text,
-    tracking_number text,
-    order_id int REFERENCES orders (id)
+    trackingNumber text,
+    orderId int NOT NULL REFERENCES orders (id)
 );
 
+CREATE UNIQUE INDEX primary_address_index ON user_address (userId) WHERE isPrimary is true;
+CREATE UNIQUE INDEX primary_card_index ON credit_cards (userId) WHERE isPrimary is true;
 
-INSERT INTO users (email, first_name, last_name, phone_number, password_plaintext, is_employee, is_admin, active) VALUES
-    ('admin.sam@gmail.com', 'Sam', 'Smith', '0404456123', 'abc123', TRUE, TRUE, TRUE),
-    ('employee.jane@gmail.com', 'Jane', 'Smath', '0404123456', 'abc123', TRUE, FALSE, TRUE),
-    ('employee.wilson@gmail.com', 'Wilson', 'Smeth', '040445614', 'abc123', TRUE, FALSE, TRUE),
-    ('brad@gmail.com', 'Brad', 'Smoth', '0404456125', 'abc123', FALSE, FALSE, TRUE),
-    ('john@gmail.com', 'John', 'Smuth', '0404456126', 'abc123', FALSE, FALSE, TRUE),
-    ('Bill@gmail.com', 'Bill', 'Sooth', '0404458226', 'abc123', FALSE, FALSE, TRUE);
+INSERT INTO users (email, firstName, lastName, passwordPlaintext, isAdmin, isActive) VALUES
+    ('admin.sam@gmail.com', 'Sam', 'Smith', 'abc123', TRUE, TRUE),
+    ('jane@gmail.com', 'Jane', 'Smath', 'abc123', FALSE, TRUE),
+    ('wilson@gmail.com', 'Wilson', 'Smeth', 'abc123', FALSE, TRUE),
+    ('brad@gmail.com', 'Brad', 'Smoth', 'abc123', FALSE, TRUE),
+    ('john@gmail.com', 'John', 'Smuth', 'abc123', FALSE, TRUE),
+    ('Bill@gmail.com', 'Bill', 'Sooth', 'abc123', FALSE, TRUE),
+    ('joey@gmail.com', 'Joey', 'Mings', 'abc123', FALSE, TRUE),
+    ('gilbert@gmail.com', 'Gilbert', 'Lee', 'abc123', FALSE, TRUE),
+    ('pat@gmail.com', 'Patrick', 'Parker', 'abc123', FALSE, TRUE),
+    ('samm@gmail.com', 'Sam', 'Smuth', 'abc123', FALSE, TRUE),
+    ('johnnnn@gmail.com', 'John', 'Bunani', 'abc123', FALSE, TRUE),
+    ('jesssmuth@gmail.com', 'Jess', 'Smuth', 'abc123', FALSE, TRUE),
+    ('jamesfahez@gmail.com', 'James', 'Fahez', 'abc123', FALSE, TRUE),
+    ('samhay@gmail.com', 'Samantha', 'Hay', 'abc123', FALSE, TRUE),
+    ('foobar@gmail.com', 'Foo', 'Bar', 'abc123', FALSE, TRUE),
+    ('alicehyde@gmail.com', 'Alice', 'Hyde', 'abc123', FALSE, TRUE),
+    ('georgiamendy@gmail.com', 'Georgia', 'Mendy', 'abc123', FALSE, TRUE),
+    ('elliotjohnston@gmail.com', 'Elliot', 'Johnston', 'abc123', FALSE, TRUE),
+    ('philiplo@gmail.com', 'Philip', 'Lo', 'abc123', FALSE, FALSE),
+    ('tramyphanny@gmail.com', 'Tra Ma', 'Phanny', 'abc123', FALSE, FALSE);
 
-
-
-INSERT INTO access_logs(access_timestamp, user_id) VALUES 
+INSERT INTO access_logs(accessTimestamp, userId) VALUES 
     (TIMESTAMP '2021-01-16 10:23:54', 1),
     (TIMESTAMP '2021-01-29 10:23:54', 1),
     (TIMESTAMP '2021-02-01 10:23:54', 2),
     (TIMESTAMP '2021-02-05 10:56:54', 3),
     (TIMESTAMP '2021-03-02 10:23:54', 3),
-    (TIMESTAMP '2021-03-22 10:23:54', 4),
     (TIMESTAMP '2021-03-12 10:23:54', 5),
+    (TIMESTAMP '2021-03-22 10:23:54', 4),
+    (TIMESTAMP '2021-03-22 13:01:59', 4),
     (TIMESTAMP '2021-04-24 10:23:54', 2),
-    (TIMESTAMP '2021-04-27 10:23:54', 1);
+    (TIMESTAMP '2021-04-27 10:23:54', 1),
+    (TIMESTAMP '2021-04-27 12:23:54', 5),
+    (TIMESTAMP '2021-04-28 10:23:54', 6),
+    (TIMESTAMP '2021-04-29 10:23:54', 6),
+    (TIMESTAMP '2021-04-30 10:23:54', 6),
+    (TIMESTAMP '2021-05-01 10:23:54', 8),
+    (TIMESTAMP '2021-05-02 10:23:54', 9),
+    (TIMESTAMP '2021-05-03 10:23:54', 11),
+    (TIMESTAMP '2021-05-04 10:23:54', 11),
+    (TIMESTAMP '2021-05-06 10:23:54', 12),
+    (TIMESTAMP '2021-05-06 10:23:54', 13);
 
-INSERT INTO user_address (street_address, city, postcode, state_abbreviation, country, user_id) VALUES
-    ('123 Fake Street', 'Sydney', '2000', 'NSW', 'Australia', '2'),
-    ('32 Real Street', 'Brisbane', '4000', 'QLD', 'Australia', '3'),
-    ('22 Pacific Road', 'Chatswood', '2067', 'NSW', 'Australia', '4');
+INSERT INTO employees (employeeRole, phoneNumber, isActiveEmployee, userId) VALUES
+    ('ADMIN', '0404456123', TRUE, 1),
+    ('STAFF', '0404123456',TRUE, 2),
+    ('STAFF', '0404456140', TRUE, 3),
+    ('STAFF', '0405456140', FALSE, 19),
+    ('STAFF', '0406456140', FALSE, 20);
 
+INSERT INTO user_address (address, city, postcode, region, country, userId, isPrimary) VALUES
+    ('123 Fake Street', 'Sydney', '2000', 'NSW', 'Australia', 2, TRUE),
+    ('32 Real Street', 'Brisbane', '4000', 'QLD', 'Australia', 3, TRUE),
+    ('22 Pacific Road', 'Chatswood', '2067', 'NSW', 'Australia', 4, TRUE),
+    ('1 Albert Avenue', 'Hornsby', '2077', 'NSW', 'Australia', 4, FALSE),
+    ('22 Anthony Road', 'Chatswood', '2067', 'NSW', 'Australia', 5, FALSE),
+    ('3 Riddles Street', 'Bankstown', '2200', 'NSW', 'Australia', 5, TRUE),
+    ('262 Pacific Road', 'Blacktown', '2148', 'NSW', 'Australia', 6, FALSE),
+    ('4 Albert Avenue', 'Hornsby', '2077', 'NSW', 'Australia', 7, FALSE),
+    ('5 Riddles Street', 'Bankstown', '2200', 'NSW', 'Australia', 8, TRUE),
+    ('6 Anthony Road', 'Chatswood', '2067', 'NSW', 'Australia', 8, FALSE),
+    ('7 Pacific Highway', 'Sydney', '2000', 'NSW', 'Australia', 8, FALSE),
+    ('8 Albert Avenue', 'Hornsby', '2077', 'NSW', 'Australia', 9, FALSE),
+    ('9 Archer Street', 'North Bondi', '2026', 'NSW', 'Australia', 10, FALSE),
+    ('8 Riddles Road', 'Bankstown', '2200', 'NSW', 'Australia', 11, FALSE),
+    ('77 Pacific Road', 'Blacktown', '2148', 'NSW', 'Australia', 12, FALSE),
+    ('66 Archer Street', 'North Bondi', '2026', 'NSW', 'Australia', 13, FALSE);
 
-
-INSERT INTO items (item_name, quantity, price, image_url, category) VALUES
-    ('Arduino Nano IoT Interface Adapter', 10, 11.95, 'https://dcubestore.com/wp-content/uploads/2018/10/AN_A_1_1-e1540884379272.png', 'Adapter'),
-    ('CCS811 Air Quality Sensor', 10, 30.00, 'https://dcubestore.com/wp-content/uploads/2019/09/CCS81-500x500.png', 'Sensors'),
-    ('ESP32 IoT WiFi BLE Module with Integrated USB', 10, 16.95, 'https://dcubestore.com/wp-content/uploads/2019/10/ESP32_1-500x500.png', ''),
-    ('Industrial IoT RS485 To Wireless Converter', 5, 168.95, 'https://dcubestore.com/wp-content/uploads/2019/11/RS485_1-500x500.jp', 'Communications'),
-    ('Industrial IoT Wireless Linear Displacement Sensor', 5, 196.95, 'https://dcubestore.com/wp-content/uploads/2019/11/Linear-Disp-Sensor_1-500x500.jpg', 'Sensors'),
-    ('Industrial IoT Wireless Vibration & Temperature Sensor V2 MEMS', 3, 258.95, 'https://dcubestore.com/wp-content/uploads/2019/11/PR52-33N_1-500x500.jpg', 'Sensors'),
-    ('Industrial IoT Wireless Temperature Humidity Sensor', 10, 198.95, 'https://dcubestore.com/wp-content/uploads/2019/09/Temp_Humidity2-1-500x500.jpg', 'Controllers'),
-    ('I2C Shield for Raspberry Pi with Inward Facing I2C Port', 30, 10.95, 'https://dcubestore.com/wp-content/uploads/2018/10/INPI2_4-500x500.png', 'Raspberry Pi'),
-    ('I2C Shield for Raspberry Pi with Outward Facing I2C Port', 50, 10.95, 'https://dcubestore.com/wp-content/uploads/2018/10/RASP_ADAP7_1-1-500x500.png', 'Raspberry Pi'),
-    ('Dual I2C Shield for Arduino Due with Modular Communications Interface', 50, 12.95, 'https://dcubestore.com/wp-content/uploads/2019/11/PR37-10_1-500x500.png', 'Adapters'),
-    ('Arduino Nano', 10, 11.95, 'https://dcubestore.com/wp-content/uploads/2019/09/207-2079543_arduino-nano-arduino-nano-board1_2_700x667-500x500.png', 'Adapters'),
-    ('ADT75 Temperature Sensor ±1°C 12-Bit with 3 Address Lines I2C Mini Module', 21, 24.95, 'https://dcubestore.com/wp-content/uploads/2019/09/ADT75_I2CS_A_1-600x393_1000x667-500x500.png', 'Sensors'),
-    ('8-Channel DC Current Monitor with I2C Interface', 10, 84.95, 'https://dcubestore.com/wp-content/uploads/2018/10/ADS7828_I2CCM8-500x500.png', 'Controllers'),
-    ('IoT Training Controller Light Sound Sensor Action', 10, 63.95, 'https://dcubestore.com/wp-content/uploads/2018/09/PR51-18-w-OLED_1-1-500x500.png', 'Convertors'),
-    ('Long Range IoT Wireless RTD Temperature Sensor', 5, 188.95, 'https://dcubestore.com/wp-content/uploads/2019/11/3-Wire-RTD-WIreless-Transmitter-500x500.jpg', 'Sensors'),
-    ('MG-811 CO2 Gas Sensor with I2C Interface', 10, 68.95, 'https://dcubestore.com/wp-content/uploads/2019/09/PR51-19_1-600x400_800x667-500x500.png', 'Sensors'),
-    ('Particle Photon', 10, 11, 'https://dcubestore.com/wp-content/uploads/2018/10/Photon2-autoxauto-800x800-500x500.jpg', ''),
-    ('Raspberry Pi Model B RASP-PI-3', 10, 47.83, 'https://dcubestore.com/wp-content/uploads/2018/10/INPI2_3-500x500.png', 'Raspberry Pi'),
-    ('Raspberry Pi Model 3 B + I2C Adapter + I2C Cable + I2C Sensor', 5, 105.51, 'https://dcubestore.com/wp-content/uploads/2018/10/44670760_2173331872880195_6023066916761894912_n-500x500.png', 'Raspberry Pi'),
-    ('SI1132 UV Index Ambient Light Sensor I2C Mini Module', 10, 26.95, 'https://dcubestore.com/wp-content/uploads/2018/09/SI1132_I2CS_A_1-e1541141298185-500x500.png', 'Sensors'),
-    ('Temperature Sensor Thermistor 10K OHM ±3% PROBE', 10, 15.95, 'https://dcubestore.com/wp-content/uploads/2018/10/0_1-500x500.jpeg', 'Sensors'),
-    ('TCS3472 Very High Sensitivity Color Light-to-Digital Converter with IR Filter I2C Mini Module', 15, 28.95, 'https://dcubestore.com/wp-content/uploads/2018/09/TMP007_I2CS_A_1-e1541142323284-500x500.png', 'Sensors'),
-    ('Water Detection Sensor with Buzzer', 10, 24.95, 'https://dcubestore.com/wp-content/uploads/2018/09/PCA9536_WDBZ_I2CS_1-500x500.png', 'Sensors'),
-    ('Water Level Sensor with Analog to Digital Converter ADC121C021', 10, 24.95, 'https://dcubestore.com/wp-content/uploads/2018/09/ADC121C021-WL-I2CS_1-500x500.png', 'Converters'),
-    ('Wireless 0-10V 4-Channel Input USB endNode', 3, 248.95, 'https://dcubestore.com/wp-content/uploads/2019/11/endNode_ASM1-6_1-500x500.jpg', 'Converters');
-
-INSERT INTO carts (user_id) VALUES 
-    (2), (4), (4), (5);
-
-INSERT INTO orders (order_date, order_status, total_price, cart_id, user_id) VALUES
-    ('2021-02-01', 'Delivered', 41.95, 1, 2),
-    ('2021-09-04', 'Shipped', 60.00, 2, 4),
-    ('2021-08-03', 'Delivered', 16.95, 3, 4),
-    ('2021-09-04', 'Submitted', 168.95, 4, 5);
+INSERT INTO suppliers (supplierName, company, email) VALUES
+    ('Tech Pty', 'Tech', 'suppliers@tech.com.au'),
+    ('Cisco Importers Ltd', 'Cisco', 'importers@cisco.com'),
+    ('Arduino Suppliers', 'Arduino','suppliers@arduino.com');
 
 
+INSERT INTO items (itemName, quantity, price, imageUrl, category, supplierId) VALUES
+    ('Arduino Nano IoT Interface Adapter', 10, 11.95, 'https://dcubestore.com/wp-content/uploads/2018/10/AN_A_1_1-e1540884379272.png', 'Adapter', 1),
+    ('CCS811 Air Quality Sensor', 10, 30.00, 'https://dcubestore.com/wp-content/uploads/2019/09/CCS81-500x500.png', 'Sensors', 1),
+    ('ESP32 IoT WiFi BLE Module with Integrated USB', 10, 16.95, 'https://dcubestore.com/wp-content/uploads/2019/10/ESP32_1-500x500.png', '', 2),
+    ('Industrial IoT RS485 To Wireless Converter', 5, 168.95, 'https://dcubestore.com/wp-content/uploads/2019/11/RS485_1-500x500.jpg', 'Communications', 1),
+    ('Industrial IoT Wireless Linear Displacement Sensor', 5, 196.95, 'https://dcubestore.com/wp-content/uploads/2019/11/Linear-Disp-Sensor_1-500x500.jpg', 'Sensors', 2),
+    ('Industrial IoT Wireless Vibration & Temperature Sensor V2 MEMS', 3, 258.95, 'https://dcubestore.com/wp-content/uploads/2019/11/PR52-33N_1-500x500.jpg', 'Sensors', 1),
+    ('Industrial IoT Wireless Temperature Humidity Sensor', 10, 198.95, 'https://dcubestore.com/wp-content/uploads/2019/09/Temp_Humidity2-1-500x500.jpg', 'Controllers', 1),
+    ('I2C Shield for Raspberry Pi with Inward Facing I2C Port', 30, 10.95, 'https://dcubestore.com/wp-content/uploads/2018/10/INPI2_4-500x500.png', 'Raspberry Pi', 2),
+    ('I2C Shield for Raspberry Pi with Outward Facing I2C Port', 50, 10.95, 'https://dcubestore.com/wp-content/uploads/2018/10/RASP_ADAP7_1-1-500x500.png', 'Raspberry Pi', 1),
+    ('Dual I2C Shield for Arduino Due with Modular Communications Interface', 50, 12.95, 'https://dcubestore.com/wp-content/uploads/2019/11/PR37-10_1-500x500.png', 'Adapters', 1),
+    ('Arduino Nano', 10, 11.95, 'https://dcubestore.com/wp-content/uploads/2019/09/207-2079543_arduino-nano-arduino-nano-board1_2_700x667-500x500.png', 'Adapters', 3),
+    ('ADT75 Temperature Sensor ±1°C 12-Bit with 3 Address Lines I2C Mini Module', 21, 24.95, 'https://dcubestore.com/wp-content/uploads/2019/09/ADT75_I2CS_A_1-600x393_1000x667-500x500.png', 'Sensors', 1),
+    ('8-Channel DC Current Monitor with I2C Interface', 10, 84.95, 'https://dcubestore.com/wp-content/uploads/2018/10/ADS7828_I2CCM8-500x500.png', 'Controllers', 3),
+    ('IoT Training Controller Light Sound Sensor Action', 10, 63.95, 'https://dcubestore.com/wp-content/uploads/2018/09/PR51-18-w-OLED_1-1-500x500.png', 'Convertors', 1),
+    ('Long Range IoT Wireless RTD Temperature Sensor', 5, 188.95, 'https://dcubestore.com/wp-content/uploads/2019/11/3-Wire-RTD-WIreless-Transmitter-500x500.jpg', 'Sensors', 1),
+    ('MG-811 CO2 Gas Sensor with I2C Interface', 10, 68.95, 'https://dcubestore.com/wp-content/uploads/2019/09/PR51-19_1-600x400_800x667-500x500.png', 'Sensors', 3),
+    ('Particle Photon', 10, 11, 'https://dcubestore.com/wp-content/uploads/2018/10/Photon2-autoxauto-800x800-500x500.jpg', '', 3),
+    ('Raspberry Pi Model B RASP-PI-3', 10, 47.83, 'https://dcubestore.com/wp-content/uploads/2018/10/INPI2_3-500x500.png', 'Raspberry Pi', 1),
+    ('Raspberry Pi Model 3 B + I2C Adapter + I2C Cable + I2C Sensor', 5, 105.51, 'https://dcubestore.com/wp-content/uploads/2018/10/44670760_2173331872880195_6023066916761894912N-500x500.png', 'Raspberry Pi', 1),
+    ('SI1132 UV Index Ambient Light Sensor I2C Mini Module', 10, 26.95, 'https://dcubestore.com/wp-content/uploads/2018/09/SI1132_I2CS_A_1-e1541141298185-500x500.png', 'Sensors', 1),
+    ('Temperature Sensor Thermistor 10K OHM ±3% PROBE', 10, 15.95, 'https://dcubestore.com/wp-content/uploads/2018/10/0_1-500x500.jpeg', 'Sensors', 3),
+    ('TCS3472 Very High Sensitivity Color Light-to-Digital Converter with IR Filter I2C Mini Module', 15, 28.95, 'https://dcubestore.com/wp-content/uploads/2018/09/TMP007_I2CS_A_1-e1541142323284-500x500.png', 'Sensors', 1),
+    ('Water Detection Sensor with Buzzer', 10, 24.95, 'https://dcubestore.com/wp-content/uploads/2018/09/PCA9536_WDBZ_I2CS_1-500x500.png', 'Sensors', 1),
+    ('Water Level Sensor with Analog to Digital Converter ADC121C021', 10, 24.95, 'https://dcubestore.com/wp-content/uploads/2018/09/ADC121C021-WL-I2CS_1-500x500.png', 'Converters', 1),
+    ('Wireless 0-10V 4-Channel Input USB endNode', 3, 248.95, 'https://dcubestore.com/wp-content/uploads/2019/11/endNode_ASM1-6_1-500x500.jpg', 'Converters', 1);
+
+INSERT INTO carts (userId) VALUES 
+    (2), (4), (4), (5), (6), (6), (7), (8), (5), (13), 
+    (5), (5), (5), (6), (8), (19), (11), (10), (19), (17);
+
+INSERT INTO orders (orderDate, orderTime, orderStatus, isPaid, cartId, userId) VALUES
+    ('2021-02-01', '09:55:02', 'Delivered', TRUE, 1, 2),
+    ('2021-02-04', '13:05:07', 'Shipped', TRUE, 2, 4),
+    ('2021-02-03', '06:48:53', 'Delivered', TRUE, 3, 4),
+    ('2021-03-04', '21:31:26', 'Saved', FALSE, 4, 5),
+    ('2021-03-06', '21:31:26', 'Delivered', TRUE, 5, 5),
+    ('2021-03-07', '21:31:26', 'Delivered', TRUE, 6, 5),
+    ('2021-03-08', '21:31:26', 'Delivered', TRUE, 7, 6),
+    ('2021-03-09', '21:31:26', 'Delivered', TRUE, 8, 7),
+    ('2021-04-10', '21:31:26', 'Delivered', TRUE, 9, 8),
+    ('2021-04-11', '21:31:26', 'Delivered', TRUE, 10, 8),
+    ('2021-04-12', '21:31:26', 'Delivered', TRUE, 11, 9),
+    ('2021-04-13', '21:31:26', 'Delivered', TRUE, 12, 9),
+    ('2021-04-14', '22:31:26', 'Delivered', TRUE, 13, 10),
+    ('2021-04-15', '01:31:26', 'Delivered', TRUE, 14, 11),
+    ('2021-04-22', '01:31:26', 'Delivered', TRUE, 15, 12),
+    ('2021-04-23', '11:31:26', 'Delivered', TRUE, 16, 13),
+    ('2021-04-24', '23:31:26', 'Delivered', TRUE, 17, 14),
+    ('2021-04-25', '12:31:26', 'Shipped', TRUE, 18, 15),
+    ('2021-04-26', '21:31:26', 'Shipped', TRUE, 19, 16),
+    ('2021-04-27', '21:31:26', 'Submitted', TRUE, 20, 17);
 
 
-INSERT INTO cart_items (item_id, quantity, price, subtotal, cart_id) VALUES
-    (1, 1, 11.95, 11.95, 1),
-    (2, 1, 30.00, 30.00, 1),
-    (2, 2, 30.00, 60.00, 2),
-    (3, 1, 16.95, 16.95, 3),
-    (4, 1, 168.95, 168.95, 4);
+
+INSERT INTO cart_items (itemId, quantity, itemPrice, cartId) VALUES
+    (1, 1, 11.95, 1),
+    (2, 1, 30.00, 1),
+    (2, 2, 30.00, 2),
+    (3, 1, 16.95, 3),
+    (3, 1, 16.95, 5),
+    (3, 1, 16.95, 6),
+    (3, 1, 16.95, 7),
+    (3, 1, 16.95, 8),
+    (4, 2, 168.95, 4),
+    (4, 1, 168.95, 5),
+    (4, 3, 168.95, 7),
+    (4, 2, 168.95, 9),
+    (5, 1, 196.95, 11),
+    (5, 1, 196.95, 13),
+    (5, 2, 196.95, 15),
+    (5, 1, 196.95, 17),
+    (8, 2, 10.95, 6),
+    (8, 4, 10.95, 7),
+    (8, 1, 10.95, 18),
+    (8, 1, 10.95, 19),
+    (8, 2, 10.95, 12),
+    (9, 2, 10.95, 6),
+    (9, 1, 10.95, 9),
+    (9, 2, 10.95, 12),
+    (24, 1, 24.95, 15),
+    (24, 1, 24.95, 10),
+    (24, 1, 24.95, 12),
+    (24, 3, 24.95, 14),
+    (24, 1, 24.95, 16),
+    (24, 2, 24.95, 20);
 
 
+INSERT INTO credit_cards (cardNumber, expirationMonth, expirationYear, cardOwner, userId, isPrimary) VALUES
+    ('1234-5678-1234-1234', '01', '23', 'Jane Smath', 2, TRUE),
+    ('1234-5678-1234-5678', '09', '22', 'Brad Smoth', 4, TRUE),
+    ('1234-5678-1234-5678', '09', '22', 'Brad Smoth', 4, FALSE),
+    ('1234-5673-1234-5678', '06', '25', 'Bill Smoth', 6, TRUE),
+    ('4234-5428-1234-5678', '07', '21', 'Joey Mings', 8, FALSE),
+    ('6234-5678-1234-5678', '08', '21', 'Joey Mings', 8, TRUE),
+    ('7234-5642-1234-5678', '09', '23', 'Gilbert Lee', 9, TRUE);
 
-INSERT INTO credit_cards (card_number, expiration_date, card_owner, user_id) VALUES
-    ('1234-5678-1234-1234', '01-23', 'Jane Smath', 2),
-    ('1234-5678-1234-5678', '09-22', 'Brad Smoth', 4);
+INSERT INTO order_payments (cardNumber, cardExpirationDate, orderId) VALUES
+    ('1234-5678-1234-1234', '01-23', '1'),
+    ('1234-5678-1234-5678', '09-22', '2'),
+    ('6666-1234-1234-5678', '10-21', '3'),
+    ('6666-1234-1234-1111', '10-23', '5'),
+    ('6666-1234-1234-2222', '08-23', '6'),
+    ('6666-1234-1234-2233', '07-23', '7'),
+    ('6666-1234-1234-3333', '08-23', '8'),
+    ('6666-1234-1234-4444', '09-23', '9'),
+    ('6666-1234-1234-5555', '09-23', '10'),
+    ('6666-1234-1234-6666', '09-23', '11'),
+    ('6666-1234-1234-7777', '09-23', '12'),
+    ('6666-1234-1234-8888', '09-23', '13'),
+    ('6666-1234-1234-8899', '09-23', '14'),
+    ('6666-1234-1234-0000', '09-23', '15'),
+    ('6666-1234-1234-9999', '09-23', '16'),
+    ('6666-1234-1234-9876', '09-23', '17'),
+    ('6666-1234-1234-6543', '09-23', '18'),
+    ('6666-1234-1234-3245', '09-23', '19'),
+    ('6666-1234-1234-3466', '09-23', '20');
 
+INSERT INTO shipping (address, city, region, postcode, country, recipient, trackingNumber, orderId) VALUES
+    ('123 Fake Street', 'Sydney', 'NSW', '2000', 'Australia', 'Jane Smath', 'S0230HGTY', 1),
+    ('22 Pacific Road', 'Chatswood', 'NSW', '2067', 'Australia', 'Brad Smoth', 'Y000GH1', 2),
+    ('22 Pacific Road', 'Chatswood', 'NSW', '2067', 'Australia', 'Brad Smoth', 'S00001', 3);
 
-INSERT INTO order_payments (payment_amount, card_number, card_expiration_date, order_id) VALUES
-    (41.95, '1234-5678-1234-1234', '01-23', '1'),
-    (60.00, '1234-5678-1234-5678', '09-22', '2'),
-    (16.95, '6666-1234-1234-5678', '10-21', '3'),
-    (168.95, '1234-1234-1234-5678', '10-22', '4');
-
-
-
-INSERT INTO shipping (shipping_address, city, state_abbreviation, postcode, country, tracking_number, order_id) VALUES
-    ('123 Fake Street', 'Sydney', 'NSW', '2000', 'Australia', 'S0230HGTY', 1),
-    ('22 Pacific Road', 'Chatswood', 'NSW', '2067','Australia', 'Y000GH1', 2),
-    ('22 Pacific Road', 'Chatswood', 'NSW', '2067', 'Australia', 'S00001', 3);
