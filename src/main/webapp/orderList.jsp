@@ -26,11 +26,11 @@
                     <th>Order Status</th>
                     <th></th>
                 </tr>
-                <c:forEach items="${orders}" var="order"> 
+                <c:forEach items="${userOrders}" var="order"> 
                     <tr class="align-middle">
                         <td>${order.id}</td>
                         <td>${order.orderDate}</td>
-                        <td>$${order.totalPrice}</td>
+                        <td>$${order.cart.totalPrice}</td>
                         <td>${order.orderStatus}</td>
                         <td>
                             <div class="">
