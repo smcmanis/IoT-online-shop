@@ -1,37 +1,44 @@
 package com.iotbay.shop.model;
 
+import java.io.Serializable;
+import javax.persistence.*;
 
-
-public class Address {
+@Entity
+@Table(name = "addresses")
+public class Address implements Serializable {
     
-    private Integer id;   
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
     
-    private String streetAddress;
+    private String address;
     
     private String city;
     
     private String postcode;
     
-    private String state;
+    private String region;
     
     private String country;
     
-    private Integer userId;
+    @Column(name = "isPrimary")
+    private boolean primary;
+    
+    @OneToOne
+    @JoinColumn(name="userId")
+    private User user;
+    
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getAddress() {
+        return address;
     }
 
-    public String getStreetAddress() {
-        return streetAddress;
-    }
-
-    public void setStreetAddress(String streetAddress) {
-        this.streetAddress = streetAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCity() {
@@ -50,12 +57,12 @@ public class Address {
         this.postcode = postcode;
     }
 
-    public String getState() {
-        return state;
+    public String getRegion() {
+        return region;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     public String getCountry() {
@@ -65,14 +72,13 @@ public class Address {
     public void setCountry(String country) {
         this.country = country;
     }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    
+    public boolean isPrimary() {
+        return primary;
     }
     
+    public void setPrimary(boolean primary) {
+        this.primary = primary;
+    }
     
 }

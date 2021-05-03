@@ -1,77 +1,101 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.iotbay.shop.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
-/**
- *
- * @author namlo
- */
-public class Shipment implements Serializable {
-    private int shipment_id; //PK
-    private String tracking_number;
-    private String shipment_date;
-    private String shipment_status;
-    private int shipment_details_id; //FK
-    private int order_id; //FK    
+@Entity
+@Table(name = "shipping")
+public class Shipping implements Serializable {
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
+    
+    private String address;
+    
+    private String city;
+    
+    private String postcode;
+    
+    private String region;
+    
+    private String country;
+        
+    private String recipient;
+    
+    private String trackingNumber;
+    
+    @OneToOne
+    @JoinColumn(name = "orderId")
+    private Order order;
 
-    public Shipment(String tracking_number, String shipment_date, String shipment_status, int shipment_details_id, int order_id) {
-        this.tracking_number = tracking_number;
-        this.shipment_date = shipment_date;
-        this.shipment_status = shipment_status;
-        this.shipment_details_id = shipment_details_id;
-        this.order_id = order_id;
+    public Integer getId() {
+        return id;
     }
 
-    public int getShipment_id() {
-        return shipment_id;
+    public String getAddress() {
+        return address;
     }
 
-    public String getTracking_number() {
-        return tracking_number;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getShipment_date() {
-        return shipment_date;
+    public String getCity() {
+        return city;
     }
 
-    public String getShipment_status() {
-        return shipment_status;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public int getShipment_details_id() {
-        return shipment_details_id;
+    public String getPostcode() {
+        return postcode;
     }
 
-    public int getOrder_id() {
-        return order_id;
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
     }
 
-    public void setShipment_id(int shipment_id) {
-        this.shipment_id = shipment_id;
+    public String getRegion() {
+        return region;
     }
 
-    public void setTracking_number(String tracking_number) {
-        this.tracking_number = tracking_number;
+    public void setRegion(String region) {
+        this.region = region;
     }
 
-    public void setShipment_date(String shipment_date) {
-        this.shipment_date = shipment_date;
+    public String getCountry() {
+        return country;
     }
 
-    public void setShipment_status(String shipment_status) {
-        this.shipment_status = shipment_status;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public void setShipment_details_id(int shipment_details_id) {
-        this.shipment_details_id = shipment_details_id;
+    public String getRecipient() {
+        return recipient;
     }
 
-    public void setOrder_id(int order_id) {
-        this.order_id = order_id;
-    }  
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
+    }
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+    
+    
 }

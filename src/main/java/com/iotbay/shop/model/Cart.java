@@ -1,37 +1,33 @@
 package com.iotbay.shop.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "carts")
 public class Cart implements Serializable {
 
-    private Integer cartId;
-    
-    private Integer userId;
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CartItem> cartItems;
+    
+    @ManyToOne    
+    @JoinColumn(name = "userId")  
+    private User user;
+    
+    private BigDecimal totalPrice;
 
-
-      public Cart(Integer cartId, Integer userId, List cartItems) {
-        this.cartId = cartId;
-        this.userId = userId;
-        this.cartItems = cartItems;
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
     }
 
-    public Integer getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(Integer cartId) {
-        this.cartId = cartId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public List<CartItem> getCartItems() {
@@ -41,8 +37,17 @@ public class Cart implements Serializable {
     public void setCartItems(List<CartItem> cartItems) {
         this.cartItems = cartItems;
     }
-
     
+    public Integer getId() {
+        return id;
+    }
 
+    public User getUser() {
+        return user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }  
+    
 }

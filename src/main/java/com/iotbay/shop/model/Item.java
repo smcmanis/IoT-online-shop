@@ -3,37 +3,35 @@ package com.iotbay.shop.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "items")
 public class Item implements Serializable {
-
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
-
+    
+    @Column(name = "itemName")
     private String name;
 
     private Integer quantity;
-
+    
     private BigDecimal price;
-
+    
     private String imageUrl;
-
+    
     private String category;
-
-    public Item(Integer id, String name, Integer quantity, BigDecimal price, String imageUrl, String category) {
-        this.id = id;
-        this.name = name;
-        this.quantity = quantity;
-        this.price = price;
-        this.imageUrl = imageUrl;
-        this.category = category;
-    }
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "supplierId")
+    private Supplier supplier;
 
     public Integer getId() {
         return id;
     }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
+    
     public String getName() {
         return name;
     }
@@ -74,4 +72,11 @@ public class Item implements Serializable {
         this.category = category;
     }
 
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
 }

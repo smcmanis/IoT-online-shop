@@ -3,41 +3,41 @@ package com.iotbay.shop.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Time;
 
+import javax.persistence.*;
 
-
+@Entity
+@Table(name = "orders")
 public class Order implements Serializable {
     
-    private Integer id; 
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
     
     private Date orderDate;
     
+    private Time orderTIme;
+    
     private String orderStatus;    
     
-    private BigDecimal totalPrice;
+    private boolean isPaid;
     
+    @OneToOne(optional = false)
+    @JoinColumn(name = "cartId")
     private Cart cart;
     
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId")
     private User user;
     
-    private Shipment shipping;
+    @OneToOne(mappedBy = "order")
+    private Shipping shipping;
+    
+    private BigDecimal totalPrice;
 
-    public Order(Integer id, Date orderDate, String orderStatus, BigDecimal totalPrice, Cart cart, User user) {
-        this.id = id;
-        this.orderDate = orderDate;
-        this.orderStatus = orderStatus;
-        this.totalPrice = totalPrice;
-        this.cart = cart;
-        this.user = user;
-    }
-    
-    
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Date getOrderDate() {
@@ -48,6 +48,14 @@ public class Order implements Serializable {
         this.orderDate = orderDate;
     }
 
+    public Time getOrderTIme() {
+        return orderTIme;
+    }
+
+    public void setOrderTIme(Time orderTIme) {
+        this.orderTIme = orderTIme;
+    }
+
     public String getOrderStatus() {
         return orderStatus;
     }
@@ -56,22 +64,12 @@ public class Order implements Serializable {
         this.orderStatus = orderStatus;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
+    public boolean isIsPaid() {
+        return isPaid;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setIsPaid(boolean isPaid) {
+        this.isPaid = isPaid;
     }
 
     public Cart getCart() {
@@ -82,11 +80,27 @@ public class Order implements Serializable {
         this.cart = cart;
     }
 
-    public Shipment getShipping() {
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Shipping getShipping() {
         return shipping;
     }
 
-    public void setShipping(Shipment shipping) {
+    public void setShipping(Shipping shipping) {
         this.shipping = shipping;
     }
 

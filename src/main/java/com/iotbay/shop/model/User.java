@@ -1,60 +1,48 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.iotbay.shop.model;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.*;
 
-/**
- *
- * @author hlong
- */
+@Entity
+@Table(name = "users")
 public class User implements Serializable {
 
-    private Integer userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     private String firstName;
+
     private String lastName;
+
     private String email;
-    private String password;
 
-    public User(Integer userId, String firstName, String lastName, String email, String password) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
+    @Column(name = "passwordplaintext")
+    private String passwordPlaintext;
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+    private String passhash;
 
-    public String getEmail() {
-        return email;
-    }
+    private String salt;
 
-    public String getPassword() {
-        return password;
-    }
+    @Column(name = "isActive")
+    private boolean active;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    @Column(name = "isAdmin")
+    private boolean admin;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<Address> shippingAddresses;
 
-    public Integer getUserId() {
-        return userId;
-    }
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<CreditCard> creditCards;
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Order> orders;
+    
+    public Integer getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -73,4 +61,78 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPasswordPlaintext() {
+        return passwordPlaintext;
+    }
+
+    public void setPasswordPlaintext(String passwordPlaintext) {
+        this.passwordPlaintext = passwordPlaintext;
+    }
+
+    public String getPasshash() {
+        return passhash;
+    }
+
+    public void setPasshash(String passhash) {
+        this.passhash = passhash;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public Set<Address> getShippingAddresses() {
+        return shippingAddresses;
+    }
+
+    public void setShippingAddresses(Set<Address> shippingAddresses) {
+        this.shippingAddresses = shippingAddresses;
+    }
+
+    public Set<CreditCard> getCreditCards() {
+        return creditCards;
+    }
+
+    public void setCreditCards(Set<CreditCard> creditCards) {
+        this.creditCards = creditCards;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+    
+    
+    
 }
