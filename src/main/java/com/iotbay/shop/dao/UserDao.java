@@ -1,25 +1,40 @@
 package com.iotbay.shop.dao;
 
 import com.iotbay.shop.model.User;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.iotbay.shop.service.EntityManagerFactoryService;
 
-public class UserDao extends Dao {
+import java.util.List;
+import javax.persistence.EntityManager;
 
-    public User getUserByUserId(Integer userId) throws SQLException {
-        String query = "SELECT * FROM users WHERE id ='" + userId + "';";
-        ResultSet rs = executeQuery(query);
-        rs.next();
-        String email = rs.getString("email");
-        String firstName = rs.getString("first_name");
-        String lastName = rs.getString("last_name");
-        String phone = rs.getString("phone_number");
-        String password = rs.getString("password_plaintext");
-        String salt = rs.getString("salt");
-        String passhash = rs.getString("passhash");
-        boolean active = rs.getBoolean("active");
-        boolean employee = rs.getBoolean("is_employee");
-        boolean admin = rs.getBoolean("is_admin");
-        return new User(userId, firstName, lastName, email, password);
+public class UserDao {
+    
+    private EntityManager getEntityManager() {
+        return EntityManagerFactoryService.getEntityManagerFactory().createEntityManager();
+    }
+    
+    public void addUser(User user) {
+        
+    }
+    
+    public User getUserByUserId(Integer userId) {
+        EntityManager em = getEntityManager();
+        User user = em.find(User.class, userId);
+        em.close();
+        return user;
+    }
+        
+    public List<User> getAllUsers() {
+        EntityManager em = getEntityManager();
+        List<User> userList = em.createQuery("select u from User u").getResultList();
+        em.close();
+        return userList;
+    }
+    
+    public void updateUser(User user) {
+        
+    }
+    
+    public void deleteUser(User user) {
+        
     }
 }
