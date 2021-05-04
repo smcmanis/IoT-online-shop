@@ -6,11 +6,8 @@ import com.iotbay.shop.model.Order;
 import com.iotbay.shop.model.User;
 
 import java.io.IOException;
-
 import java.util.List;
-import java.util.Set;
 import javax.servlet.RequestDispatcher;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,9 +38,9 @@ public class OrderListServlet extends HttpServlet {
         if (false) {
             dispatcher = request.getRequestDispatcher("/index.html");
         } else {
-            List orders = user.getOrders(); 
+            List<Order> orders = user.getOrders();
             System.out.println(orders.size());            
-            session.setAttribute("userOrders", orders);
+            session.setAttribute("userOrders", orders);                      
             dispatcher = request.getRequestDispatcher("/orderList.jsp");
             dispatcher.forward(request, response);
         }

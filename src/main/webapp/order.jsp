@@ -17,6 +17,9 @@
         <title>Order</title>
     </head>
     <body>
+
+        <%@include file="common/navbar.jsp" %>
+
         <div class="container">
             <div>
                 <h1>Order #${order.id}</h1>
