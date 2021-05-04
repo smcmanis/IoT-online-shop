@@ -24,9 +24,8 @@ public class CartItemDao {
     }
 
     public void updateCartItem(CartItem cartItem) {
-        double subtotal = calculateSubtotal(cartItem);
-        // MathContext(2) sets BigDecimal precision to 2 decimal places
-        cartItem.setPrice(new BigDecimal(subtotal, new MathContext(2)));
+        BigDecimal subtotal = calculateSubtotal(cartItem);
+        cartItem.setPrice(subtotal);
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
         em.merge(cartItem);
@@ -47,8 +46,8 @@ public class CartItemDao {
         }
     }
 
-    public double calculateSubtotal(CartItem cartItem) {
-        double subtotal = cartItem.getPrice().doubleValue() * cartItem.getQuantity();
+    public BigDecimal calculateSubtotal(CartItem cartItem) {
+        BigDecimal subtotal = cartItem.getPrice().multiply(new BigDecimal(cartItem.getQuantity()));
         return subtotal;
     }
 

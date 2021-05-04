@@ -3,23 +3,26 @@ package com.iotbay.shop.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.*;
+import org.hibernate.annotations.Formula;
 
 @Entity
 @Table(name = "cart_items")
 public class CartItem implements Serializable {
-    
+
     @Embeddable
     public static class Id implements Serializable {
+
         protected Integer cartId;
         protected Integer itemId;
-        
-        public Id() {}
-        
+
+        public Id() {
+        }
+
         public Id(Integer cartId, Integer itemId) {
             this.cartId = cartId;
             this.itemId = itemId;
         }
-        
+
         public boolean equals(Object o) {
             if (o != null && o instanceof Id) {
                 Id that = (Id) o;
@@ -27,28 +30,32 @@ public class CartItem implements Serializable {
             }
             return false;
         }
-        
+
         public int hashcode() {
             return cartId.hashCode() + itemId.hashCode();
         }
     }
-    
+
     @EmbeddedId()
     private Id id;
-    
+
     @ManyToOne
     @JoinColumn(name = "itemId", insertable = false, updatable = false)
     private Item item;
-    
+
     private Integer quantity;
-    
+
     @Column(name = "itemprice")
     private BigDecimal price;
-    
+
     @ManyToOne
     @JoinColumn(name = "cartId", insertable = false, updatable = false)
     private Cart cart;
-    
+
+    @Transient
+    @Formula("quantity*2")
+    private BigDecimal subtotal;
+
     public Id getId() {
         return this.id;
     }
@@ -84,5 +91,12 @@ public class CartItem implements Serializable {
     public void setCart(Cart cart) {
         this.cart = cart;
     }
-       
+
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
+    }
 }
