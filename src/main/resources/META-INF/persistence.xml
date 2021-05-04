@@ -11,9 +11,9 @@
         <properties>    
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"></property>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/iotbayy" />
-            <property name="javax.persistence.jdbc.user" value="simon" />
-            <property name="javax.persistence.jdbc.password" value="()" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-35-174-35-242.compute-1.amazonaws.com/d7j6pcgtc8qq5s" />
+            <property name="javax.persistence.jdbc.user" value="zeiodfbndjgzyj" />
+            <property name="javax.persistence.jdbc.password" value="224dbdf2774b22a03953d02ca9add37da800df25d1711bd4a4b7cc62b5d6826b" />
             <!--<property name="hibernate.show_sql" value="true" />-->
             <property name="hibernate.hbm2ddl.auto" value="update" /> 
             <property name="hibernate.format_sql" value="true"/>
