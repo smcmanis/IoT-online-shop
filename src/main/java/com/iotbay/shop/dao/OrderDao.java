@@ -27,8 +27,11 @@ public class OrderDao {
     }
 
     public List<Order> getAllOrders() {
-        Query query =  getEntityManager().createQuery("select o from Order o");
-        return query.getResultList();
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("select o from Order o");
+        List<Order> orderList = query.getResultList();
+        em.close();
+        return orderList;
     }
 
     public void updateOrder(Order order) {
