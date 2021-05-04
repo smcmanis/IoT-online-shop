@@ -21,39 +21,7 @@
 
     <body>
         <div class="container">
-            <div class="container">
-                <a class="btn btn-primary" href="/order/new" role="button">New Order</a>
-            </div>
-            <div class="container">
-                <label for="orderIdList" class="form-label">Search Orders</label>
-                <div class="row g-3">
-                    <div class="col">
-                        <input class="form-control" list="orderIdList" id="orderIdInput" placeholder="Id...">
-                        <datalist id="orderIdList">
-                            <c:forEach items="${userOrders}" var="order"> 
-                                <option value="Order# ${order.id}">
-                                </c:forEach>
-                        </datalist>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary">Search</button>
-                    </div>
-                </div>
-                <div class="row g-3">
-                    <div class="col">
-                        <input class="form-control" list="orderDateList" id="orderDateInput" placeholder="Date...">
-                        <datalist id="orderDateList">
-                            <c:forEach items="${userOrders}" var="order"> 
-                                <option value="Date: ${order.orderDate}">
-                                </c:forEach>
-                        </datalist>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary">Search</button>
-                    </div>
-                </div>
-            </div>
-
+            
             <table class="table">
                 <tr>
                     <th>Order ID</th>
