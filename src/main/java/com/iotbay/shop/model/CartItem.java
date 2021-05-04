@@ -9,35 +9,9 @@ import org.hibernate.annotations.Formula;
 @Table(name = "cart_items")
 public class CartItem implements Serializable {
 
-    @Embeddable
-    public static class Id implements Serializable {
-
-        protected Integer cartId;
-        protected Integer itemId;
-
-        public Id() {
-        }
-
-        public Id(Integer cartId, Integer itemId) {
-            this.cartId = cartId;
-            this.itemId = itemId;
-        }
-
-        public boolean equals(Object o) {
-            if (o != null && o instanceof Id) {
-                Id that = (Id) o;
-                return this.cartId.equals(that.cartId) && this.itemId.equals(that.itemId);
-            }
-            return false;
-        }
-
-        public int hashcode() {
-            return cartId.hashCode() + itemId.hashCode();
-        }
-    }
-
-    @EmbeddedId()
-    private Id id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "itemId", insertable = false, updatable = false)
@@ -56,7 +30,7 @@ public class CartItem implements Serializable {
     @Formula("quantity*2")
     private BigDecimal subtotal;
 
-    public Id getId() {
+    public Integer getId() {
         return this.id;
     }
 

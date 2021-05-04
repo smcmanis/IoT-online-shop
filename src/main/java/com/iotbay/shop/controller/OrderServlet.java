@@ -17,15 +17,17 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(
         name = "OrderServlet",
-        urlPatterns = {"/order"})
+        urlPatterns = {"/order", "/order/delete"})
 public class OrderServlet extends HttpServlet {
 
     private OrderDao orderDao = new OrderDao();
     private CartItemDao cartItemDao = new CartItemDao();
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
         Integer orderId = Integer.parseInt(request.getParameter("orderId"));
         Order order = orderDao.getOrderByOrderId(orderId);
+        
         request.setAttribute("order", order);
             
         Cart cart = order.getCart();
