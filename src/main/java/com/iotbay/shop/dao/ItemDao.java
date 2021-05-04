@@ -4,6 +4,7 @@ import com.iotbay.shop.model.Item;
 import com.iotbay.shop.service.EntityManagerFactoryService;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 public class ItemDao {
     
@@ -23,7 +24,11 @@ public class ItemDao {
     }
         
     public List<Item> getAllItems() {
-        return null;
+        EntityManager em = getEntityManager();
+        Query query =  em.createQuery("select i from Item i");
+        List<Item> itemList =  query.getResultList();
+        em.close();
+        return itemList;
     }
     
     public void updateItem(Item item) {
