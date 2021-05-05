@@ -26,24 +26,21 @@ public class OrderListServlet extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         RequestDispatcher dispatcher;
-//        User user = (User) session.getAttribute("user");
-//
-//        // Should check authentication here
-////        if (user == null) {
-//        if (true) {
-//            String userId = request.getParameter("userId");
-//            if (userId != null) {
-//                try {
-//                    user = userDao.getUserByUserId(Integer.parseInt(userId));
-//                } catch (NumberFormatException e) {
-//                    // remove this after testing
-//                    user = userDao.getUserByUserId(7);
-//                }
-//                session.setAttribute("user", user);
-//            }
-//
-//        }
-        User user = userDao.getUserByUserId(4);
+        User user = (User) session.getAttribute("user");
+        // Should check authentication here
+        if (true) {
+            String userId = request.getParameter("userId");
+            if (userId != null) {
+                try {
+                    user = userDao.getUserByUserId(Integer.parseInt(userId));
+                } catch (NumberFormatException e) {
+                    // remove this after testing
+                    user = userDao.getUserByUserId(7);
+                }
+                session.setAttribute("user", user);
+            }
+
+        }
         session.setAttribute("user", user);
 
         // If unauthorized: redirect

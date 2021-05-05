@@ -14,7 +14,7 @@ public class CartItem implements Serializable {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "itemId", insertable = false, updatable = false)
+    @JoinColumn(name = "itemId")
     private Item item;
 
     private Integer quantity;
@@ -23,7 +23,7 @@ public class CartItem implements Serializable {
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name = "cartId", insertable = false, updatable = false)
+    @JoinColumn(name = "cartId")
     private Cart cart;
 
     @Transient
