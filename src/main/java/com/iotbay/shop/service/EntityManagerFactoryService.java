@@ -2,14 +2,26 @@ package com.iotbay.shop.service;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceUnit;
 
 public class EntityManagerFactoryService {
     
-    @PersistenceUnit
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("iotbayPU");
+    private static EntityManagerFactory emf;
+    
+    EntityManagerFactoryService() {}
+    
+//    public static synchronized EntityManagerFactory getInstance() {
+//        if (emf == null) {
+//            emf = Persistence.createEntityManagerFactory("iotbayPU");
+//        }
+//
+//        return emf;
+//    }
+//    
+    public static synchronized EntityManagerFactory getEntityManagerFactory() {
+        if (emf == null) {
+            emf = Persistence.createEntityManagerFactory("iotbayPU");
+        }
 
-    public static EntityManagerFactory getEntityManagerFactory() {
         return emf;
     }
 }
