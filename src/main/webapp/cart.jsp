@@ -89,11 +89,19 @@
                     <button class="btn btn-primary">Checkout</button>
                 </div>
             </div>
-            <div>
-                <c:url value="/getAllProducts" var="catalogueUrl"></c:url>
-                <a href="${catalogueUrl}" class="btn btn-primary">
-                    Continue Shopping
-                </a>
+            <div class="d-flex">
+                <div>
+                    <c:url value="/getAllProducts" var="catalogueUrl"></c:url>
+                    <a href="${catalogueUrl}" class="btn btn-primary">
+                        Continue Shopping
+                    </a>
+                </div>
+                <div>
+                    <c:url value="/getAllProducts" var="catalogueUrl"></c:url>
+                    <a href="${catalogueUrl}" class="btn btn-primary">
+                        Continue Shopping
+                    </a>
+                </div>
             </div>
         </div>
     </body>
