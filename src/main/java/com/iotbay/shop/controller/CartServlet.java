@@ -25,8 +25,8 @@ public class CartServlet extends HttpServlet {
     private CartItemDao cartItemDao = new CartItemDao();
     
     
-    
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         Integer cartId;
         try {
             cartId = Integer.parseInt(request.getParameter("cartId"));

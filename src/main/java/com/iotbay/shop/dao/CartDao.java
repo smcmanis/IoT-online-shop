@@ -1,8 +1,11 @@
 package com.iotbay.shop.dao;
 
 import com.iotbay.shop.model.Cart;
+import com.iotbay.shop.model.CartItem;
 import com.iotbay.shop.service.EntityManagerFactoryService;
-
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.LinkedList;
 
 import javax.persistence.EntityManager;
 
@@ -12,8 +15,28 @@ public class CartDao {
         return EntityManagerFactoryService.getEntityManagerFactory().createEntityManager();
     }
 
-    public void addCart(Cart cart) {
+    private CartItemDao cartItemDao = new CartItemDao();
 
+    public void validateCart(Cart cart) {
+        if (cart.getCartItems() == null) {
+            cart.setCartItems(new LinkedList<CartItem>());
+        }
+        BigDecimal totalPrice = new BigDecimal(0, new MathContext(2));
+        for (CartItem cartItem : cart.getCartItems()) {
+            totalPrice = totalPrice.add(cartItem.getSubtotal());
+        }
+        cart.setTotalPrice(totalPrice);
+    }
+
+    public void addCart(Cart cart) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(cart);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
     public Cart getCartByCartId(Integer cartId) {
@@ -32,7 +55,6 @@ public class CartDao {
 //        em.flush();
 //        em.close();
 //    }
-
 //    
 //    public void deleteCart(Cart cart) {
 //        EntityManager em = getEntityManager();

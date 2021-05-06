@@ -26,13 +26,7 @@ public class CartItemDao {
         em.getTransaction().begin();
         if (cartItem.getId() != null && em.find(CartItem.class, cartItem.getId()) != null) {
             em.merge(cartItem);
-        } else {
-            if (cartItem.getCart() == null) {
-                System.out.println("null cart");
-            } else {
-                System.out.println("not null cart");
-                System.out.println(cartItem.getCart().getId());
-            }
+        } else if (cartItem.getCart() == null) {
             em.persist(cartItem);
         }
         em.getTransaction().commit();
