@@ -15,8 +15,13 @@ public class OrderDao {
 
     public void addOrder(Order order) {
         EntityManager em = getEntityManager();
-        em.persist(order);
-        em.close();
+        try {
+            em.getTransaction().begin();
+            em.persist(order);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
     public Order getOrderByOrderId(Integer orderId) {
@@ -35,11 +40,11 @@ public class OrderDao {
     }
 
     public void updateOrder(Order order) {
-        
+
     }
 
     public void deleteOrder(Order order) {
 
     }
-    
+
 }
