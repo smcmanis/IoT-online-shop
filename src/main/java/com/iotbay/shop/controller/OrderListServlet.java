@@ -15,32 +15,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 @WebServlet(
         name = "OrderListServlet",
         urlPatterns = {"/customer/orders"})
 public class OrderListServlet extends HttpServlet {
-    
+
     private OrderDao orderDao = new OrderDao();
+    private UserDao userDao = new UserDao();
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         RequestDispatcher dispatcher;
         User user = (User) session.getAttribute("user");
-        
         // Should check authentication here
-        if (user == null) {
-            // remove this after testing
-            UserDao userDao = new UserDao();
-            user = userDao.getUserByUserId(7);
+        if (true) {
+            String userId = request.getParameter("userId");
+            if (userId != null) {
+                try {
+                    user = userDao.getUserByUserId(Integer.parseInt(userId));
+                } catch (NumberFormatException e) {
+                    // remove this after testing
+                    user = userDao.getUserByUserId(7);
+                }
+                session.setAttribute("user", user);
+            }
+
         }
+        session.setAttribute("user", user);
+
         // If unauthorized: redirect
         if (false) {
             dispatcher = request.getRequestDispatcher("/index.html");
         } else {
             List<Order> orders = user.getOrders();
-            System.out.println(orders.size());            
-            session.setAttribute("userOrders", orders);                      
+            System.out.println(orders.size());
+            session.setAttribute("userOrders", orders);
+
             dispatcher = request.getRequestDispatcher("/orderList.jsp");
             dispatcher.forward(request, response);
         }

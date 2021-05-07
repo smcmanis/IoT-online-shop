@@ -21,7 +21,8 @@ public class Order implements Serializable {
     
     private String orderStatus;    
     
-    private boolean isPaid;
+    @Column(name = "isPaid")
+    private boolean paid;
     
     @OneToOne(optional = false)
     @JoinColumn(name = "cartId")
@@ -64,12 +65,12 @@ public class Order implements Serializable {
         this.orderStatus = orderStatus;
     }
 
-    public boolean isIsPaid() {
-        return isPaid;
+    public boolean isPaid() {
+        return paid;
     }
 
-    public void setIsPaid(boolean isPaid) {
-        this.isPaid = isPaid;
+    public void setPaid(boolean paid) {
+        this.paid = paid;
     }
 
     public Cart getCart() {
