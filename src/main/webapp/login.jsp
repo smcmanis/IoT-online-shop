@@ -20,7 +20,7 @@
         <div class="signup-wrapper">
             <div class="signup-box">
                 <div class="signup-form container">
-                    <form class="form" method="post">
+                    <form class="form" method="post" action="login">
                         <h2>Sign In</h2>
                         <div class="form-group">
                             <input type="email" 
