@@ -5,31 +5,52 @@
  */
 package com.iotbay.shop.controller;
 
+import com.iotbay.shop.dao.UserDao;
+import com.iotbay.shop.model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author hlong
  */
-public class Authentication extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+@WebServlet(name = "RegisterServlet", urlPatterns = {"/register"})
+public class RegisterServlet extends HttpServlet {
+    private UserDao userDao = new UserDao();
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        Validator validator = new Validator();
+        String registerEmail = request.getParameter("email");
+        String registerPassword = request.getParameter("password");
+        String registerFirstName = request.getParameter("first-name");
+        String registerLastName = request.getParameter("last-name");
+        
+        validator.clear(session);
+        
+        if(!validator.validateEmail(registerEmail)) {
+            session.setAttribute("emailErr", "Error: Email format is incorrect");
+            request.getRequestDispatcher("register.jsp").include(request, response);
+        } else if(!validator.validatePassword(registerPassword)) {
+            session.setAttribute("passErr", "Error: Pass format is incorrect");
+            request.getRequestDispatcher("register.jsp").include(request, response);
+        } else {
+            User user = new User();
+            user.setEmail(registerEmail);
+            user.setPasswordPlaintext(registerPassword);
+            user.setFirstName(registerFirstName);
+            user.setLastName(registerLastName);
+            userDao.addUser(user); 
+            session.setAttribute("user", user);
+            request.getRequestDispatcher("welcome.jsp").include(request, response);
+        }
         
     }
 

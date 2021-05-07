@@ -20,7 +20,7 @@
         <div class="signup-wrapper">
             <div class="signup-box">
                 <div class="signup-form container">
-                    <form method="post" action="welcome.jsp">
+                    <form method="post" action="register">
                         <h2>Register</h2>
                         <div class="form-group">
                             <input type="text"
@@ -28,7 +28,7 @@
                                    name="first-name"
                                    class="form-control"
                                    required autofocus>
-                            </input>
+                            
                         </div>
                         <div class="form-group">
                             <input type="text"
@@ -36,7 +36,7 @@
                                    name="last-name"
                                    class="form-control"
                                    required autofocus>
-                            </input>
+                            
                         </div>
                         <div class="form-group">
                             <input type="email"
@@ -52,7 +52,7 @@
                                    name="password"
                                    class="form-control"
                                    required>
-                            </input>
+                            
                         </div>
                         <div class="form-group">
                             <input type="password"
@@ -60,12 +60,12 @@
                                    name="confirm-password"
                                    class="form-control"
                                    required>
-                            </input>
+                            
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-block btn-lg">
+                            <input type="submit" class="btn btn-success btn-block btn-lg">
                                 Sign Up Now
-                            </button>
+                            
                         </div>
                     </form>
                     <div>
