@@ -1,22 +1,23 @@
-<%-- 
-    Document   : register
-    Created on : Mar 28, 2021, 3:57:06 PM
-    Author     : namlo
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
-              crossorigin="anonymous"/>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet"
+              href="<c:url value="/resources/bootstrap/css/bootstrap.min.css"/>">
+        <script src="<c:url value="/resources/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
+        <link rel="stylesheet" type="text/css"
+              href="<c:url value="/resources/css/style.css"/>">
         <title>Register</title>
     </head>
 
     <body>
+        
+        <%@include file="common/navbar.jsp" %>
+        
         <div class="signup-wrapper">
             <div class="signup-box">
                 <div class="signup-form container">
