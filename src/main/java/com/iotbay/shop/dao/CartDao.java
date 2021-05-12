@@ -4,6 +4,7 @@ import com.iotbay.shop.model.Cart;
 import com.iotbay.shop.service.EntityManagerFactoryService;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 public class CartDao {
 
@@ -12,8 +13,7 @@ public class CartDao {
     }
 
     private CartItemDao cartItemDao = new CartItemDao();
-    
-    
+
     public void addCart(Cart cart) {
         EntityManager em = getEntityManager();
         try {
@@ -26,25 +26,41 @@ public class CartDao {
     }
 
     public Cart getCartByCartId(Integer cartId) {
+        Cart cart;
         EntityManager em = getEntityManager();
-        Cart cart = em.find(Cart.class, cartId);
-        em.close();
+        try {
+            cart = em.find(Cart.class, cartId);
+        } finally {
+            em.close();
+        }
+        return cart;
+    }
+    
+    public Cart getCartByHttpSessionId(String httpSessionId) {
+        Cart cart;
+        EntityManager em = getEntityManager();
+        try {
+            cart = (Cart) em.createQuery("select c from Cart c where c.httpSessionId like :httpSessionId")
+                    .setParameter("httpSessionId", httpSessionId)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            cart = null;
+        } finally {
+            em.close();
+        }
         return cart;
     }
 
-//    public void updateCart(Cart cart) {
-//        double totalPrice = calculateCartTotal(cart);
-//        // MathContext(2) sets BigDecimal precision to 2 decimal places
-//        cart.setTotalPrice(new BigDecimal(totalPrice, new MathContext(2)));
-//        EntityManager em = getEntityManager();
-//        em.merge(cart);
-//        em.flush();
-//        em.close();
-//    }
-//    
-//    public void deleteCart(Cart cart) {
-//        EntityManager em = getEntityManager();
-//        em.remove(cart);
-//        em.close();
-//    }
+
+   
+    public void updateCart(Cart cart) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(cart);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
 }
