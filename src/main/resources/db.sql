@@ -70,11 +70,12 @@ CREATE TABLE orders(
 );
 
 CREATE TABLE cart_items(
+    id SERIAL PRIMARY KEY,
     itemId int NOT NULL REFERENCES items (id),
     cartId int NOT NULL REFERENCES carts (id),
     quantity int NOT NULL,
     itemPrice decimal(11,2),
-    PRIMARY KEY(cartId, itemId)
+    UNIQUE(cartId, itemId)
 );
 
 CREATE TABLE credit_cards(
@@ -186,31 +187,31 @@ INSERT INTO suppliers (supplierName, company, email) VALUES
 
 
 INSERT INTO items (itemName, quantity, price, imageUrl, category, supplierId) VALUES
-    ('Arduino Nano IoT Interface Adapter', 10, 11.95, 'https://dcubestore.com/wp-content/uploads/2018/10/AN_A_1_1-e1540884379272.png', 'Adapter', 1),
-    ('CCS811 Air Quality Sensor', 10, 30.00, 'https://dcubestore.com/wp-content/uploads/2019/09/CCS81-500x500.png', 'Sensors', 1),
-    ('ESP32 IoT WiFi BLE Module with Integrated USB', 10, 16.95, 'https://dcubestore.com/wp-content/uploads/2019/10/ESP32_1-500x500.png', '', 2),
-    ('Industrial IoT RS485 To Wireless Converter', 5, 168.95, 'https://dcubestore.com/wp-content/uploads/2019/11/RS485_1-500x500.jpg', 'Communications', 1),
-    ('Industrial IoT Wireless Linear Displacement Sensor', 5, 196.95, 'https://dcubestore.com/wp-content/uploads/2019/11/Linear-Disp-Sensor_1-500x500.jpg', 'Sensors', 2),
-    ('Industrial IoT Wireless Vibration & Temperature Sensor V2 MEMS', 3, 258.95, 'https://dcubestore.com/wp-content/uploads/2019/11/PR52-33N_1-500x500.jpg', 'Sensors', 1),
-    ('Industrial IoT Wireless Temperature Humidity Sensor', 10, 198.95, 'https://dcubestore.com/wp-content/uploads/2019/09/Temp_Humidity2-1-500x500.jpg', 'Controllers', 1),
-    ('I2C Shield for Raspberry Pi with Inward Facing I2C Port', 30, 10.95, 'https://dcubestore.com/wp-content/uploads/2018/10/INPI2_4-500x500.png', 'Raspberry Pi', 2),
-    ('I2C Shield for Raspberry Pi with Outward Facing I2C Port', 50, 10.95, 'https://dcubestore.com/wp-content/uploads/2018/10/RASP_ADAP7_1-1-500x500.png', 'Raspberry Pi', 1),
-    ('Dual I2C Shield for Arduino Due with Modular Communications Interface', 50, 12.95, 'https://dcubestore.com/wp-content/uploads/2019/11/PR37-10_1-500x500.png', 'Adapters', 1),
-    ('Arduino Nano', 10, 11.95, 'https://dcubestore.com/wp-content/uploads/2019/09/207-2079543_arduino-nano-arduino-nano-board1_2_700x667-500x500.png', 'Adapters', 3),
-    ('ADT75 Temperature Sensor ±1°C 12-Bit with 3 Address Lines I2C Mini Module', 21, 24.95, 'https://dcubestore.com/wp-content/uploads/2019/09/ADT75_I2CS_A_1-600x393_1000x667-500x500.png', 'Sensors', 1),
-    ('8-Channel DC Current Monitor with I2C Interface', 10, 84.95, 'https://dcubestore.com/wp-content/uploads/2018/10/ADS7828_I2CCM8-500x500.png', 'Controllers', 3),
-    ('IoT Training Controller Light Sound Sensor Action', 10, 63.95, 'https://dcubestore.com/wp-content/uploads/2018/09/PR51-18-w-OLED_1-1-500x500.png', 'Convertors', 1),
-    ('Long Range IoT Wireless RTD Temperature Sensor', 5, 188.95, 'https://dcubestore.com/wp-content/uploads/2019/11/3-Wire-RTD-WIreless-Transmitter-500x500.jpg', 'Sensors', 1),
-    ('MG-811 CO2 Gas Sensor with I2C Interface', 10, 68.95, 'https://dcubestore.com/wp-content/uploads/2019/09/PR51-19_1-600x400_800x667-500x500.png', 'Sensors', 3),
-    ('Particle Photon', 10, 11, 'https://dcubestore.com/wp-content/uploads/2018/10/Photon2-autoxauto-800x800-500x500.jpg', '', 3),
-    ('Raspberry Pi Model B RASP-PI-3', 10, 47.83, 'https://dcubestore.com/wp-content/uploads/2018/10/INPI2_3-500x500.png', 'Raspberry Pi', 1),
-    ('Raspberry Pi Model 3 B + I2C Adapter + I2C Cable + I2C Sensor', 5, 105.51, 'https://dcubestore.com/wp-content/uploads/2018/10/44670760_2173331872880195_6023066916761894912N-500x500.png', 'Raspberry Pi', 1),
-    ('SI1132 UV Index Ambient Light Sensor I2C Mini Module', 10, 26.95, 'https://dcubestore.com/wp-content/uploads/2018/09/SI1132_I2CS_A_1-e1541141298185-500x500.png', 'Sensors', 1),
-    ('Temperature Sensor Thermistor 10K OHM ±3% PROBE', 10, 15.95, 'https://dcubestore.com/wp-content/uploads/2018/10/0_1-500x500.jpeg', 'Sensors', 3),
-    ('TCS3472 Very High Sensitivity Color Light-to-Digital Converter with IR Filter I2C Mini Module', 15, 28.95, 'https://dcubestore.com/wp-content/uploads/2018/09/TMP007_I2CS_A_1-e1541142323284-500x500.png', 'Sensors', 1),
-    ('Water Detection Sensor with Buzzer', 10, 24.95, 'https://dcubestore.com/wp-content/uploads/2018/09/PCA9536_WDBZ_I2CS_1-500x500.png', 'Sensors', 1),
-    ('Water Level Sensor with Analog to Digital Converter ADC121C021', 10, 24.95, 'https://dcubestore.com/wp-content/uploads/2018/09/ADC121C021-WL-I2CS_1-500x500.png', 'Converters', 1),
-    ('Wireless 0-10V 4-Channel Input USB endNode', 3, 248.95, 'https://dcubestore.com/wp-content/uploads/2019/11/endNode_ASM1-6_1-500x500.jpg', 'Converters', 1);
+    ('Arduino Nano IoT Interface Adapter', 10, 11.95, 'resources/images/1.png', 'Adapter', 1),
+    ('CCS811 Air Quality Sensor', 10, 30.00, 'resources/images/2.png', 'Sensors', 1),
+    ('ESP32 IoT WiFi BLE Module with Integrated USB', 10, 16.95, 'resources/images/3.png', '', 2),
+    ('Industrial IoT RS485 To Wireless Converter', 5, 168.95, 'resources/images/4.png', 'Communications', 1),
+    ('Industrial IoT Wireless Linear Displacement Sensor', 5, 196.95, 'resources/images/5.png', 'Sensors', 2),
+    ('Industrial IoT Wireless Vibration & Temperature Sensor V2 MEMS', 3, 258.95, 'resources/images/6.png', 'Sensors', 1),
+    ('Industrial IoT Wireless Temperature Humidity Sensor', 10, 198.95, 'resources/images/7.png', 'Controllers', 1),
+    ('I2C Shield for Raspberry Pi with Inward Facing I2C Port', 30, 10.95, 'resources/images/8.png', 'Raspberry Pi', 2),
+    ('I2C Shield for Raspberry Pi with Outward Facing I2C Port', 50, 10.95, 'resources/images/9.png', 'Raspberry Pi', 1),
+    ('Dual I2C Shield for Arduino Due with Modular Communications Interface', 50, 12.95, '19/11/PR37-10_1-500x500.png', 'Adapters', 1),
+    ('Arduino Nano', 10, 11.95, '19/09/207-2079543_arduino-nano-arduino-nano-board1_2_700x667-500x500.png', 'Adapters', 3),
+    ('ADT75 Temperature Sensor ±1°C 12-Bit with 3 Address Lines I2C Mini Module', 21, 24.95, '19/09/ADT75_I2CS_A_1-600x393_1000x667-500x500.png', 'Sensors', 1),
+    ('8-Channel DC Current Monitor with I2C Interface', 10, 84.95, '18/10/ADS7828_I2CCM8-500x500.png', 'Controllers', 3),
+    ('IoT Training Controller Light Sound Sensor Action', 10, 63.95, '18/09/PR51-18-w-OLED_1-1-500x500.png', 'Convertors', 1),
+    ('Long Range IoT Wireless RTD Temperature Sensor', 5, 188.95, '19/11/3-Wire-RTD-WIreless-Transmitter-500x500.jpg', 'Sensors', 1),
+    ('MG-811 CO2 Gas Sensor with I2C Interface', 10, 68.95, '19/09/PR51-19_1-600x400_800x667-500x500.png', 'Sensors', 3),
+    ('Particle Photon', 10, 11, '18/10/Photon2-autoxauto-800x800-500x500.jpg', '', 3),
+    ('Raspberry Pi Model B RASP-PI-3', 10, 47.83, '18/10/INPI2_3-500x500.png', 'Raspberry Pi', 1),
+    ('Raspberry Pi Model 3 B + I2C Adapter + I2C Cable + I2C Sensor', 5, 105.51, '18/10/44670760_2173331872880195_6023066916761894912N-500x500.png', 'Raspberry Pi', 1),
+    ('SI1132 UV Index Ambient Light Sensor I2C Mini Module', 10, 26.95, '18/09/SI1132_I2CS_A_1-e1541141298185-500x500.png', 'Sensors', 1),
+    ('Temperature Sensor Thermistor 10K OHM ±3% PROBE', 10, 15.95, '18/10/0_1-500x500.jpeg', 'Sensors', 3),
+    ('TCS3472 Very High Sensitivity Color Light-to-Digital Converter with IR Filter I2C Mini Module', 15, 28.95, '18/09/TMP007_I2CS_A_1-e1541142323284-500x500.png', 'Sensors', 1),
+    ('Water Detection Sensor with Buzzer', 10, 24.95, '18/09/PCA9536_WDBZ_I2CS_1-500x500.png', 'Sensors', 1),
+    ('Water Level Sensor with Analog to Digital Converter ADC121C021', 10, 24.95, '18/09/ADC121C021-WL-I2CS_1-500x500.png', 'Converters', 1),
+    ('Wireless 0-10V 4-Channel Input USB endNode', 3, 248.95, '19/11/endNode_ASM1-6_1-500x500.jpg', 'Converters', 1);
 
 INSERT INTO carts (userId, totalPrice) VALUES 
     (2, 41.95), (4, 60.00), (4, 16.95), (5,348.85), 
