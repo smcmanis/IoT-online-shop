@@ -20,6 +20,8 @@ public class Cart implements Serializable {
     @JoinColumn(name = "userId")  
     private User user;
     
+    private String httpSessionId;
+    
     private BigDecimal totalPrice;
 
     public BigDecimal getTotalPrice() {
@@ -49,5 +51,14 @@ public class Cart implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }  
+
+    public String getHttpSessionId() {
+        return httpSessionId;
+    }
+
+    public void setHttpSessionId(String httpSessionId) {
+        this.httpSessionId = httpSessionId;
+    }
+    
     
 }
