@@ -22,19 +22,25 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/IoTBay/catalogue">Catalogue</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="login.jsp">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="register.jsp">Register</a>
-                            </li>
+                            <c:if test="${user == null}">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="login.jsp">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="register.jsp">Register</a>
+                                </li>
+                            </c:if>
                             <li class="nav-item">
                                 <a class="nav-link" href="/IoTBay/cart">Cart</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/IoTBay/orderList">My Orders</a>
                             </li>
-                            
+                            <c:if test="${user != null}">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/IoTBay/LogoutServlet">Logout</a>
+                                </li>
+                            </c:if>
                         </ul>
                     </div>
                 </div>
