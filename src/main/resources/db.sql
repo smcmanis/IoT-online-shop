@@ -56,7 +56,9 @@ CREATE TABLE carts(
     id SERIAL PRIMARY KEY,
     totalPrice decimal(11,2), 
     userId int DEFAULT NULL REFERENCES users (id),
-    httpSessionId text
+    httpSessionId text,
+    timeSessionCreated timestamp DEFAULT TIMESTAMP(NOW),
+    UNIQUE(httpSessionId)
 );
 
 CREATE TABLE orders(
