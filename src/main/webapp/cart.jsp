@@ -93,12 +93,7 @@
                         Continue Shopping
                     </a>
                 </div>
-                <div>
-                    <c:url value="/getAllProducts" var="catalogueUrl"></c:url>
-                    <a href="${catalogueUrl}" class="btn btn-primary">
-                        Continue Shopping
-                    </a>
-                </div>
+
             </div>
         </div>
     </body>

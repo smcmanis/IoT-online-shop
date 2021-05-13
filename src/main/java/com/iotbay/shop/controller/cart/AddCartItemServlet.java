@@ -38,6 +38,7 @@ public class AddCartItemServlet extends HttpServlet {
             cart.setCartItems(new LinkedList<CartItem>());
             cart.setHttpSessionId(session.getId());
             cartService.addCart(cart);
+            response.addCookie(new Cookie("cartSessionId", session.getId()));
         }
 
         Integer quantity = Integer.parseInt(request.getParameter("quantity"));

@@ -52,6 +52,7 @@ public class CartService {
 
     public Cart getCartFromCookies(Cookie[] cookies) {
         Cart cart = null;
+        if (cookies == null) return cart;
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("cartId")) {
                 cart = cartDao.getCartByCartId(Integer.parseInt(cookie.getValue()));
@@ -75,6 +76,5 @@ public class CartService {
         }
 
         cart.setTotalPrice(calculateCartTotal(cart));
-        cartDao.updateCart(cart);
     }
 }
