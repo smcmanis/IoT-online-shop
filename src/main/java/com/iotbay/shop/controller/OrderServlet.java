@@ -8,7 +8,6 @@ import com.iotbay.shop.model.CartItem;
 import com.iotbay.shop.model.Order;
 import com.iotbay.shop.model.User;
 import java.io.IOException;
-import java.math.BigDecimal;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

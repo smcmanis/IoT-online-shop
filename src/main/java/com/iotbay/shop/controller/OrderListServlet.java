@@ -2,18 +2,12 @@ package com.iotbay.shop.controller;
 
 import com.iotbay.shop.dao.OrderDao;
 import com.iotbay.shop.dao.UserDao;
-import com.iotbay.shop.model.Order;
 import com.iotbay.shop.model.User;
 
 import java.io.IOException;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 @WebServlet(
         name = "OrderListServlet",
@@ -25,44 +19,48 @@ public class OrderListServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        RequestDispatcher dispatcher;
         User user = (User) session.getAttribute("user");
-        // Should check authentication here
-        if (true) {
-            String userId = request.getParameter("userId");
-            if (userId != null) {
-                try {
-                    user = userDao.getUserByUserId(Integer.parseInt(userId));
-                } catch (NumberFormatException e) {
-                    // remove this after testing
-                    user = userDao.getUserByUserId(7);
-                }
-                session.setAttribute("user", user);
+
+        if (user == null) {
+            // Redirect if user not logged in
+            response.sendRedirect("/IoTBay/main.jsp");
+        } else {
+            User requestedUser = null;
+            try {
+                requestedUser = userDao.getUserByUserId(
+                        Integer.parseInt(request.getParameter("userId")));
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid requested userId");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
 
-        }
-        session.setAttribute("user", user);
+            if (requestedUser == null) requestedUser = user;
+            if (requestedUser != null) {
+                if (user.getId().equals(requestedUser.getId())) {
+                    request.setAttribute("customer", requestedUser);
+                    request.setAttribute("customerOrders", requestedUser.getOrders());
+                    request.getRequestDispatcher("/orderList.jsp").forward(request, response);
+                    return;
+                }
+//                else { 
+//                    // Check for user/admin priliges
+//                    response.sendRedirect("/IoTBay/main.jsp");
+//                }
+            }
 
-        // If unauthorized: redirect
-        if (false) {
-            dispatcher = request.getRequestDispatcher("/index.html");
-        } else {
-            List<Order> orders = user.getOrders();
-            System.out.println(orders.size());
-            session.setAttribute("userOrders", orders);
-
-            dispatcher = request.getRequestDispatcher("/orderList.jsp");
-            dispatcher.forward(request, response);
+            response.sendRedirect("/IoTBay/main.jsp");
         }
+
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+@Override
+        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 

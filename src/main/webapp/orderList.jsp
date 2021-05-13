@@ -19,12 +19,12 @@
     <body>
         <div class="container">
             <h5 class="mb-3">
-                <b>Customer: </b>${user.firstName} ${user.lastName}
+                <b>Customer: </b>${customer.firstName} ${customer.lastName}
             </h5>
             <a href="/addOrder" role="button" class="btn btn-primary">Start new order</a>
         </div>
         <div class="container">
-            <h4>Orders (${userOrders.size()})</h4>
+            <h4>Orders (${customerOrders.size()})</h4>
 
             <table class="table">
                 <tr>
@@ -34,7 +34,7 @@
                     <th>Order Status</th>
                     <th></th>
                 </tr>
-                <c:forEach items="${userOrders}" var="order"> 
+                <c:forEach items="${customerOrders}" var="order"> 
                     <tr class="align-middle">
                         <td>${order.id}</td>
                         <td>${order.orderDate}</td>
