@@ -21,10 +21,10 @@
             User user = (User) session.getAttribute("user");
             String updated = (String) session.getAttribute("updated");
         %>
-        <div class="mt-3"> 
-            <a class="btn btn-lg btn-primary btn-block" href="/edit?email='<%=user.getEmail()%>">Main</a>
+        <div class="mt-3 mb-3"> 
+            <a class="btn btn-lg btn-primary btn-block" href="/main.jsp?email='<%=user.getEmail()%>">Main</a>
             <a class="btn btn-lg btn-primary btn-block" href="LogoutServlet"> Sign out </a>
-            <a class="btn btn-lg btn-primary btn-block" href="CancelAccountServlet"> Cancel Registration </a>
+            <a class="btn btn-lg btn-danger btn-block pull-right" href="CancelAccountServlet"> Cancel Registration </a>
         </div>
 
         <h1>Edit User Information: <span class="message"><%=(updated != null ? updated : "")%></span></h1>
