@@ -23,7 +23,7 @@
                 <div class="signup-form container">
                     <form method="post" action="register">
                         <h2>Register</h2>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <input type="text"
                                    placeholder="First Name"
                                    name="first-name"
@@ -31,7 +31,7 @@
                                    required autofocus>
                             
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <input type="text"
                                    placeholder="Last Name"
                                    name="last-name"
@@ -39,7 +39,7 @@
                                    required autofocus>
                             
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <input type="email"
                                    placeholder="Email"
                                    name="email"
@@ -47,7 +47,7 @@
                                    required autofocus>
                             </input>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <input type="password"
                                    placeholder="Password"
                                    name="password"
@@ -55,7 +55,7 @@
                                    required>
                             
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <input type="password"
                                    placeholder="Confirm Password"
                                    name="confirm-password"
@@ -63,10 +63,8 @@
                                    required>
                             
                         </div>
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-success btn-block btn-lg">
-                                Sign Up Now
-                            
+                        <div class="form-group mb-2">
+                            <input type="submit" value="Sign Up" class="btn btn-success btn-block btn-lg">
                         </div>
                     </form>
                     <div>

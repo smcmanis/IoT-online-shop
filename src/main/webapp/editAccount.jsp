@@ -15,14 +15,16 @@
         <title>Edit Page</title>
     </head>
     <body>
+        <%@include file="common/navbar.jsp" %>
+        
         <%
             User user = (User) session.getAttribute("user");
             String updated = (String) session.getAttribute("updated");
         %>
-        <div class="mt-3"> 
-            <a class="btn btn-lg btn-primary btn-block" href="/edit?email='<%=user.getEmail()%>">Main</a>
+        <div class="mt-3 mb-3"> 
+            <a class="btn btn-lg btn-primary btn-block" href="/main.jsp?email='<%=user.getEmail()%>">Main</a>
             <a class="btn btn-lg btn-primary btn-block" href="LogoutServlet"> Sign out </a>
-            <a class="btn btn-lg btn-primary btn-block" href="CancelAccountServlet"> Cancel Registration </a>
+            <a class="btn btn-lg btn-danger btn-block pull-right" href="CancelAccountServlet"> Cancel Registration </a>
         </div>
 
         <h1>Edit User Information: <span class="message"><%=(updated != null ? updated : "")%></span></h1>
@@ -31,7 +33,7 @@
                 <div class="signup-form container">
                     <form method="POST" action="UpdateAccountServlet">
                         <h2>Edit Details</h2>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <input type="text"
                                    placeholder="First Name"
                                    name="first-name"
@@ -40,7 +42,7 @@
                                    required autofocus>
 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <input type="text"
                                    placeholder="Last Name"
                                    name="last-name"
@@ -49,16 +51,16 @@
                                    required autofocus>
 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <input type="email"
                                    placeholder="Email"
                                    name="email"
                                    value="${user.getEmail()}"
-                                   class="form-control"
+                                   class="form-control "
                                    required autofocus>
                             </input>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <input type="password"
                                    placeholder="Password"
                                    name="password"
