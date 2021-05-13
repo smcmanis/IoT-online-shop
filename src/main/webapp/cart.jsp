@@ -88,7 +88,7 @@
             </div>
             <div class="d-flex justify-content-between">
                 <div>
-                    <c:url value="/IoTBay/getAllProducts" var="catalogueUrl"></c:url>
+                    <c:url value="/catalogue" var="catalogueUrl"></c:url>
                     <a href="${catalogueUrl}" class="btn btn-primary">
                         Continue Shopping
                     </a>
