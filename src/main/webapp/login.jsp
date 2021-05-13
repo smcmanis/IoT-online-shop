@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+         pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -15,29 +15,31 @@
     </head>
 
     <body>
-        
+
         <%@include file="common/navbar.jsp" %>
 
-        
+        <%
+            String existErr = (String) session.getAttribute("existErr");
+            String emailErr = (String) session.getAttribute("emailErr");
+            String passErr = (String) session.getAttribute("passErr");
+        %>
+
         <div class="signup-wrapper">
             <div class="signup-box">
                 <div class="signup-form container">
                     <form class="form" method="post" action="login">
-                        <h2>Sign In</h2>
-                        <div class="form-group">
+                         <h2>Sign In <span class="message"><%=(existErr != null ? existErr : "")%></span></h2>                        <div class="form-group">
                             <input type="email" 
                                    class="form-control" 
                                    name="email" 
-                                   placeholder="Email" 
-                                   required>
+                                    placeholder="<%=(emailErr != null ? emailErr : "Enter email")%>"                                    required>
                             </input>
                         </div>
                         <div class="form-group">
                             <input type="password"
                                    class="form-control"  
                                    name="password" 
-                                   placeholder="Password"
-                                   required>
+                                    placeholder="<%=(passErr != null ? passErr : "Enter password")%>"                                   required>
                             </input>
                         </div>
                         <div class="form-group">

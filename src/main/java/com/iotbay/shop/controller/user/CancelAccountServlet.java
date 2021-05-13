@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.iotbay.shop.controller;
+package com.iotbay.shop.controller.user;
 
 import com.iotbay.shop.dao.UserDao;
 import com.iotbay.shop.model.User;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,42 +10,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author hlong
- */
-@WebServlet(name = "RegisterServlet", urlPatterns = {"/register"})
-public class RegisterServlet extends HttpServlet {
+@WebServlet(
+        name = "CancelAccountServlet",
+        urlPatterns = {"/CancelAccountServlet"})
+public class CancelAccountServlet extends HttpServlet {
     private UserDao userDao = new UserDao();
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Validator validator = new Validator();
-        String registerEmail = request.getParameter("email");
-        String registerPassword = request.getParameter("password");
-        String registerFirstName = request.getParameter("first-name");
-        String registerLastName = request.getParameter("last-name");
-        
-        validator.clear(session);
-        
-        if(!validator.validateEmail(registerEmail)) {
-            session.setAttribute("emailErr", "Error: Email format is incorrect");
-            request.getRequestDispatcher("register.jsp").include(request, response);
-        } else if(!validator.validatePassword(registerPassword)) {
-            session.setAttribute("passErr", "Error: Pass format is incorrect");
-            request.getRequestDispatcher("register.jsp").include(request, response);
-        } else {
-            User user = new User();
-            user.setEmail(registerEmail);
-            user.setPasswordPlaintext(registerPassword);
-            user.setFirstName(registerFirstName);
-            user.setLastName(registerLastName);
-            userDao.addUser(user); 
-            session.setAttribute("user", user);
-            request.getRequestDispatcher("welcome.jsp").include(request, response);
+        User user = (User) session.getAttribute("user");
+        User existUser = userDao.getUserByUserEmail(user.getEmail());
+        System.out.println(user.getEmail());
+
+        try {
+            if(existUser != null) {
+                session.setAttribute("user", existUser);
+                userDao.deleteUser(existUser);
+                //session.setAttribute("cancel", "Cancelation was successful");
+                request.getRequestDispatcher("main.jsp").include(request, response);
+            } else {
+                //session.setAttribute("cancel", "Cancelation was not successful");
+                request.getRequestDispatcher("editAccount.jsp").include(request, response);
+            }
+        } catch(NullPointerException ex) {
+            System.out.println(ex.getMessage() == null ? "User does not exist" : "Welcome");
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

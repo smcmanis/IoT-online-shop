@@ -33,8 +33,8 @@
                     <div> Email: <% out.print(email);%>!</div>
 
                     <div class="mt-3"> 
-                        <a class="btn btn-lg btn-primary btn-block">Go to Account Settings"</a>
-                        <a class="btn btn-lg btn-primary btn-block" href="<%=request.getContextPath()%>/main.jsp"> Proceed to store </a>
+                         <a class="btn btn-lg btn-primary btn-block" href="editAccount.jsp">Go to Account Settings"</a>                        
+                         <a class="btn btn-lg btn-primary btn-block" href="<%=request.getContextPath()%>/main.jsp"> Proceed to store </a>
                     </div>           
                 </div>
             </div>
