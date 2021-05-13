@@ -16,31 +16,41 @@ public class CartItemDao {
 
     public CartItem getCartItemByCartItemId(Integer cartItemId) {
         EntityManager em = getEntityManager();
-        CartItem cartItem = em.find(CartItem.class, cartItemId);
-        em.close();
+        CartItem cartItem = null;
+        try {
+            cartItem = em.find(CartItem.class, cartItemId);
+        } finally {
+            em.close();
+        }
         return cartItem;
     }
 
     public void addCartItem(CartItem cartItem) {
         EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        if (cartItem.getId() != null && em.find(CartItem.class, cartItem.getId()) != null) {
-            em.merge(cartItem);
-        } else if (cartItem.getCart() == null) {
-            em.persist(cartItem);
+        try {
+            em.getTransaction().begin();
+            if (cartItem.getId() != null && em.find(CartItem.class, cartItem.getId()) != null) {
+                em.merge(cartItem);
+            } else if (cartItem.getCart() != null) {
+                em.persist(cartItem);
+            }
+            em.getTransaction().commit();
+        } finally {
+            em.close();
         }
-        em.getTransaction().commit();
-        em.close();
     }
 
     public void updateCartItem(CartItem cartItem) {
         BigDecimal subtotal = calculateSubtotal(cartItem);
         cartItem.setPrice(subtotal);
         EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        em.merge(cartItem);
-        em.getTransaction().commit();
-        em.close();
+        try {
+            em.getTransaction().begin();
+            em.merge(cartItem);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
     public void removeCartItem(CartItem cartItem) {
@@ -48,15 +58,15 @@ public class CartItemDao {
         try {
             // Start transaction with database
             em.getTransaction().begin();
-            
+
             // Get the real copy of the cartItem from the database (The existing one is just copy)
             cartItem = em.find(CartItem.class, cartItem.getId());
-            
+
             // This will ASK the entitymanager to remove the cartItem from the database
             // However, it will only really remove it from database after we "commit" the 
             // transaction, using: em.getTransaction().commit()
             em.remove(cartItem);
-            
+
             // We must also remove the cartItem from the cart. This is because the cart owns 
             // the cartItem (ONE cart has MANY cartItems). The cart still has a reference to 
             // the cartItem, so, the cart will just recreate the cartItem in the database 
@@ -64,7 +74,7 @@ public class CartItemDao {
             Cart cart = em.find(Cart.class, cartItem.getCart().getId());
             List<CartItem> cartItems = cart.getCartItems();
             cartItems.remove(cartItem);
-            
+
             // Commit ends the transaction and "commits" it to the database
             em.getTransaction().commit();
         } finally {

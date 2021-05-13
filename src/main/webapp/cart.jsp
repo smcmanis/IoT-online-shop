@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+         pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -45,11 +45,11 @@
                         <td>
                             <div class="input-group">
                                 <div class="input-group-prepend d-flex">
-                                    <c:url value="/cartItem?cartItemId=${cartItem.id}&action=remove" var="removeCartItemUrl"></c:url>
+                                    <c:url value="/IotBay/removeCartItem?cartItemId=${cartItem.id}" var="removeCartItemUrl"></c:url>
                                     <a href="${removeCartItemUrl}">
                                         X
                                     </a>
-                                    
+
                                 </div>
 
                             </div>
@@ -86,13 +86,20 @@
                     <button class="btn btn-primary">Checkout</button>
                 </div>
             </div>
-            <div class="d-flex">
+            <div class="d-flex justify-content-between">
                 <div>
-                    <c:url value="/getAllProducts" var="catalogueUrl"></c:url>
+                    <c:url value="/IoTBay/getAllProducts" var="catalogueUrl"></c:url>
                     <a href="${catalogueUrl}" class="btn btn-primary">
                         Continue Shopping
                     </a>
                 </div>
+                <c:if test="${cart.cartItems != null && cart.cartItems.size() > 0}">
+                    <div>
+                        <a href="/IoTBay/removeCartItem?removeAll=true" class="btn btn-danger">
+                            Empty cart
+                        </a>
+                    </div>
+                </c:if>
 
             </div>
         </div>
