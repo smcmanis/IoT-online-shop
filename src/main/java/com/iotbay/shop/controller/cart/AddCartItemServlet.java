@@ -27,7 +27,7 @@ public class AddCartItemServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Cart cart = cartService.getCart(request);
+        Cart cart = cartService.getCartFromSession(request);
         if (cart == null) {
             // Initialise new cart
             cart = new Cart();
@@ -50,7 +50,7 @@ public class AddCartItemServlet extends HttpServlet {
                 // Update the quantity of the item 
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
                 cartItemDao.updateCartItem(cartItem);
-                return;
+                request.getRequestDispatcher("/cart").forward(request, response);
             }
         }
         
@@ -63,13 +63,8 @@ public class AddCartItemServlet extends HttpServlet {
         cartItem.setSubtotal(item.getPrice().multiply(new BigDecimal(cartItem.getQuantity())));
         cartItem.setCart(cart);
         cartItemDao.addCartItem(cartItem);
-        
-        // Add the cartItem to the detached cart 
-        cart.getCartItems().add(cartItem);
-        cartService.updateCart(cart);
-        
-        session.setAttribute("cart", cart);
-        request.getRequestDispatcher("/cart.jsp").forward(request, response);
+                
+        request.getRequestDispatcher("/cart").forward(request, response);
     }
 
     @Override

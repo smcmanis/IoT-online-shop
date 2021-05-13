@@ -26,40 +26,34 @@ public class CartService {
         cartDao.updateCart(cart);
     }
     
-    public Cart getCart(HttpServletRequest request) {
+    public Cart getCartFromSession(HttpServletRequest request) {
         // Look for cart in session
-        Cart cart = getCartFromSession(request.getSession());
+        Cart cart = cartDao.getCartByHttpSessionId(request.getSession().getId());
         if (cart == null) {
             // Look for cart in cookies
-            cart = getCartFromCookies(request.getCookies());
+            String httpSessionId = getCartSessionIdFromCookie(request.getCookies());
+            cart = cartDao.getCartByHttpSessionId(httpSessionId);
         }
-        if (cart != null) {
-            validateCart(cart);
-        }
+//        if (cart != null) {
+//            validateCart(cart);
+//        }
+        
         return cart;
     }
 
     public Cart getCartFromSession(HttpSession session) {
-        Cart cart = (Cart) session.getAttribute("cart");
-
-        if (cart == null) {
-            // Check for cart for session in database
-            cart = cartDao.getCartByHttpSessionId(session.getId());
-        }
-
-        return cart;
+        return cartDao.getCartByHttpSessionId(session.getId());
     }
 
-    public Cart getCartFromCookies(Cookie[] cookies) {
-        Cart cart = null;
-        if (cookies == null) return cart;
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("cartId")) {
-                cart = cartDao.getCartByCartId(Integer.parseInt(cookie.getValue()));
-                break;
+    public String getCartSessionIdFromCookie(Cookie[] cookies) {
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("cartSessionId")) {
+                    return cookie.getValue();
+                }
             }
         }
-        return cart;
+        return "";
     }
     
     private BigDecimal calculateCartTotal(Cart cart) {
@@ -71,6 +65,7 @@ public class CartService {
     }
 
     public void validateCart(Cart cart) {
+        
         if (cart.getCartItems() == null) {
             cart.setCartItems(new LinkedList<CartItem>());
         }

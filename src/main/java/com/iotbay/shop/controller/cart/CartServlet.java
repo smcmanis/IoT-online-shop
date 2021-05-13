@@ -1,6 +1,5 @@
 package com.iotbay.shop.controller.cart;
 
-import com.iotbay.shop.dao.CartDao;
 import com.iotbay.shop.model.Cart;
 import com.iotbay.shop.service.CartService;
 
@@ -19,9 +18,8 @@ public class CartServlet extends HttpServlet {
     private CartService cartService = new CartService();
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Cart cart = cartService.getCart(request);
-
+        Cart cart = cartService.getCartFromSession(request);
+        
         request.setAttribute("cart", cart);
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
     }
