@@ -32,7 +32,7 @@
                             </c:if>
                             <c:if test="${user != null}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/IoTBay/orderList">My Orders</a>
+                                    <a class="nav-link" href="/IoTBay/customer/orders?userId=${user.id}">My Orders</a>
                                 </li>
                             </c:if>
                             <li class="nav-item">
