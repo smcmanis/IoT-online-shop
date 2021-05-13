@@ -64,3 +64,11 @@ and open the template in the editor.
     display: flex;
     justify-content: space-between;
 }
+
+.form-group {
+    margin: 2em;
+}
+
+.form-control {
+    margin: 2em;
+}

@@ -15,6 +15,8 @@
         <title>Edit Page</title>
     </head>
     <body>
+        <%@include file="common/navbar.jsp" %>
+        
         <%
             User user = (User) session.getAttribute("user");
             String updated = (String) session.getAttribute("updated");
@@ -31,7 +33,7 @@
                 <div class="signup-form container">
                     <form method="POST" action="UpdateAccountServlet">
                         <h2>Edit Details</h2>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <input type="text"
                                    placeholder="First Name"
                                    name="first-name"
@@ -40,7 +42,7 @@
                                    required autofocus>
 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <input type="text"
                                    placeholder="Last Name"
                                    name="last-name"
@@ -49,16 +51,16 @@
                                    required autofocus>
 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <input type="email"
                                    placeholder="Email"
                                    name="email"
                                    value="${user.getEmail()}"
-                                   class="form-control"
+                                   class="form-control "
                                    required autofocus>
                             </input>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <input type="password"
                                    placeholder="Password"
                                    name="password"

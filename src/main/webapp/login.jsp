@@ -28,21 +28,24 @@
             <div class="signup-box">
                 <div class="signup-form container">
                     <form class="form" method="post" action="login">
-                         <h2>Sign In <span class="message"><%=(existErr != null ? existErr : "")%></span></h2>                        <div class="form-group">
+                         <h2>Sign In <span class="message"><%=(existErr != null ? existErr : "")%></span></h2>                        
+                         <div class="form-group mb-3">
                             <input type="email" 
                                    class="form-control" 
                                    name="email" 
-                                    placeholder="<%=(emailErr != null ? emailErr : "Enter email")%>"                                    required>
+                                   placeholder="<%=(emailErr != null ? emailErr : "Enter email")%>"                                    
+                                   required>
                             </input>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <input type="password"
                                    class="form-control"  
                                    name="password" 
-                                    placeholder="<%=(passErr != null ? passErr : "Enter password")%>"                                   required>
+                                    placeholder="<%=(passErr != null ? passErr : "Enter password")%>"                                   
+                                    required>
                             </input>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <button type="submit" class="btn btn-success btn-block btn-lg">
                                 Sign In 
                             </button>
