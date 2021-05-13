@@ -30,12 +30,20 @@
                                     <a class="nav-link" href="register.jsp">Register</a>
                                 </li>
                             </c:if>
+                            <c:if test="${user != null}">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/IoTBay/orderList">My Orders</a>
+                                </li>
+                            </c:if>
                             <li class="nav-item">
-                                <a class="nav-link" href="/IoTBay/cart">Cart</a>
+                                <a class="nav-link" href="/IoTBay/cart">
+                                    Cart
+                                    <c:if test="${cart != null && cart.getCartItems().size() > 0}">
+                                        <span class="badge bg-danger">${cart.getCartItems().size()}</span>
+                                    </c:if>
+                                </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/IoTBay/orderList">My Orders</a>
-                            </li>
+
                             <c:if test="${user != null}">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/IoTBay/LogoutServlet">Logout</a>
