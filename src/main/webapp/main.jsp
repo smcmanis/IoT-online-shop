@@ -11,7 +11,7 @@
         <script src="<c:url value="/resources/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
         <link rel="stylesheet" type="text/css"
               href="<c:url value="/resources/css/style.css"/>">
-        <title>IoTBay Main</title>
+        <title>IoTBay</title>
     </head>
 
     <body>

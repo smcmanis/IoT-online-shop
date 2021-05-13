@@ -2,10 +2,8 @@ package com.iotbay.shop.dao;
 
 import com.iotbay.shop.model.Cart;
 import com.iotbay.shop.service.EntityManagerFactoryService;
-import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 public class CartDao {
@@ -14,7 +12,6 @@ public class CartDao {
         return EntityManagerFactoryService.getEntityManagerFactory().createEntityManager();
     }
 
-    private CartItemDao cartItemDao = new CartItemDao();
 
     public void addCart(Cart cart) {
         Integer cartId = cart.getId();
@@ -57,8 +54,6 @@ public class CartDao {
         }
         return cart;
     }
-
-
    
     public void updateCart(Cart cart) {
         EntityManager em = getEntityManager();

@@ -17,7 +17,10 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="">About</a>
+                                <a class="nav-link" href="/IoTBay/main">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/IoTBay/catalogue">Catalogue</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="login.jsp">Login</a>
@@ -26,8 +29,12 @@
                                 <a class="nav-link" href="register.jsp">Register</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="Cart.html">Cart</a>
+                                <a class="nav-link" href="/IoTBay/cart">Cart</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/IoTBay/orderList">My Orders</a>
+                            </li>
+                            
                         </ul>
                     </div>
                 </div>
