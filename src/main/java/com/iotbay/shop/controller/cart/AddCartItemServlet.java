@@ -45,7 +45,7 @@ public class AddCartItemServlet extends HttpServlet {
 
         // Check if cart already contains the item  
         for (CartItem cartItem : cart.getCartItems()) {
-            if (cartItem.getItem().getId() == itemId) {
+            if (cartItem.getItem().getId().equals(itemId)) {
                 // Update the quantity of the item 
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
                 cartItemDao.updateCartItem(cartItem);

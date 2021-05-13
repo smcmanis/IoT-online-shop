@@ -55,7 +55,7 @@ public class CartService {
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("cartId")) {
                 cart = cartDao.getCartByCartId(Integer.parseInt(cookie.getValue()));
-                return cart;
+                break;
             }
         }
         return cart;
