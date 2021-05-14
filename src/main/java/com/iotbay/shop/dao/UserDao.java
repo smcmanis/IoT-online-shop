@@ -2,10 +2,10 @@ package com.iotbay.shop.dao;
 
 import com.iotbay.shop.model.User;
 import com.iotbay.shop.service.EntityManagerFactoryService;
+import java.util.LinkedList;
 
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 public class UserDao {
@@ -28,8 +28,12 @@ public class UserDao {
 
     public User getUserByUserId(Integer userId) {
         EntityManager em = getEntityManager();
-        User user = em.find(User.class, userId);
-        em.close();
+        User user = null;
+        try {
+            user = em.find(User.class, userId);
+        } finally {
+            em.close();
+        }
         return user;
     }
 
@@ -39,10 +43,11 @@ public class UserDao {
         try {
             Query q = em.createQuery("select u from User u where u.email = :email")
                     .setParameter("email", email);
-            user = (User) q.getSingleResult();
-
+            if (q.getResultList().size() > 0) {
+                user = (User) q.getResultList().get(0);
+            }
         } catch (Exception ex) {
-            System.out.println(ex);
+            System.out.println(ex.getMessage());
         } finally {
             em.close();
         }
@@ -51,8 +56,16 @@ public class UserDao {
 
     public List<User> getAllUsers() {
         EntityManager em = getEntityManager();
-        List<User> userList = em.createQuery("select u from User u").getResultList();
-        em.close();
+        List<User> userList = new LinkedList<>();
+        try {
+            for (Object userObject : em.createQuery("select u from User u").getResultList()) {
+                userList.add((User) userObject);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            em.close();
+        }
         return userList;
     }
 

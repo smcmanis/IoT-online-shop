@@ -8,6 +8,7 @@ CREATE TABLE users(
     passhash text,
     isActive boolean DEFAULT TRUE,
     isAdmin boolean DEFAULT FALSE,
+    customerType text,
     UNIQUE(email) 
 );
 
@@ -57,7 +58,7 @@ CREATE TABLE carts(
     totalPrice decimal(11,2), 
     userId int DEFAULT NULL REFERENCES users (id),
     httpSessionId text,
-    timeSessionCreated timestamp DEFAULT TIMESTAMP(NOW),
+    dateCreated timestamp DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(httpSessionId)
 );
 
@@ -66,7 +67,7 @@ CREATE TABLE orders(
     orderDate date,
     orderTime time,
     orderStatus text,
-    isPaid boolean DEFAULT FALSE,
+    isPaid boolean DEFAULT TRUE,
     totalPrice decimal(11,2),
     cartId int NOT NULL REFERENCES carts (id),
     userId int DEFAULT NULL REFERENCES users (id)
@@ -218,16 +219,16 @@ INSERT INTO items (itemName, quantity, price, imageUrl, category, supplierId) VA
 
 INSERT INTO carts (userId, totalPrice) VALUES 
     (2, 41.95), (4, 60.00), (4, 16.95), (5,348.85), 
-    (6, 185.90), (6, 60.75), (7, 567.60), (8, 16.95), 
-    (5, 348.85), (13, 24.95), (5, 196.95), (5, 68.75),
-    (5, 196.95), (6, 74.85), (8, 418.85), (19, 24.95), 
-    (11, 196.95), (10, 10.95), (19, 10.95), (17, 49.90);
+    (6, 185.90), (6, 60.75), (7, 567.60), (7, 16.95), 
+    (7, 348.85), (8, 24.95), (null, 196.95), (null, 68.75),
+    (null, 196.95), (null, 74.85), (null, 418.85), (null, 24.95), 
+    (null, 196.95), (null, 10.95), (null, 10.95), (null, 49.90);
 
 INSERT INTO orders (orderDate, orderTime, orderStatus, isPaid, cartId, userId) VALUES
     ('2021-02-01', '09:55:02', 'Delivered', TRUE, 1, 2),
     ('2021-02-04', '13:05:07', 'Shipped', TRUE, 2, 4),
     ('2021-02-03', '06:48:53', 'Delivered', TRUE, 3, 4),
-    ('2021-03-04', '21:31:26', 'Saved', FALSE, 4, 5),
+    ('2021-03-04', '21:31:26', 'Delivered', TRUE, 4, 5),
     ('2021-03-06', '21:31:26', 'Delivered', TRUE, 5, 6),
     ('2021-03-07', '21:31:26', 'Delivered', TRUE, 6, 6),
     ('2021-03-08', '21:31:26', 'Delivered', TRUE, 7, 7),
