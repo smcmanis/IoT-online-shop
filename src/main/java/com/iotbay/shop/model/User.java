@@ -41,6 +41,7 @@ public class User implements Serializable {
     private Set<CreditCard> creditCards;
 
     @OneToMany(mappedBy = "user")
+    @OrderBy("orderTimestamp desc")
     private List<Order> orders;
     
     public Integer getId() {
