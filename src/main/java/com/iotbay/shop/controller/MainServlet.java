@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 public class MainServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("main.jsp");
+        response.sendRedirect("/IoTBay/main.jsp");
     }
 
     @Override
