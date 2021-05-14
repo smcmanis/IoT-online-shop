@@ -1,58 +1,141 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+         pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!--Bootstrap 5-->
         <link rel="stylesheet"
               href="<c:url value="/resources/bootstrap/css/bootstrap.min.css"/>">
         <script src="<c:url value="/resources/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
-        <link rel="stylesheet" type="text/css"
-              href="<c:url value="/resources/css/style.css"/>">
+
+        <!--Font Awesome 5-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+
+        <!--Local CSS-->
         <title>Orders</title>
     </head>
 
-    <%@include file="common/navbar.jsp" %>
-
     <body>
-        <div class="container">
-            <h5 class="mb-3">
-                <b>Customer: </b>${customer.firstName} ${customer.lastName}
-            </h5>
-        </div>
-        <div class="container">
-            <h4>Orders (${customerOrders.size()})</h4>
 
-            <table class="table">
-                <tr>
-                    <th>Order ID</th>
-                    <th>Order Date</th>
-                    <th>Total</th>
-                    <th>Order Status</th>
-                    <th></th>
-                </tr>
-                <c:forEach items="${customerOrders}" var="order"> 
-                    <tr class="align-middle">
-                        <td>${order.id}</td>
-                        <td>${order.orderDate}</td>
-                        <td>$${order.cart.totalPrice}</td>
-                        <td>${order.orderStatus}</td>
-                        <td>
-                            <div class="">
-                                <c:url value="/IoTBay/customer/order?orderId=${order.id}" var="orderUrl"/>
-                                <a href="${orderUrl}">View Order</a>
-                            </div>
-                            <div>
-                                <c:url value="/track/order?orderId=${order.id}" var="trackingUrl"/>
-                                <a href="${trackingUrl}">Track order</a>
-                            </div>
+        <c:if test="${filterDateStart != null && filterDateEnd != null}" var="isFiltered"></c:if>
 
-                        </td>
+        <%@include file="common/navbar.jsp" %>
+
+        <!--Page title-->
+        <h1 class="display-4 p-3">Order History</h1>
+
+        <!--Page content-->
+        <div clas="container">
+            ]
+            <div class="container">
+                <h5 class="mb-3">
+                    <b>Customer: </b>${customer.firstName} ${customer.lastName}
+                </h5>
+            </div>
+
+            <div class="container">
+
+                <!--// Search & filter form-->
+                <div>
+                    <!--Search & filter bar-->
+                    <div class="d-flex justify-content-between">
+                        <div></div>
+                        <button class="btn btn-primary mb-2" type="button" 
+                                data-bs-toggle="collapse" data-bs-target="#collapseFilter"  
+                                aria-controls="collapseFilter"
+                                aria-expanded="${isFiltered}">
+                            <i class="fab fa-filter"></i>
+                            Filter
+                        </button>
+                    </div>
+
+                    <!--Filter drop-down-->
+
+                    <div id="collapseFilter"
+                         <c:if test="${!isFiltered}" >
+                             class="collapse" 
+                         </c:if>>
+
+                        <div class="card card-body">
+                            <form method="POST" action="/IoTBay/customer/order/list">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-4">
+                                        <div class="form-floating mb-2">
+                                            <input type="date" id="filterDateStart" name="filterDateStart"
+                                                   class="form-control"
+                                                   <c:if test="${isFiltered}">
+                                                       value="${filterDateStart.toString()}"
+                                                   </c:if>
+                                                   min="2020-01-01" max="2023-01-01">
+                                            <label for="filterDateStart" >From</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-floating mb-2">
+                                            <input type="date" id="filterDateEnd" name="filterDateEnd"   
+                                                   class="form-control"
+                                                   <c:if test="${isFiltered}">
+                                                       value="${filterDateEnd.toString()}"
+                                                   </c:if>
+                                                   min="2020-01-01" max="2023-01-01">
+                                            <label for="filterDateEnd" >To</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <input type="submit" value="Search" class="btn form-control">
+
+                                    </div>
+                                </div>
+                            </form> 
+                            <c:if test="${isFiltered}">
+                                <div class="d-flex justify-content-end">
+                                    <a href="/IoTBay/customer/order/list" >Reset</a>
+                                </div>
+                            </c:if>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--Order history table-->
+                <table class="table">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Order Date</th>
+                        <th>Total</th>
+                        <th>Order Status</th>
+                        <th></th>
                     </tr>
-                </c:forEach>
-            </table>
+                    <c:forEach items="${customerOrders}" var="order"> 
+                        <tr class="align-middle">
+                            <td>${order.id}</td>
+                            <td>${order.orderDate}</td>
+                            <td>$${order.cart.totalPrice}</td>
+                            <td>${order.orderStatus}</td>
+                            <td>
+                                <div class="">
+                                    <c:url value="/IoTBay/customer/order?orderId=${order.id}" var="orderUrl"/>
+                                    <a href="${orderUrl}">View Order</a>
+                                </div>
+                                <div>
+                                    <c:url value="/track/order?orderId=${order.id}" var="trackingUrl"/>
+                                    <a href="${trackingUrl}">Track order</a>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+
+                <c:if test="${isFiltered && customerOrders.isEmpty()}">
+                    No orders found
+                </c:if>
+            </div>
         </div>
     </body>
 </html>

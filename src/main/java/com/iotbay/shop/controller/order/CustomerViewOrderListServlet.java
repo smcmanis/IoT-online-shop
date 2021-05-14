@@ -6,6 +6,8 @@ import com.iotbay.shop.model.User;
 import com.iotbay.shop.service.UserService;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -32,11 +34,38 @@ public class CustomerViewOrderListServlet extends HttpServlet {
                 // ...
             }
         }
-        
-        
+
         if (user != null) {
+            // Check request parameters for dat filter and order Id search
+            LocalDate filterDateStart = null;
+            LocalDate filterDateEnd = null;
+            try {
+                filterDateStart = LocalDate.parse(request.getParameter("filterDateStart"));
+                filterDateEnd = LocalDate.parse(request.getParameter("filterDateEnd"));
+            } catch (Exception e) {
+
+            }
+
+            if (filterDateStart != null && filterDateEnd != null) {
+                List<Order> filteredOrders = new LinkedList<>();
+                LocalDate orderDate;
+                for (Order order : user.getOrders()) {
+                    orderDate = order.getOrderDate().toLocalDate();
+                    // .isbefore() and .isAfter() are exclusive. We want inclusive date so I am using
+                    // the negation of the ranges to be filtered out
+                    // A better wayh would probably be to use orderDao to directly query DB
+                    if (!orderDate.isBefore(filterDateStart) && !orderDate.isAfter(filterDateEnd)) {
+                        filteredOrders.add(order);
+                    }
+                }
+                request.setAttribute("customerOrders", filteredOrders);
+                request.setAttribute("filterDateStart", filterDateStart);
+                request.setAttribute("filterDateEnd", filterDateEnd);
+            } else {
+                request.setAttribute("customerOrders", user.getOrders());
+            }
+
             request.setAttribute("customer", user);
-            request.setAttribute("customerOrders", user.getOrders());
             request.getRequestDispatcher("/orderList.jsp").forward(request, response);
         } else {
             // Redirect unauthenticated user to login
