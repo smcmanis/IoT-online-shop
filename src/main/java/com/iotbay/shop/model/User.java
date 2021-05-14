@@ -31,6 +31,8 @@ public class User implements Serializable {
 
     @Column(name = "isAdmin")
     private boolean admin;
+    
+    private String customerType;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Address> shippingAddresses;
@@ -109,6 +111,15 @@ public class User implements Serializable {
         this.admin = admin;
     }
 
+    public String getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
+    }
+
+    
     public Set<Address> getShippingAddresses() {
         return shippingAddresses;
     }
