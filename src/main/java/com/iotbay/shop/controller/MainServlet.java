@@ -10,11 +10,11 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(
         name = "MainServlet",
-        urlPatterns = {""})
+        urlPatterns = {"", "/Main"})
 public class MainServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("/IoTBay/main.jsp");
+        request.getRequestDispatcher("main.jsp").forward(request, response);
     }
 
     @Override

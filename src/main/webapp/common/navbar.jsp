@@ -7,7 +7,7 @@
         <header class="header">
             <nav class="navbar bg-light navbar-expand-lg navbar-light">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="/IoTBay">
                         <img  width="30" height="30" class="d-inline-block align-top" alt="">
                         IOT BAY
                     </a>
@@ -32,7 +32,7 @@
                             </c:if>
                             <c:if test="${user != null}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/IoTBay/customer/orders?userId=${user.id}">My Orders</a>
+                                    <a class="nav-link" href="/IoTBay/customer/order/list">My Orders</a>
                                 </li>
                             </c:if>
                             <li class="nav-item">

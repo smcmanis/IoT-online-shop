@@ -21,7 +21,6 @@
             <h5 class="mb-3">
                 <b>Customer: </b>${customer.firstName} ${customer.lastName}
             </h5>
-            <a href="/addOrder" role="button" class="btn btn-primary">Start new order</a>
         </div>
         <div class="container">
             <h4>Orders (${customerOrders.size()})</h4>
@@ -42,19 +41,14 @@
                         <td>${order.orderStatus}</td>
                         <td>
                             <div class="">
-                                <c:url value="/order?orderId=${order.id}" var="orderUrl"/>
+                                <c:url value="/IoTBay/customer/order?orderId=${order.id}" var="orderUrl"/>
                                 <a href="${orderUrl}">View Order</a>
                             </div>
                             <div>
                                 <c:url value="/track/order?orderId=${order.id}" var="trackingUrl"/>
                                 <a href="${trackingUrl}">Track order</a>
                             </div>
-                            <c:if test="${!order.paid}">
-                                <div>
-                                    <c:url value="/order/edit?orderId=${order.id}" var="editUrl"/>
-                                    <a href="${editUrl}">Continue order</a>
-                                </div>
-                            </c:if>
+
                         </td>
                     </tr>
                 </c:forEach>
