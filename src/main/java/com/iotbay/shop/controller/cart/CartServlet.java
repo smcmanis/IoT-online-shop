@@ -17,7 +17,7 @@ public class CartServlet extends HttpServlet {
     
     private CartService cartService = new CartService();
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cart cart = cartService.getCartFromSession(request);
         
         request.setAttribute("cart", cart);

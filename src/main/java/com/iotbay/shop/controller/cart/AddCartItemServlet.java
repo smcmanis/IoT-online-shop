@@ -25,7 +25,7 @@ public class AddCartItemServlet extends HttpServlet {
     private final ItemDao itemDao = new ItemDao();
     private final CartService cartService = new CartService();
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Cart cart = cartService.getCartFromSession(request);
         if (cart == null) {

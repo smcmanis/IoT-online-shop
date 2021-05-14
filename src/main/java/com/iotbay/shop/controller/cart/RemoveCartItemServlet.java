@@ -20,7 +20,7 @@ public class RemoveCartItemServlet extends HttpServlet {
     private final CartItemDao cartItemDao = new CartItemDao();
     private final CartService cartService = new CartService();
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cart cart = cartService.getCartFromSession(request);
         if (Boolean.parseBoolean(request.getParameter("removeAll"))) {
              cartItemDao.removeAllCartItemsFromCart(cart);
