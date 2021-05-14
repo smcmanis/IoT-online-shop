@@ -42,15 +42,31 @@
                 <!--// Search & filter form-->
                 <div>
                     <!--Search & filter bar-->
-                    <div class="d-flex justify-content-between">
-                        <div></div>
-                        <button class="btn btn-primary mb-2" type="button" 
-                                data-bs-toggle="collapse" data-bs-target="#collapseFilter"  
-                                aria-controls="collapseFilter"
-                                aria-expanded="${isFiltered}">
-                            <i class="fab fa-filter"></i>
-                            Filter
-                        </button>
+                    <div class="row">
+                        <div class="col-5">
+                            <form method="POST" action="/IoTBay/customer/order/search">
+                                <div class="input-group rounded">
+                                    <input type="search" class="form-control rounded" 
+                                           name="searchOrderId"
+                                           placeholder="Search order #" aria-label="Search"
+                                           aria-describedby="search-addon" />
+                                    <button type="submit" class="input-group-text border-0" id="search-addon">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col flex-grow-1">
+                        </div>
+                        <div class="col-3 d-flex justify-content-end">
+                            <button class="btn btn-danger mb-2" type="button" 
+                                    data-bs-toggle="collapse" data-bs-target="#collapseFilter"  
+                                    aria-controls="collapseFilter"
+                                    aria-expanded="${isFiltered}">
+                                <i class="fab fa-filter"></i>
+                                Filter
+                            </button>
+                        </div>
                     </div>
 
                     <!--Filter drop-down-->
@@ -132,7 +148,7 @@
                     </c:forEach>
                 </table>
 
-                <c:if test="${isFiltered && customerOrders.isEmpty()}">
+                <c:if test="${noSearchResults || (isFiltered && customerOrders.isEmpty())}">
                     No orders found
                 </c:if>
             </div>
