@@ -66,6 +66,7 @@ CREATE TABLE orders(
     id SERIAL PRIMARY KEY,
     orderDate date,
     orderTime time,
+    orderTimestamp timestamp default current_timestamp,
     orderStatus text,
     isPaid boolean DEFAULT TRUE,
     totalPrice decimal(11,2),

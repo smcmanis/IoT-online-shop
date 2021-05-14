@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 import javax.persistence.*;
 
@@ -18,6 +19,8 @@ public class Order implements Serializable {
     private Date orderDate;
     
     private Time orderTIme;
+    
+    private Timestamp orderTimestamp;
     
     private String orderStatus;    
     
@@ -55,6 +58,14 @@ public class Order implements Serializable {
 
     public void setOrderTIme(Time orderTIme) {
         this.orderTIme = orderTIme;
+    }
+
+    public Timestamp getOrderTimestamp() {
+        return orderTimestamp;
+    }
+
+    public void setOrderTimestamp(Timestamp orderTimestamp) {
+        this.orderTimestamp = orderTimestamp;
     }
 
     public String getOrderStatus() {

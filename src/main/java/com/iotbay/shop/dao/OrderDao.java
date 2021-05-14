@@ -2,6 +2,7 @@ package com.iotbay.shop.dao;
 
 import com.iotbay.shop.model.Order;
 import com.iotbay.shop.service.EntityManagerFactoryService;
+import java.util.LinkedList;
 
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -26,19 +27,29 @@ public class OrderDao {
 
     public Order getOrderByOrderId(Integer orderId) {
         EntityManager em = getEntityManager();
-        Order order = em.find(Order.class, orderId);
-        em.close();
+        Order order = null;
+        try {
+            order = em.find(Order.class, orderId);
+        } finally { 
+            em.close();
+        }
         return order;
     }
 
     public List<Order> getAllOrders() {
         EntityManager em = getEntityManager();
-        Query query = em.createQuery("select o from Order o");
-        List<Order> orderList = query.getResultList();
-        em.close();
+        List<Order> orderList = new LinkedList<>();
+        try {
+            Query query = em.createQuery("select o from Order o");
+            for (Object result : query.getResultList()) {
+                orderList.add((Order) result);
+            }
+        } finally {
+            em.close();
+        }
         return orderList;
     }
-
+   
     public void updateOrder(Order order) {
 
     }
