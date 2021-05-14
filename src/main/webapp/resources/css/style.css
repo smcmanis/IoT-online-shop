@@ -65,10 +65,10 @@ and open the template in the editor.
     justify-content: space-between;
 }
 
-.form-group {
+.form-group-m2em {
     margin: 2em;
 }
 
-.form-control {
+.form-control-m2em {
     margin: 2em;
 }

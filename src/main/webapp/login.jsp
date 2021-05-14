@@ -31,7 +31,7 @@
                          <h2>Sign In <span class="message"><%=(existErr != null ? existErr : "")%></span></h2>                        
                          <div class="form-group mb-3">
                             <input type="email" 
-                                   class="form-control" 
+                                   class="form-control form-control-m2em"
                                    name="email" 
                                    placeholder="<%=(emailErr != null ? emailErr : "Enter email")%>"                                    
                                    required>
@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <input type="password"
-                                   class="form-control"  
+                                   class="form-control form-control-m2em"
                                    name="password" 
                                     placeholder="<%=(passErr != null ? passErr : "Enter password")%>"                                   
                                     required>

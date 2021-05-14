@@ -38,7 +38,7 @@
                                    placeholder="First Name"
                                    name="first-name"
                                    value="${user.getFirstName()}"
-                                   class="form-control"
+                                   class="form-control form-control-m2em"
                                    required autofocus>
 
                         </div>
@@ -47,7 +47,7 @@
                                    placeholder="Last Name"
                                    name="last-name"
                                    value="${user.getLastName()}"
-                                   class="form-control"
+                                   class="form-control form-control-m2em"
                                    required autofocus>
 
                         </div>
@@ -56,7 +56,7 @@
                                    placeholder="Email"
                                    name="email"
                                    value="${user.getEmail()}"
-                                   class="form-control "
+                                   class="form-control form-control-m2em"
                                    required autofocus>
                             </input>
                         </div>
@@ -65,7 +65,7 @@
                                    placeholder="Password"
                                    name="password"
                                    value="${user.getPasswordPlaintext()}"
-                                   class="form-control"
+                                   class="form-control form-control-m2em"
                                    required>
 
                         </div>
