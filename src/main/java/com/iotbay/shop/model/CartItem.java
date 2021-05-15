@@ -22,12 +22,10 @@ public class CartItem implements Serializable {
     @Column(name = "itemprice")
     private BigDecimal price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cartId")
     private Cart cart;
 
-    @Transient
-    @Formula("quantity*2")
     private BigDecimal subtotal;
 
     public Integer getId() {

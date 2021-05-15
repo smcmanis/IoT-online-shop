@@ -8,22 +8,22 @@ import javax.persistence.*;
 @Entity
 @Table(name = "items")
 public class Item implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
-    
+
     @Column(name = "itemName")
     private String name;
 
     private Integer quantity;
-    
+
     private BigDecimal price;
-    
+
     private String imageUrl;
-    
+
     private String category;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supplierId")
     private Supplier supplier;
@@ -31,7 +31,7 @@ public class Item implements Serializable {
     public Integer getId() {
         return id;
     }
-    
+
     public String getName() {
         return name;
     }

@@ -31,7 +31,7 @@ public class Cart implements Serializable {
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
-
+    
     public List<CartItem> getCartItems() {
         return cartItems;
     }
