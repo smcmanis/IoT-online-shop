@@ -23,7 +23,9 @@
             </div>
             <div>
                 <p>
-                    <b>Customer: </b>${order.user.firstName} ${order.user.lastName}
+                    <c:if test="${order.user != null && order.user.firstName != null && order.user.lastName != null}">
+                        <b>Customer: </b>${order.user.firstName} ${order.user.lastName}
+                    </c:if>
                 </p>
             </div>
             <div>

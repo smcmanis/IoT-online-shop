@@ -11,33 +11,40 @@ import javax.persistence.*;
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     private Date orderDate;
     
     private Time orderTIme;
     
     private Timestamp orderTimestamp;
-    
-    private String orderStatus;    
-    
+
+    @PrePersist
+    protected void onCreate() {
+        orderTimestamp = Timestamp.from(java.time.Instant.now());
+        orderTIme = new Time(orderTimestamp.getTime());
+        orderDate = new Date(orderTimestamp.getTime());
+    }
+        
+    private String orderStatus;
+
     @Column(name = "isPaid")
     private boolean paid;
-    
+
     @OneToOne(optional = false)
     @JoinColumn(name = "cartId")
     private Cart cart;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private User user;
-    
+
     @OneToOne(mappedBy = "order")
     private Shipping shipping;
-    
+
     private BigDecimal totalPrice;
 
     public Integer getId() {
@@ -116,6 +123,4 @@ public class Order implements Serializable {
         this.shipping = shipping;
     }
 
-
-    
 }

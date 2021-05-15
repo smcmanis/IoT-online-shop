@@ -66,7 +66,7 @@ public class CustomerViewOrderListServlet extends HttpServlet {
             }
 
             request.setAttribute("customer", user);
-            request.getRequestDispatcher("/orderList.jsp").forward(request, response);
+            request.getRequestDispatcher("/CustomerViewOrderListServlet").forward(request, response);
         } else {
             // Redirect unauthenticated user to login
             response.sendRedirect("/IoTBay/login.jsp");

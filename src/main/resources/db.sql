@@ -64,8 +64,8 @@ CREATE TABLE carts(
 
 CREATE TABLE orders(
     id SERIAL PRIMARY KEY,
-    orderDate date,
-    orderTime time,
+    orderDate date default current current_date,
+    orderTime time default current current_time,
     orderTimestamp timestamp default current_timestamp,
     orderStatus text,
     isPaid boolean DEFAULT TRUE,
@@ -80,6 +80,7 @@ CREATE TABLE cart_items(
     cartId int NOT NULL REFERENCES carts (id),
     quantity int NOT NULL,
     itemPrice decimal(11,2),
+    subtotal decimal(11,2),
     UNIQUE(cartId, itemId)
 );
 
@@ -329,3 +330,7 @@ INSERT INTO shipping (address, city, postcode, region, country, recipient, track
     ('32 Real Street', 'Brisbane', '4000', 'QLD', 'Australia', 'Jane Smath', 'S0230HGTY', 2),
     ('22 Pacific Road', 'Chatswood', '2067', 'NSW', 'Australia' , 'Brad Smoth', 'Y000GH1', 4),
     ('22 Pacific Road', 'Chatswood', '2067', 'NSW', 'Australia' , 'Brad Smoth', 'S00001', 4);
+
+
+UPDATE cart_items set itemprice = items.price from items where cart_items.itemid = items.id;
+UPDATE cart_items set subtotal = itemprice * quantity::decimal(11,2);

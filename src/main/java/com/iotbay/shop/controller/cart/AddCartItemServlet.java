@@ -31,16 +31,11 @@ public class AddCartItemServlet extends HttpServlet {
         if (cart == null) {
             // Initialise new cart
             cart = new Cart();
-            if (session.getAttribute("user") != null) {
-                User user = (User) session.getAttribute("user");
-                cart.setUser(user);
-            }
-            cart.setCartItems(new LinkedList<CartItem>());
-            cart.setHttpSessionId(session.getId());
+            cartService.initialiseNewCart(cart, session);
             cartService.addCart(cart);
             response.addCookie(new Cookie("cartSessionId", session.getId()));
         } 
-
+      
         Integer quantity;
         try {
             quantity = Integer.parseInt(request.getParameter("quantity"));

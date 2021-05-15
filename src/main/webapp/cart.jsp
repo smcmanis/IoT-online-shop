@@ -111,7 +111,10 @@
                         </li>
                     </ul>
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary">Checkout</button>
+                        <a  href="/IoTBay/customer/order/checkout?cartId=${cart.id}"
+                            role="button" class="btn btn-primary">
+                            Checkout
+                        </a>
                     </div>
                 </div>
             </div>
