@@ -25,8 +25,7 @@
                     <img src="${item.imageUrl}"/>
                     <h3>Price: $ ${item.price}</h3>
                     <h3>Stock: ${item.quantity}</h3>
-                    <c:url value="/IoTBay/addCartItem?itemId=${item.id}&quantity=1" var="addToCartUrl"></c:url>
-                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                    <a href="/IoTBay/addCartItem?itemId=${item.id}&quantity=1" class="btn btn-primary">Add to Cart</a>
                     <a href="/IoTBay/catalogue" class="btn btn-primary">Back to Catalogue</a>
 
 
