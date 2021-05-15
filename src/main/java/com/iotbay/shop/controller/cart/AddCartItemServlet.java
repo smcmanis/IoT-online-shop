@@ -59,13 +59,19 @@ public class AddCartItemServlet extends HttpServlet {
         if (itemId != null) {
             Item item = itemDao.getItemByItemId(itemId);
             boolean itemAlreadyInCart = false;
-            
+            if (quantity > item.getQuantity()) {
+                quantity = item.getQuantity();
+            }
             // Check if cart already contains the item  
             for (CartItem cartItem : cart.getCartItems()) {
                 if (cartItem.getItem().getId().equals(itemId)) {
                     itemAlreadyInCart = true;
-                    // Update the quantity of the item 
-                    cartItem.setQuantity(cartItem.getQuantity() + quantity);
+                    // Update the quantity of the item
+                    Integer updatedQuantity = cartItem.getQuantity() + quantity;
+                    if (item.getQuantity() < updatedQuantity) {
+                        updatedQuantity = item.getQuantity();
+                    }
+                    cartItem.setQuantity(updatedQuantity);
                     cartItem.setSubtotal(cartItemService.calculateSubtotal(cartItem));
                     cartItemService.updateCartItem(cartItem);
                 }

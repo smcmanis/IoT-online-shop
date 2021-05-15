@@ -1,6 +1,7 @@
 package com.iotbay.shop.controller.cart;
 
 import com.iotbay.shop.model.Cart;
+import com.iotbay.shop.model.CartItem;
 import com.iotbay.shop.service.CartItemService;
 import com.iotbay.shop.service.CartService;
 

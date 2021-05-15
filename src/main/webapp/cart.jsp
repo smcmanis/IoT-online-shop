@@ -31,17 +31,18 @@
                     <th></th>
                 </tr>
                 <c:forEach items="${cart.cartItems}" var="cartItem">
-                    <tr class="align-middle">
-                        <td>
-                            <img 
-                                src="${cartItem.item.imageUrl}"
+                    <c:if test="${cartItem.item.quantity <= cartItem.quantity}" var="maxQuantityReached"></c:if>
+                        <tr class="align-middle">
+                            <td>
+                                <img 
+                                    src="${cartItem.item.imageUrl}"
                                 class=""
                                 width="150" height="150">
                         </td>
                         <td>${cartItem.item.name}</td>
-                        <td>
-                            <div class=" btn-group btn-group-sm">
-                                <a href="/IoTBay/removeCartItem?cartItemId=${cartItem.id}&quantity=${cartItem.quantity - 1}" 
+                        <td class="">
+                            <div class=" btn-group btn-group-sm col-12">
+                                <a href="/IoTBay/removeCartItem?cartItemId=${cartItem.id}&quantity=1" 
                                    role="button" 
                                    class="btn btn-light col">
                                     -
@@ -52,17 +53,27 @@
                                 </div>
                                 <a href="/IoTBay/addCartItem?itemId=${cartItem.item.id}&quantity=1" 
                                    role="button" 
-                                   class="col btn btn-light">
+                                   class="col btn btn-light
+                                   <c:if test="${maxQuantityReached}">
+                                       disabled
+                                   </c:if>
+                                   ">
                                     +
                                 </a>
                             </div>
+                            <c:if test="${cartItem.item.quantity <= cartItem.quantity}">
+                                <span class="text-danger text-wrap">
+                                    Only ${cartItem.item.quantity} in stock
+                                </span> 
+                            </c:if>
+
                         </<td>
                         <td>$${cartItem.price}</td>
                         <td>$${cartItem.subtotal}</td>
                         <td>
                             <div class="input-group">
                                 <div class="input-group-prepend d-flex">
-                                    <a href="/IoTBay/removeCartItem?cartItemId=${cartItem.id}&quantity=0">
+                                    <a href="/IoTBay/removeCartItem?cartItemId=${cartItem.id}&quantity=${cartItem.quantity}">
                                         X
                                     </a>
 
@@ -99,7 +110,9 @@
                             <span>$${cart.totalPrice}</span>
                         </li>
                     </ul>
-                    <button class="btn btn-primary">Checkout</button>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary">Checkout</button>
+                    </div>
                 </div>
             </div>
             <div class="d-flex justify-content-between">

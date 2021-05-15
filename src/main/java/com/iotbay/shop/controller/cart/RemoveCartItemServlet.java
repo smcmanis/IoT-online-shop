@@ -3,6 +3,7 @@ package com.iotbay.shop.controller.cart;
 import com.iotbay.shop.dao.CartItemDao;
 import com.iotbay.shop.model.Cart;
 import com.iotbay.shop.model.CartItem;
+import com.iotbay.shop.service.CartItemService;
 import com.iotbay.shop.service.CartService;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -19,6 +20,7 @@ public class RemoveCartItemServlet extends HttpServlet {
 
     private final CartItemDao cartItemDao = new CartItemDao();
     private final CartService cartService = new CartService();
+    private final CartItemService cartItemService = new CartItemService();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cart cart = cartService.getCartFromSession(request);
@@ -30,9 +32,15 @@ public class RemoveCartItemServlet extends HttpServlet {
             String cartItemId = request.getParameter("cartItemId");
             try {
                 CartItem cartItem = cartItemDao.getCartItemByCartItemId(Integer.parseInt(cartItemId));
-                removeFromCart(cart, cartItem.getId());
-                cartItemDao.removeCartItemById(cartItem.getId());
-                
+                Integer adjustedQuantity = cartItem.getQuantity() - Integer.parseInt(request.getParameter("quantity"));
+                if (adjustedQuantity > 0) {
+                    cartItem.setQuantity(adjustedQuantity);
+                    cartItem.setSubtotal(cartItemService.calculateSubtotal(cartItem));
+                    cartItemDao.updateCartItem(cartItem);
+                } else {
+                    removeFromCart(cart, cartItem.getId());
+                    cartItemDao.removeCartItemById(cartItem.getId());
+                }
             } catch (Exception e) {
 
             }
