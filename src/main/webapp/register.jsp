@@ -27,7 +27,7 @@
                             <input type="text"
                                    placeholder="First Name"
                                    name="first-name"
-                                   class="form-control form-control-m2em"
+                                   class="form-control "
                                    required autofocus>
                             
                         </div>
@@ -35,7 +35,7 @@
                             <input type="text"
                                    placeholder="Last Name"
                                    name="last-name"
-                                   class="form-control form-control-m2em"
+                                   class="form-control "
                                    required autofocus>
                             
                         </div>
@@ -43,7 +43,7 @@
                             <input type="email"
                                    placeholder="Email"
                                    name="email"
-                                   class="form-control form-control-m2em"
+                                   class="form-control"
                                    required autofocus>
                             </input>
                         </div>
@@ -51,7 +51,7 @@
                             <input type="password"
                                    placeholder="Password"
                                    name="password"
-                                   class="form-control form-control-m2em"
+                                   class="form-control"
                                    required>
                             
                         </div>
@@ -59,7 +59,7 @@
                             <input type="password"
                                    placeholder="Confirm Password"
                                    name="confirm-password"
-                                   class="form-control form-control-m2em"
+                                   class="form-control"
                                    required>
                             
                         </div>
