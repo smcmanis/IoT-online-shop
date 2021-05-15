@@ -3,12 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" 
+              href="<c:url value="/resources/css/navbar.css"/>">
+    </head>
     <body>
         <header class="header">
             <nav class="navbar bg-light navbar-expand-lg navbar-light">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="/IoTBay">
-                        <img  width="30" height="30" class="d-inline-block align-top" alt="">
+                    <a class="navbar-brand d-flex align-items-center " href="/IoTBay/Main">
+                        <img src="resources/images/page/logo.png" alt="" class="logo">
                         IOT BAY
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

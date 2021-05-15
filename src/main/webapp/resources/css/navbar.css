@@ -1,0 +1,15 @@
+.logo-container {
+    padding-top: 22px;
+    position: relative;
+}
+
+.logo {
+    padding: 0 22px;
+}
+
+
+header .logo
+{
+    position: relative;
+    max-width: 80px;
+}
