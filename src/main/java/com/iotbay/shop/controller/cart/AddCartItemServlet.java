@@ -1,14 +1,14 @@
 package com.iotbay.shop.controller.cart;
 
-import com.iotbay.shop.dao.CartItemDao;
 import com.iotbay.shop.dao.ItemDao;
 import com.iotbay.shop.model.Cart;
 import com.iotbay.shop.model.CartItem;
 import com.iotbay.shop.model.Item;
 import com.iotbay.shop.model.User;
 import com.iotbay.shop.service.CartService;
+import com.iotbay.shop.service.CartItemService;
+
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,9 +21,9 @@ public class AddCartItemServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    private final CartItemDao cartItemDao = new CartItemDao();
     private final ItemDao itemDao = new ItemDao();
     private final CartService cartService = new CartService();
+    private final CartItemService cartItemService = new CartItemService();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -39,31 +39,46 @@ public class AddCartItemServlet extends HttpServlet {
             cart.setHttpSessionId(session.getId());
             cartService.addCart(cart);
             response.addCookie(new Cookie("cartSessionId", session.getId()));
+        } 
+
+        Integer quantity;
+        try {
+            quantity = Integer.parseInt(request.getParameter("quantity"));
+        } catch (Exception e) {
+            // Default quantity of item to add is 1
+            quantity = 1;
         }
 
-        Integer quantity = Integer.parseInt(request.getParameter("quantity"));
-        Integer itemId = Integer.parseInt(request.getParameter("itemId"));
+        Integer itemId;
+        try {
+            itemId = Integer.parseInt(request.getParameter("itemId"));
+        } catch (Exception e) {
+            itemId = null;
+        }
 
-        // Check if cart already contains the item  
-        for (CartItem cartItem : cart.getCartItems()) {
-            if (cartItem.getItem().getId().equals(itemId)) {
-                // Update the quantity of the item 
-                cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                cartItemDao.updateCartItem(cartItem);
-                request.getRequestDispatcher("/cart").forward(request, response);
+        if (itemId != null) {
+            Item item = itemDao.getItemByItemId(itemId);
+            boolean itemAlreadyInCart = false;
+            
+            // Check if cart already contains the item  
+            for (CartItem cartItem : cart.getCartItems()) {
+                if (cartItem.getItem().getId().equals(itemId)) {
+                    itemAlreadyInCart = true;
+                    // Update the quantity of the item 
+                    cartItem.setQuantity(cartItem.getQuantity() + quantity);
+                    cartItem.setSubtotal(cartItemService.calculateSubtotal(cartItem));
+                    cartItemService.updateCartItem(cartItem);
+                }
             }
+            if (!itemAlreadyInCart) {
+                // The item is not in the cart, so a new cartItem must be created
+                CartItem cartItem = initialiseNewCartItem(cart, item, quantity);
+                cart.getCartItems().add(cartItem);
+                cartItemService.addCartItem(cartItem);
+            }
+            cart.setTotalPrice(cartService.calculateCartTotal(cart));
+            cartService.updateCart(cart);
         }
-        
-        // The item is not in the cart, so a new cartItem must be created
-        CartItem cartItem = new CartItem();
-        Item item = itemDao.getItemByItemId(itemId);
-        cartItem.setItem(item);
-        cartItem.setQuantity(quantity);
-        cartItem.setPrice(item.getPrice());
-        cartItem.setSubtotal(item.getPrice().multiply(new BigDecimal(cartItem.getQuantity())));
-        cartItem.setCart(cart);
-        cartItemDao.addCartItem(cartItem);
-                
         request.getRequestDispatcher("/cart").forward(request, response);
     }
 
@@ -75,5 +90,15 @@ public class AddCartItemServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
+    }
+    
+    public CartItem initialiseNewCartItem(Cart cart, Item item, int quantity) {
+        CartItem cartItem = new CartItem();
+        cartItem.setItem(item);
+        cartItem.setQuantity(quantity);
+        cartItem.setPrice(item.getPrice());
+        cartItem.setSubtotal(cartItemService.calculateSubtotal(cartItem));
+        cartItem.setCart(cart);
+        return cartItem;
     }
 }

@@ -22,22 +22,24 @@ public class RemoveCartItemServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cart cart = cartService.getCartFromSession(request);
-        if (Boolean.parseBoolean(request.getParameter("removeAll"))) {
-             cartItemDao.removeAllCartItemsFromCart(cart);
-             cart.setCartItems(new LinkedList<CartItem>());
+        String removeAllItems = request.getParameter("removeAll");
+        if (removeAllItems != null) {
+            cartItemDao.removeAllCartItemsFromCart(cart);
+            cart.setCartItems(new LinkedList<CartItem>());
         } else {
             String cartItemId = request.getParameter("cartItemId");
             try {
                 CartItem cartItem = cartItemDao.getCartItemByCartItemId(Integer.parseInt(cartItemId));
-                cart.getCartItems().remove(cartItem);
-                cartItemDao.removeCartItem(cartItem);
-            } catch (Exception e) {
+                removeFromCart(cart, cartItem.getId());
+                cartItemDao.removeCartItemById(cartItem.getId());
                 
+            } catch (Exception e) {
+
             }
         }
-        request.getRequestDispatcher("/cart").forward(request, response);                
+        request.getRequestDispatcher("/cart").forward(request, response);
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
@@ -47,4 +49,19 @@ public class RemoveCartItemServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
+    
+    private void removeFromCart(Cart cart, Integer cartItemId) {
+        CartItem cartItem = null;
+        for (CartItem c : cart.getCartItems()) {
+            if (c.getId().equals(cartItemId)) {
+                cartItem = c;
+            }
+        }
+        if (cartItem != null) {
+            cart.getCartItems().remove(cartItem);
+            cartService.updateCart(cart);
+        }
+        
+    }
+    
 }

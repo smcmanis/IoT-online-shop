@@ -1,6 +1,7 @@
 package com.iotbay.shop.controller.cart;
 
 import com.iotbay.shop.model.Cart;
+import com.iotbay.shop.service.CartItemService;
 import com.iotbay.shop.service.CartService;
 
 import java.io.IOException;
@@ -14,14 +15,20 @@ import javax.servlet.http.*;
 public class CartServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    
-    private CartService cartService = new CartService();
+
+    private final CartService cartService = new CartService();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cart cart = cartService.getCartFromSession(request);
-        
-        request.setAttribute("cart", cart);
-        request.getRequestDispatcher("/cart.jsp").forward(request, response);
+        if (cart != null) {
+            cartService.validateCart(cart);
+            cart.setTotalPrice(cartService.calculateCartTotal(cart));
+            request.getSession().setAttribute("cart", cart);
+            request.getRequestDispatcher("/cart.jsp").forward(request, response);
+        } else {
+            // If no cart found, redirect to homepage
+            response.sendRedirect("/IoTBay/main.jsp");
+        }
     }
 
     @Override
@@ -33,6 +40,6 @@ public class CartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    
 
 }

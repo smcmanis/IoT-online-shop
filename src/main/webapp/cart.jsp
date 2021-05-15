@@ -24,10 +24,10 @@
             <table class="table">
                 <tr>
                     <th></th>
-                    <th>Item</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Subtotal</th>
+                    <th></th>
+                    <th class="text-center">Qty</th>
+                    <th class="text-center">Price</th>
+                    <th class="text-center">Subtotal</th>
                     <th></th>
                 </tr>
                 <c:forEach items="${cart.cartItems}" var="cartItem">
@@ -39,14 +39,30 @@
                                 width="150" height="150">
                         </td>
                         <td>${cartItem.item.name}</td>
-                        <td>${cartItem.quantity}</<td>
+                        <td>
+                            <div class=" btn-group btn-group-sm">
+                                <a href="/IoTBay/removeCartItem?cartItemId=${cartItem.id}&quantity=${cartItem.quantity - 1}" 
+                                   role="button" 
+                                   class="btn btn-light col">
+                                    -
+                                </a>
+                                <div class="col-6 px-2 
+                                     d-flex justify-content-around align-items-center">
+                                    <div>${cartItem.quantity}</div>
+                                </div>
+                                <a href="/IoTBay/addCartItem?itemId=${cartItem.item.id}&quantity=1" 
+                                   role="button" 
+                                   class="col btn btn-light">
+                                    +
+                                </a>
+                            </div>
+                        </<td>
                         <td>$${cartItem.price}</td>
                         <td>$${cartItem.subtotal}</td>
                         <td>
                             <div class="input-group">
                                 <div class="input-group-prepend d-flex">
-                                    <c:url value="/IotBay/removeCartItem?cartItemId=${cartItem.id}" var="removeCartItemUrl"></c:url>
-                                    <a href="${removeCartItemUrl}">
+                                    <a href="/IoTBay/removeCartItem?cartItemId=${cartItem.id}&quantity=0">
                                         X
                                     </a>
 

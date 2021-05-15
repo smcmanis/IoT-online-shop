@@ -23,6 +23,8 @@ public class CartDao {
                 em.getTransaction().begin();
                 em.persist(cart);
                 em.getTransaction().commit();
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
             } finally {
                 em.close();
             }
@@ -44,7 +46,7 @@ public class CartDao {
         Cart cart;
         EntityManager em = getEntityManager();
         try {
-            Query query = em.createQuery("select c from Cart c where c.httpSessionId like :httpSessionId")
+            Query query = em.createQuery("select c from Cart c where c.httpSessionId is not null and c.httpSessionId like :httpSessionId")
                     .setParameter("httpSessionId", httpSessionId);
             cart = (Cart) query.getResultList().get(0);
         } catch (IndexOutOfBoundsException e) {

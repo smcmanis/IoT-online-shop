@@ -3,7 +3,6 @@ package com.iotbay.shop.dao;
 import com.iotbay.shop.model.Cart;
 import com.iotbay.shop.model.CartItem;
 import com.iotbay.shop.service.EntityManagerFactoryService;
-import java.math.BigDecimal;
 
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -41,8 +40,6 @@ public class CartItemDao {
     }
 
     public void updateCartItem(CartItem cartItem) {
-        BigDecimal subtotal = calculateSubtotal(cartItem);
-        cartItem.setPrice(subtotal);
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
@@ -53,29 +50,13 @@ public class CartItemDao {
         }
     }
 
-    public void removeCartItem(CartItem cartItem) {
+    public void removeCartItemById(Integer cartItemId) {
         EntityManager em = getEntityManager();
         try {
-            // Start transaction with database
             em.getTransaction().begin();
-
-            // Get the real copy of the cartItem from the database (The existing one is just copy)
-            cartItem = em.find(CartItem.class, cartItem.getId());
-
-            // This will ASK the entitymanager to remove the cartItem from the database
-            // However, it will only really remove it from database after we "commit" the 
-            // transaction, using: em.getTransaction().commit()
+            CartItem cartItem = em.find(CartItem.class, cartItemId);
             em.remove(cartItem);
-
-            // We must also remove the cartItem from the cart. This is because the cart owns 
-            // the cartItem (ONE cart has MANY cartItems). The cart still has a reference to 
-            // the cartItem, so, the cart will just recreate the cartItem in the database 
-            // unless we remove manually remove the cartItem from the cart as well.
-            Cart cart = em.find(Cart.class, cartItem.getCart().getId());
-            List<CartItem> cartItems = cart.getCartItems();
-            cartItems.remove(cartItem);
-
-            // Commit ends the transaction and "commits" it to the database
+            em.flush();
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -85,13 +66,8 @@ public class CartItemDao {
     public void removeAllCartItemsFromCart(Cart cart) {
         List<CartItem> cartItems = cart.getCartItems();
         for (CartItem cartItem : cartItems) {
-            removeCartItem(cartItem);
+            removeCartItemById(cartItem.getId());
         }
-    }
-
-    public BigDecimal calculateSubtotal(CartItem cartItem) {
-        BigDecimal subtotal = cartItem.getPrice().multiply(new BigDecimal(cartItem.getQuantity()));
-        return subtotal;
     }
 
 }
