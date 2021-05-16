@@ -40,7 +40,7 @@
                             <a class="nav-link" href="">Manage Orders</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Manage Users</a>
+                            <a class="nav-link" href="/IoTBay/cim">Manage Users</a>
                         </li>
 
                     </ul>
@@ -48,5 +48,6 @@
             </nav>
         </header>
         <h1>Hello Admin!</h1>
+        
     </body>
 </html>

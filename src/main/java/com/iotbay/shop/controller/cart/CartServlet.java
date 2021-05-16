@@ -28,7 +28,7 @@ public class CartServlet extends HttpServlet {
             request.getRequestDispatcher("/cart.jsp").forward(request, response);
         } else {
             // If no cart found, redirect to homepage
-            response.sendRedirect("/IoTBay/main.jsp");
+            response.sendRedirect("/IoTBay/cart.jsp");
         }
     }
 

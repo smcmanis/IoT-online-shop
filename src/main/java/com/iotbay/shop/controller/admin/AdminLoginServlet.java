@@ -33,6 +33,8 @@ public class AdminLoginServlet extends HttpServlet {
             user = userDao.getUserByUserId(user.getId());
             if (user.isAdmin()) {
                 request.getRequestDispatcher("/adminHome.jsp").include(request, response);
+            } else {
+               request.getRequestDispatcher("/adminLogin.jsp").include(request, response);
             }
         } else {
             request.getRequestDispatcher("/adminLogin.jsp").include(request, response);

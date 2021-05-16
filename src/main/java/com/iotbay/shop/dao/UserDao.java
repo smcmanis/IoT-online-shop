@@ -91,6 +91,28 @@ public class UserDao {
         } finally {
             em.close();
         }
-
+    }
+    
+    public List<User> getAllCustomers(String firstName, String lastName) {
+        EntityManager em = getEntityManager();
+        String sql = "select u from User u where isadmin is not true and  lower(firstname) like lower('%"+firstName+"%') and lower(lastname) like lower('%"+lastName +"%')";
+        List<User> userList =em.createQuery(sql).getResultList();
+        em.close();
+        return userList;
+    }
+    
+    public List<User> getAllCustomers(String firstName, String lastName, String customertype) {
+        EntityManager em = getEntityManager();
+        String sql = "select u from User u where isadmin is not true and lower(firstname) like lower('%"+firstName+"%') and lower(lastname) like lower('%"+lastName +"%') and lower(customertype) like lower('%"+customertype+"%')";
+        List<User> userList =em.createQuery(sql).getResultList();
+        em.close();
+        return userList;
+    }
+    
+    public List<User> getAllCustomers() {
+        EntityManager em = getEntityManager();
+        List<User> customerList = em.createQuery("select u from User u where isadmin is not true").getResultList();
+        em.close();
+        return customerList;
     }
 }
