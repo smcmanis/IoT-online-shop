@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package admin;
+package com.iotbay.shop.controller.admin;
 
 import com.iotbay.shop.model.User;
 import com.iotbay.shop.dao.UserDao;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
         name = "AdminLogin",
         urlPatterns = {"/admin"}
 )
-public class AuthoriseAdminServlet extends HttpServlet {
+public class AdminLoginServlet extends HttpServlet {
 
     private final UserDao userDao = new UserDao();
 

@@ -11,29 +11,24 @@
         <script src="<c:url value="/resources/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
         <link rel="stylesheet" type="text/css"
               href="<c:url value="/resources/css/style.css"/>">
-        <title>Login</title>
+        <title>Admin Login</title>
     </head>
 
     <body>
 
-        <%@include file="common/navbar.jsp" %>
 
-        <%
-            String existErr = (String) session.getAttribute("existErr");
-            String emailErr = (String) session.getAttribute("emailErr");
-            String passErr = (String) session.getAttribute("passErr");
-        %>
+
 
         <div class="signup-wrapper">
             <div class="signup-box">
                 <div class="signup-form container">
-                    <form class="form" method="post" action="login">
-                         <h2>Sign In <span class="message"><%=(existErr != null ? existErr : "")%></span></h2>                        
+                    <form class="form" method="post" action="/IoTBay/admin/login">
+                         <h2>Admin Login </h2>                        
                          <div class="form-group mb-3">
                             <input type="email" 
                                    class="form-control"
                                    name="email" 
-                                   placeholder="<%=(emailErr != null ? emailErr : "Enter email")%>"                                    
+                                   placeholder="Admin email"                                    
                                    required>
                             </input>
                         </div>
@@ -41,7 +36,7 @@
                             <input type="password"
                                    class="form-control "
                                    name="password" 
-                                    placeholder="<%=(passErr != null ? passErr : "Enter password")%>"                                   
+                                    placeholder="Admin password"                                   
                                     required>
                             </input>
                         </div>
@@ -51,10 +46,6 @@
                             </button>
                         </div>
                     </form>
-                    <div class="sign-in-actions">
-                        <a href="">Forgot Password?</a>
-                        <a href="register.jsp">Sign up</a>
-                    </div>
                 </div>
             </div>
         </div>
