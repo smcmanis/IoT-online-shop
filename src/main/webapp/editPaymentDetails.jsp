@@ -84,7 +84,7 @@
                                    required autofocus>
                         </div>
                         <br>
-                        <input type="submit" value="Update" class="btn btn-success btn-block btn-lg"/>
+                        <input type="submit" value="Update" class="btn btn-primary btn-block btn-lg"/>
                     </form>
                 </div>
             </div>
