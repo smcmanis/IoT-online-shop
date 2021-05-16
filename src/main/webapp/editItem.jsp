@@ -1,3 +1,8 @@
+<%-- 
+    Document   : editItem
+    Created on : 13/05/2021, 8:03:25 PM
+    Author     : trees
+--%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -14,19 +19,24 @@
         <title>Add Item</title>
     </head>
     <body>
-        <%@include file="common/navbar.jsp" %>
         
-        <main>
-            <div class="signup-wrapper">
+        
+        <%@include file="/common/navbar.jsp" %>
+        
+        <div class="signup-wrapper">
                 <div class="signup-box">
                     <div class="signup-form container">
-                        <form action="addItem" method="post">
-                            <h2>New Device</h2>
+                        <form action="/IoTBay/updateItem?itemId=${item.id}" method="post">
+                            <h2>Update Device</h2>
+                            <div class="form-group">
+                                <label for="itemId"> Item ID: ${item.id}</label>
+                            </div>
                             <div class="form-group">
                                 <label for="item_name"> Device Name: </label>
                                 <input type="text" 
                                        id="item_name" 
                                        name="item_name"
+                                       value="${item.name}"
                                        class="form-control"
                                        required autofocus>                               
 
@@ -37,6 +47,7 @@
                                         name="category" 
                                         class="form-control"
                                         required autofocus>
+                                        
                                     <option value="" disabled selected hidden>Please Choose...</option>
                                     <option value="Adapters">Adapters</option>
                                     <option value="Communications">Communications</option>
@@ -44,9 +55,6 @@
                                     <option value="Converters">Converters</option>
                                     <option value="Raspberry Pi">Raspberry Pi</option>
                                     <option value="Sensors">Sensors</option>
-                                    
-                                    
-                                    
                                 </select>  
                             </div>
                             <div class="form-group">
@@ -56,8 +64,9 @@
                                        step="0.01" 
                                        id="price" 
                                        name="price"
+                                       placeholder="${item.price}"
                                        class="form-control"
-                                       required autofocus>
+                                       required autofocus/>
 
                             </div>
                             <div class="form-group">
@@ -67,19 +76,19 @@
                                        step="1" 
                                        id="quantity" 
                                        name="quantity"
+                                       placeholder="${item.quantity}"
                                        class="form-control"
                                        required autofocus>
 
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success btn-block btn-lg">
-                                    Add Device 
+                                    Update Device 
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>  
-        </main>
+            </div> 
     </body>
-</html> 
+</html>

@@ -15,38 +15,52 @@
     </head>
     <body>
         <%@include file="common/navbar.jsp" %>
-        <a href="/IoTBay/addItem.jsp" class="btn btn-primary">Add Item</a>
-        <h1 class="align-middle">Item List</h1>
-        <div class="container">
-            <table class="table">
-                <tr>
-                    <th>Item ID</th>
-                    <th>Item Name</th>
-                    <th>Item Price</th>
-                    <th>Item Quantity</th>
-                    <th>Item Category</th>
-                </tr>
-                <c:forEach items="${itemList}" var="item">
-                    <tr class="align-middle" >
-                        <td>${item.id}</td>
-                        <td>${item.name}</td>
-                        <td>${item.price}</td>
-                        <td>${item.quantity}</td>
-                        <td>${item.category}</td>
-                        <td>
-                            <div>
-                                <c:url value="" var="editURL"/>
-                                <a href="${editURL}">Edit Item </a>
-                            </div>
-                            <div>
-                                <c:url value="" var="deleteURL"/>
-                                <a href="${deleteURL}" >Delete Item</a>
-                            </div>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </table>
 
-        </div>
+        <c:if test="${noAccess}">
+            <h2 class="text-center"> You do not have permission to access this page. Please login with admin privileges. </h2>
+            <a class="btn btn-primary" href="/IoTBay/admin" role="button">Go to Admin Login</a>
+        </c:if>
+        <br>
+        <c:if test="${!noAccess}">
+            <div class="container" >
+                <h3 class="text-center" >Item List</h3>
+                <hr>
+                <div class="container text-right" >
+                    <a href="/IoTBay/addItem.jsp" class="btn btn-primary">Add New Item</a>
+                </div>
+                <br>
+                <table class="table table-bordered" >
+                    <thead>
+                        <tr>
+                            <th>Item ID</th>
+                            <th>Item Name</th>
+                            <th>Item Price</th>
+                            <th>Item Quantity</th>
+                            <th>Item Category</th>
+                            <th>Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${itemList}" var="item">
+                            <tr class="align-middle" >
+                                <td>${item.id}</td>
+                                <td>${item.name}</td>
+                                <td>${item.price}</td>
+                                <td>${item.quantity}</td>
+                                <td>${item.category}</td>
+                                <td>
+                                    <div>
+                                        <a href="/IoTBay/editItem?itemId=${item.id}">Edit Item </a>
+                                    </div>
+                                    <div>
+                                        <a href="/IoTBay/deleteItem?itemId=${item.id}" >Delete Item</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </c:if>
     </body>
 </html>

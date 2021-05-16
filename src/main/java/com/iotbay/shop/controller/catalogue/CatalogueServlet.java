@@ -4,6 +4,7 @@ import com.iotbay.shop.dao.ItemDao;
 import com.iotbay.shop.model.Item;
 import java.io.IOException;
 import java.util.List;
+import java.util.LinkedList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,19 +21,34 @@ public class CatalogueServlet extends HttpServlet {
 
     private ItemDao itemDao = new ItemDao();
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) 
+                throws ServletException, IOException {
+        
+        System.out.println("we made it boys");
         List<Item> catalogue = itemDao.getAllItems();
         HttpSession session = request.getSession();
-        session.setAttribute("catalogue", catalogue);
+        String itemCategory = null;
 
-        String itemCategory = request.getParameter("itemCategory");
+        try{
+            itemCategory = request.getParameter("itemCategory");
+            System.out.println("got category");
+        }catch(Exception e){}
+
+        if(itemCategory != null){
+            List<Item> categorisedItems = itemDao.getItemsByItemCategory(itemCategory);
+            request.setAttribute("itemCategory", itemCategory);
+            request.setAttribute("catalogue", categorisedItems);
+            System.out.println("got category");
+        }else{
+                
+                    request.setAttribute("catalogue", catalogue);
+                    System.out.println("didnt got category");
+            }            
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/catalogue.jsp");
+            dispatcher.forward(request, response);
         
-        System.out.println(request.getSession().getServletContext());
-//        Item item = itemDao.getItemByItemCategory(itemCategory);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/catalogue.jsp");
-        dispatcher.forward(request, response);
-
+        
+        
     }
 
     @Override

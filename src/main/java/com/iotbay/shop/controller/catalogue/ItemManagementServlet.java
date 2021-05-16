@@ -2,6 +2,9 @@ package com.iotbay.shop.controller.catalogue;
 
 import com.iotbay.shop.dao.ItemDao;
 import com.iotbay.shop.model.Item;
+import com.iotbay.shop.dao.UserDao;
+import com.iotbay.shop.service.UserService;
+import com.iotbay.shop.model.User;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,13 +21,24 @@ import javax.servlet.http.HttpSession;
         urlPatterns = {"/itemManagement"})
 
 public class ItemManagementServlet extends HttpServlet {
-
+    private UserService userService = new UserService();
     private ItemDao itemDao = new ItemDao();
+    
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Item> itemList = itemDao.getAllItems();
+            
         HttpSession session = request.getSession();
-        session.setAttribute("itemList", itemList);
+        User user = (User) session.getAttribute("user");
+        
+        if(userService.isUserEmployee(user)){
+            List<Item> itemList = itemDao.getAllItems();
+        
+            request.setAttribute("itemList", itemList);
+        }else{
+            session.setAttribute("noAccess", true);
+        }
+        
+
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/itemManagement.jsp");
         dispatcher.forward(request, response);

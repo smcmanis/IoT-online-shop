@@ -37,6 +37,23 @@ public class ItemDao {
         return item;
     }
 
+    public List<Item> getItemsBySearchQuery(String searchQuery) {
+        EntityManager em = getEntityManager();
+        List<Item> itemList = new ArrayList<>();
+
+        try {
+            Query query = em.createQuery("select i from Item i where name like :name").setParameter("name", searchQuery);
+            for (Object item : query.getResultList()) {
+                itemList.add((Item) item);
+            }
+        } catch (NoResultException e) {
+
+        } finally {
+            em.close();
+        }
+        return itemList;
+    }
+
     public List<Item> getItemsByItemCategory(String itemCategory) {
         EntityManager em = getEntityManager();
         List<Item> itemList = new ArrayList<>();
@@ -47,7 +64,7 @@ public class ItemDao {
                 itemList.add((Item) item);
             }
         } catch (NoResultException e) {
-            
+
         } finally {
             em.close();
         }

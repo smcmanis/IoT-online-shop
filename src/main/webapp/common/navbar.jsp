@@ -55,7 +55,11 @@
                                     </c:if>
                                 </a>
                             </li>
-
+                            <c:if test="${user != null && isEmployee}">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/IoTBay/itemManagement">Item Management</a>
+                                </li>
+                            </c:if>
                             <c:if test="${user != null}">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/IoTBay/LogoutServlet">Logout</a>

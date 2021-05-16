@@ -3,6 +3,7 @@ package com.iotbay.shop.dao;
 import com.iotbay.shop.model.Employee;
 import com.iotbay.shop.model.User;
 import com.iotbay.shop.service.EntityManagerFactoryService;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -23,23 +24,15 @@ public class EmployeeDao {
         em.close();
         return employee;
     }
-    
-    public User getEmployeeByUserId(Integer userId) {
+           
+    public List<Employee> getAllEmployees() {
         EntityManager em = getEntityManager();
-        User employee = null;
+        List<Employee> employeeList = new ArrayList<>();
         try {
-             Query query = em.createQuery("select e from Employee e where userId like :userId")
-                    .setParameter("userId", userId);
+           employeeList = em.createQuery("select u from Employee u").getResultList();
         } finally {
             em.close();
         }
-        return employee;
-    }
-        
-    public List<Employee> getAllEmployees() {
-        EntityManager em = getEntityManager();
-        List<Employee> employeeList = em.createQuery("select u from Employee u").getResultList();
-        em.close();
         return employeeList;
     }
     

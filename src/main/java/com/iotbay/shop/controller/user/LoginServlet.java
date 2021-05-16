@@ -9,6 +9,7 @@ package com.iotbay.shop.controller.user;
 
 import com.iotbay.shop.dao.UserDao;
 import com.iotbay.shop.model.User;
+import com.iotbay.shop.service.UserService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpSession;
         urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
     private UserDao userDao = new UserDao();
+    private UserService userService = new UserService();
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
@@ -37,6 +39,9 @@ public class LoginServlet extends HttpServlet {
         try {
             if(user != null && user.isActive()) {
                 if(password.equals(user.getPasswordPlaintext())) {
+                    boolean isEmployee = userService.isUserEmployee(user);
+   
+                    session.setAttribute("isEmployee", isEmployee);
                     session.setAttribute("user", user);
                     request.getRequestDispatcher("welcome.jsp").include(request, response);
                 } else {
