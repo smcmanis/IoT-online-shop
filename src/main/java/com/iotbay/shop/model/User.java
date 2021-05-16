@@ -36,14 +36,14 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Address> shippingAddresses;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CreditCard> creditCards;
 
     @OneToMany(mappedBy = "user")
     @OrderBy("orderTimestamp desc")
     private List<Order> orders;
     
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<Payment> payments;
     
     public Integer getId() {

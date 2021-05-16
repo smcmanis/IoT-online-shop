@@ -39,30 +39,42 @@ public class CreditCardListServlet extends HttpServlet {
             }
         }
 
-        if (user != null) { 
+        if (user != null) {
             List<CreditCard> creditCards = user.getCreditCards();
             if (creditCards == null) {
                 creditCards = new LinkedList<>();
+            } else {
+                try {
+                    creditCards.size(); // dumn
+                } catch (Exception e) {
+                    creditCards = new LinkedList<>();
+                }
             }
-            System.out.println(creditCards.size());
-            session.setAttribute("userCreditCards", creditCards);
             
+            session.setAttribute("userCreditCards", creditCards);
+
             List<Payment> payments = user.getPayments();
             if (payments == null) {
                 payments = new LinkedList<>();
+            } else {
+                try {
+                    payments.size(); // dumn
+                } catch (Exception e) {
+                    payments = new LinkedList<>();
+                }
             }
-            
-            System.out.println(payments.size());
-            session.setAttribute("userPayments", payments);
-            
+
+            request.setAttribute("userPayments", payments);
+//            request.setAttribute("userPayments", new LinkedList<CreditCard>());
+
             dispatcher = request.getRequestDispatcher("/viewPaymentDetails.jsp");
             dispatcher.forward(request, response);
         } else {
             response.sendRedirect("/IoTBay/login.jsp");
         }
-        
+
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
