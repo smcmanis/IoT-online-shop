@@ -54,7 +54,7 @@ public class DeleteShipmentServlet extends HttpServlet {
             }
             
         }
-        request.getRequestDispatcher("ShipmentDetailsServlet").forward(request, response);
+        request.getRequestDispatcher("/shipmentdetails").forward(request, response);
     }
 
     

@@ -22,7 +22,7 @@
         <div class="signup-wrapper">
             <div class="signup-box">
                 <div class="signup-form container">
-                    <form method="post" action="/addshipment">
+                    <form method="post" action="addshipment">
                         <h2>Add Shipment Details</h2>                               
                         <div class="form-group">
                             <input type="text"

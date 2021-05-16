@@ -75,7 +75,7 @@ public class EditShipmentServlet extends HttpServlet {
         catch (Exception e) {
                  session.setAttribute("updated", "Update was not successful");
                  System.out.println("no update");
-                 request.getRequestDispatcher("/ShipmentDetailServlet").include(request, response);
+                 request.getRequestDispatcher("/shipmentdetails").include(request, response);
             }
     }
 //    catch(NullPointerException ex

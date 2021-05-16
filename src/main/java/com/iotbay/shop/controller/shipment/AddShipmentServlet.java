@@ -22,7 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author namlo
  */
-@WebServlet(name = "AddShipmentServlet", urlPatterns = {"/addshipment"})
+@WebServlet(name = "AddShipmentServlet", 
+        urlPatterns = {"/addshipment"})
 public class AddShipmentServlet extends HttpServlet {
     private UserDao userDao = new UserDao();
     private ShippingDao shipmentDao = new ShippingDao();
@@ -51,7 +52,7 @@ public class AddShipmentServlet extends HttpServlet {
             user.getShipmentDetails().add(shipment_details);
             session.setAttribute("shipment_details", shipment_details);
          }
-            request.getRequestDispatcher("ShipmentDetailsServlet").include(request, response);
+            request.getRequestDispatcher("/shipmentdetails").include(request, response);
     }
 
     @Override

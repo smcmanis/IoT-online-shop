@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(
         name = "ShipmentDetailServlet",
-        urlPatterns = {"/ShipmentDetailServlet"})
+        urlPatterns = {"/shipmentdetails"})
 public class ShipmentDetailsServlet extends HttpServlet {
     private ShippingDao shippingDao = new ShippingDao();
     private UserDao userDao = new UserDao();
