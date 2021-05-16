@@ -2,6 +2,7 @@ package com.iotbay.shop.dao;
 
 import com.iotbay.shop.model.Item;
 import com.iotbay.shop.service.EntityManagerFactoryService;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -36,20 +37,21 @@ public class ItemDao {
         return item;
     }
 
-    public Item getItemByItemCategory(String itemCategory) {
+    public List<Item> getItemsByItemCategory(String itemCategory) {
         EntityManager em = getEntityManager();
-        Item item = null;
+        List<Item> itemList = new ArrayList<>();
         try {
             Query query = em.createQuery("select i from Item i where category like :category")
                     .setParameter("category", itemCategory);
-
-            item = (Item) query.getSingleResult();
+            for (Object item : query.getResultList()) {
+                itemList.add((Item) item);
+            }
         } catch (NoResultException e) {
             
         } finally {
             em.close();
         }
-        return item;
+        return itemList;
     }
 
     public List<Item> getAllItems() {

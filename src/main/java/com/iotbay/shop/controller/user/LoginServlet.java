@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         User user = userDao.getUserByUserEmail(email);
         try {
-            if(user != null) {
+            if(user != null && user.isActive()) {
                 if(password.equals(user.getPasswordPlaintext())) {
                     session.setAttribute("user", user);
                     request.getRequestDispatcher("welcome.jsp").include(request, response);
@@ -42,6 +42,9 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("passErr", "Error: Password format incorrect");
                     request.getRequestDispatcher("login.jsp").include(request, response);
                 }
+            } else if (user != null) {
+                session.setAttribute("inActiveErr", "Error: User account is deactivated");
+                request.getRequestDispatcher("register.jsp").include(request, response);
             } else {
                 session.setAttribute("existErr", "User does not exist in the database");
                 request.getRequestDispatcher("login.jsp").include(request, response);
