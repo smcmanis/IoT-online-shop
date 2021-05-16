@@ -2,6 +2,7 @@ package com.iotbay.shop.controller.user;
 
 import com.iotbay.shop.dao.UserDao;
 import com.iotbay.shop.model.User;
+import com.iotbay.shop.service.UserService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,24 +16,16 @@ import javax.servlet.http.HttpSession;
         urlPatterns = {"/CancelAccountServlet"})
 public class CancelAccountServlet extends HttpServlet {
     private UserDao userDao = new UserDao();
+    private UserService userService = new UserService();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        User existUser = userDao.getUserByUserEmail(user.getEmail());
-        System.out.println(user.getEmail());
-
         try {
-            if(existUser != null) {
-                session.setAttribute("user", existUser);
-                userDao.deleteUser(existUser);
-                //session.setAttribute("cancel", "Cancelation was successful");
-                request.getRequestDispatcher("main.jsp").include(request, response);
-            } else {
-                //session.setAttribute("cancel", "Cancelation was not successful");
-                request.getRequestDispatcher("editAccount.jsp").include(request, response);
-            }
+            userService.deactivateUser(user);
+            session.setAttribute("user", null);
+            request.getRequestDispatcher("/Main").forward(request, response);
         } catch(NullPointerException ex) {
             System.out.println(ex.getMessage() == null ? "User does not exist" : "Welcome");
         }
