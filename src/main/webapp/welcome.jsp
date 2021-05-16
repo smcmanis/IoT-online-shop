@@ -1,3 +1,4 @@
+<%@page import="com.iotbay.shop.model.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -16,9 +17,7 @@
 
     <body>
         <%
-            String firstName = request.getParameter("first-name");
-            String lastName = request.getParameter("last-name");
-            String email = request.getParameter("email");
+            User user = (User) session.getAttribute("user");
         %>
 
         <%@include file="common/navbar.jsp" %>
@@ -27,14 +26,14 @@
             <div class="center">
                 <div class="form" method="post" >
                     <div>
-                        <h1 class="mb-3">Welcome <% out.print(firstName); %>!</h1>
+                        <h1 class="mb-3">Welcome <% out.print(user.getFirstName()); %>!</h1>
                     </div>
-                    <div> Name: <% out.print(firstName + " " + lastName); %>!</div>
-                    <div> Email: <% out.print(email);%>!</div>
+                    <div> Name: <% out.print(user.getFirstName() + " " + user.getLastName()); %>!</div>
+                    <div> Email: <% out.print(user.getEmail());%>!</div>
 
                     <div class="mt-3"> 
-                         <a class="btn btn-lg btn-primary btn-block" href="editAccount.jsp">Go to Account Settings"</a>                        
-                         <a class="btn btn-lg btn-primary btn-block" href="<%=request.getContextPath()%>/main.jsp"> Proceed to store </a>
+                         <a class="btn btn-lg btn-primary btn-block" href="editAccount.jsp">Account Settings</a>                        
+                         <a class="btn btn-lg btn-primary btn-block" href="/IoTBay/catalogue"> Proceed to store </a>
                     </div>           
                 </div>
             </div>

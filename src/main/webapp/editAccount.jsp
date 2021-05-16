@@ -21,13 +21,8 @@
             User user = (User) session.getAttribute("user");
             String updated = (String) session.getAttribute("updated");
         %>
-        <div class="mt-3 mb-3"> 
-            <a class="btn btn-lg btn-primary btn-block" href="/main.jsp?email='<%=user.getEmail()%>">Main</a>
-            <a class="btn btn-lg btn-primary btn-block" href="LogoutServlet"> Sign out </a>
-            <a class="btn btn-lg btn-danger btn-block pull-right" href="CancelAccountServlet"> Cancel Registration </a>
-        </div>
 
-        <h1>Edit User Information: <span class="message"><%=(updated != null ? updated : "")%></span></h1>
+        <h1 class="ml-3">Edit User Information: <span class="message"><%=(updated != null ? updated : "")%></span></h1>
         <div class="signup-wrapper">
             <div class="signup-box">
                 <div class="signup-form container">
@@ -71,7 +66,7 @@
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Update" class="btn btn-success btn-block btn-lg"/>
-                                
+                            <a class="btn btn-lg btn-danger btn-block pull-right" href="CancelAccountServlet">Delete</a>  
                         </div>
                     </form>        
                 </div>

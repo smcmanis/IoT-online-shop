@@ -35,8 +35,18 @@
                                 </li>
                             </c:if>
                             <c:if test="${user != null}">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/IoTBay/customer/order/list">My Orders</a>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        My account
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <li>
+                                            <a class="dropdown-item" href="/IoTBay/customer/order/list">My Orders</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="editAccount.jsp">My Details</a></li>
+                                        <li><a class="dropdown-item" href="/IoTBay/customer/creditCards">My Payment Details</a></li>
+                                    </ul>
                                 </li>
                             </c:if>
                             <li class="nav-item">
