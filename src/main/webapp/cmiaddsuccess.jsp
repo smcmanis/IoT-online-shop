@@ -42,8 +42,8 @@
             </nav>
         </header>
         <br>
-        <a href="cim" class="btn btn-success">Back to CIM</a>
-        <a href="cimadd.jsp" class="btn btn-success">Add new User</a>
+        <a href="cim" class="btn btn-primary">Back to CIM</a>
+        <a href="cimadd.jsp" class="btn btn-primary">Add new User</a>
         <br>
     <center>Add ${user.firstName} into the system successfully ! </center>
     <div class="container   col-md-5">
