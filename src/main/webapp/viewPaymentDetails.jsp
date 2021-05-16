@@ -28,7 +28,7 @@
             <hr>
             <div class="container text-left">
 
-                <a href="/IoTBay/createPaymentDetails.jsp" class="btn btn-success">Add New Card</a>
+                <a href="/IoTBay/createPaymentDetails.jsp" class="btn btn-primary">Add New Card</a>
             </div>
             <br>
             <table class="table table-bordered">
@@ -52,8 +52,8 @@
                             <td>${creditCard.cardOwner}</td>
                             <td>${creditCard.cardVerificationValue}</td>
                             <td>
-                                <a href="/IoTBay/editAccount?creditCardNumber=${creditCard.cardNumber}" class="btn btn-success mb-3">Edit</a>
-                                <a class="btn btn-success btn-block" href="/IoTBay/deleteCreditCard?creditCardId=${creditCard.id}">Delete</a>                     
+                                <a href="/IoTBay/editAccount?creditCardNumber=${creditCard.cardNumber}" class="btn btn-primary mb-3">Edit</a>
+                                <a class="btn btn-danger btn-block" href="/IoTBay/deleteCreditCard?creditCardId=${creditCard.id}">Delete</a>                     
                             </td>
 
                         </tr>
