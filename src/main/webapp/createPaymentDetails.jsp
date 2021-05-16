@@ -68,7 +68,7 @@
                                    required>
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-success btn-block btn-lg">Save</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-lg">Save</button>
                     </form>
                 </div>
             </div>
