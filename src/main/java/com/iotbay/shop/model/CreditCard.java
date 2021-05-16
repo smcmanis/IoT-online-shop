@@ -13,7 +13,7 @@ public class CreditCard implements Serializable {
     
     private boolean isPrimary;
     
-    @OneToOne
+    @ManyToOne()
     @JoinColumn(name="userId")
     private User user;
     
@@ -24,6 +24,8 @@ public class CreditCard implements Serializable {
     private String expirationYear;
     
     private String cardOwner;
+    
+    private String cardVerificationValue;
 
     public Integer getId() {
         return id;
@@ -75,6 +77,14 @@ public class CreditCard implements Serializable {
 
     public void setCardOwner(String cardOwner) {
         this.cardOwner = cardOwner;
+    }
+
+    public String getCardVerificationValue() {
+        return cardVerificationValue;
+    }
+
+    public void setCardVerificationValue(String cardVerificationValue) {
+        this.cardVerificationValue = cardVerificationValue;
     }
 
     

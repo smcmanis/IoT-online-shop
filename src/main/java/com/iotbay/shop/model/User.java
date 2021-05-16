@@ -2,7 +2,6 @@ package com.iotbay.shop.model;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -35,14 +34,17 @@ public class User implements Serializable {
     private String customerType;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<Address> shippingAddresses;
+    private List<Address> shippingAddresses;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<CreditCard> creditCards;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<CreditCard> creditCards;
 
     @OneToMany(mappedBy = "user")
     @OrderBy("orderTimestamp desc")
     private List<Order> orders;
+    
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Payment> payments;
     
     public Integer getId() {
         return id;
@@ -121,19 +123,19 @@ public class User implements Serializable {
     }
 
     
-    public Set<Address> getShippingAddresses() {
+    public List<Address> getShippingAddresses() {
         return shippingAddresses;
     }
 
-    public void setShippingAddresses(Set<Address> shippingAddresses) {
+    public void setShippingAddresses(List<Address> shippingAddresses) {
         this.shippingAddresses = shippingAddresses;
     }
 
-    public Set<CreditCard> getCreditCards() {
+    public List<CreditCard> getCreditCards() {
         return creditCards;
     }
 
-    public void setCreditCards(Set<CreditCard> creditCards) {
+    public void setCreditCards(List<CreditCard> creditCards) {
         this.creditCards = creditCards;
     }
 
@@ -143,6 +145,14 @@ public class User implements Serializable {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
     
     

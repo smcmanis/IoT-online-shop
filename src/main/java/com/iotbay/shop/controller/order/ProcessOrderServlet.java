@@ -4,7 +4,7 @@ import com.iotbay.shop.dao.CreditCardDao;
 import com.iotbay.shop.dao.ShippingDao;
 import com.iotbay.shop.model.Cart;
 import com.iotbay.shop.model.CreditCard;
-import com.iotbay.shop.model.CreditCardPayment;
+import com.iotbay.shop.model.Payment;
 import com.iotbay.shop.model.Order;
 import com.iotbay.shop.model.Shipping;
 import com.iotbay.shop.service.CartService;
@@ -31,7 +31,7 @@ public class ProcessOrderServlet extends HttpServlet {
             
             // Get card details from form....
             CreditCard card = creditCardDao.getCreditCardByCreditCardId(2); // dummy for now
-            CreditCardPayment creditCardPayment = new CreditCardPayment();
+            Payment payment = new Payment();
             
             // Get shipping details from form...
             Shipping shipping = shippingDao.getShippingByShippingId(2); // dummy for now
@@ -43,7 +43,7 @@ public class ProcessOrderServlet extends HttpServlet {
             
             boolean orderSuccessful = false;
             try {
-                order = processOrderService.processOrder(order, cart, creditCardPayment, shipping);
+                order = processOrderService.processOrder(order, cart, payment, shipping);
                 orderSuccessful = true;
                 request.getSession().setAttribute("orderId", order.getId());
                 

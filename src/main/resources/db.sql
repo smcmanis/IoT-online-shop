@@ -90,6 +90,7 @@ CREATE TABLE credit_cards(
     expirationMonth text,
     expirationYear text,
     cardOwner text,
+    cardVerificationValue text,
     userId int NOT NULL REFERENCES users (id),
     isPrimary boolean,
     UNIQUE(cardNumber)

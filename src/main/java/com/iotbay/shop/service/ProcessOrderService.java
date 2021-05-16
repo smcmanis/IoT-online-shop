@@ -3,7 +3,7 @@ package com.iotbay.shop.service;
 import com.iotbay.shop.dao.OrderDao;
 import com.iotbay.shop.model.Cart;
 import com.iotbay.shop.model.CartItem;
-import com.iotbay.shop.model.CreditCardPayment;
+import com.iotbay.shop.model.Payment;
 import com.iotbay.shop.model.Item;
 import com.iotbay.shop.model.Order;
 import com.iotbay.shop.model.Shipping;
@@ -14,27 +14,27 @@ import javax.transaction.Transaction;
 
 public class ProcessOrderService {
 
-    private final CreditCardPaymentService creditCardPaymentService = new CreditCardPaymentService();
+    private final PaymentService paymentService = new PaymentService();
     private final ItemService itemService = new ItemService();
     private final CustomerService customerService = new CustomerService();
 
     private final OrderDao orderDao = new OrderDao();
 
-    public Order processOrder(Order order, Cart cart, CreditCardPayment creditCardPayment, Shipping shipping) throws Exception {
+    public Order processOrder(Order order, Cart cart, Payment payment, Shipping shipping) throws Exception {
         User customer = cart.getUser();
-        return processOrder(order, cart, creditCardPayment, shipping, customer);
+        return processOrder(order, cart, payment, shipping, customer);
     }
 
-    public Order processOrder(Order order, Cart cart, CreditCardPayment creditCardPayment, Shipping shipping, User customer) throws Exception {
+    public Order processOrder(Order order, Cart cart, Payment payment, Shipping shipping, User customer) throws Exception {
 
         // user can be null for now...
-        if (order == null || cart == null || creditCardPayment == null || shipping == null) {
+        if (order == null || cart == null || payment == null || shipping == null) {
             // Should check each individually and throw custom exceptions for each
             throw new Exception();
         }
         
 // Process the payment
-        Transaction paymentTransaction = creditCardPaymentService.processPayment(creditCardPayment, order, cart, customer);
+        Transaction paymentTransaction = paymentService.processPayment(payment, order, cart, customer);
 
         if (order.getOrderStatus() == null) {
             order.setOrderStatus("Submitted");
@@ -47,11 +47,11 @@ public class ProcessOrderService {
         order.setCart(cart);
         if (paymentTransaction != null) {
             order.setPaid(true);
-            creditCardPayment.setOrder(order);
+            payment.setOrder(order);
         } else {
             // ALLOW NULL UNTIL THIS IS SUPPORTED
             order.setPaid(true);
-            creditCardPayment.setOrder(order);
+            payment.setOrder(order);
         }
 
         // Process item stock

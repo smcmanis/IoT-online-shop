@@ -6,7 +6,7 @@
 package com.iotbay.shop.service;
 
 import com.iotbay.shop.model.Cart;
-import com.iotbay.shop.model.CreditCardPayment;
+import com.iotbay.shop.model.Payment;
 import com.iotbay.shop.model.Order;
 import com.iotbay.shop.model.User;
 import javax.transaction.Transaction;
@@ -15,9 +15,9 @@ import javax.transaction.Transaction;
  *
  * @author simon
  */
-public class CreditCardPaymentService {
+public class PaymentService {
 
-    public Transaction processPayment(CreditCardPayment payment, Order order, Cart cart, User customer) {
+    public Transaction processPayment(Payment payment, Order order, Cart cart, User customer) {
         // validate payment and return JTA transaction
         // UNSUPPORTED
         return null;
