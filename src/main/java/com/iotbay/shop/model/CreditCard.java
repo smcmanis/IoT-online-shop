@@ -1,6 +1,7 @@
 package com.iotbay.shop.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import javax.persistence.*;
 
 @Entity
@@ -11,7 +12,7 @@ public class CreditCard implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     
-    private boolean isPrimary;
+//    private boolean isPrimary;
     
     @ManyToOne()
     @JoinColumn(name="userId")
@@ -26,18 +27,18 @@ public class CreditCard implements Serializable {
     private String cardOwner;
     
     private String cardVerificationValue;
-
+    
     public Integer getId() {
         return id;
     }
 
-    public boolean isIsPrimary() {
-        return isPrimary;
-    }
-
-    public void setIsPrimary(boolean isPrimary) {
-        this.isPrimary = isPrimary;
-    }
+//    public boolean isIsPrimary() {
+//        return isPrimary;
+//    }
+//
+//    public void setIsPrimary(boolean isPrimary) {
+//        this.isPrimary = isPrimary;
+//    }
 
     public User getUser() {
         return user;
@@ -87,5 +88,5 @@ public class CreditCard implements Serializable {
         this.cardVerificationValue = cardVerificationValue;
     }
 
-    
+
 }

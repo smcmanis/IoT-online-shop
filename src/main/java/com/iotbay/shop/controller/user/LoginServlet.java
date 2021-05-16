@@ -33,6 +33,7 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String password = request.getParameter("password");
         User user = userDao.getUserByUserEmail(email);
+        System.out.println(user == null);
         try {
             if(user != null && user.isActive()) {
                 if(password.equals(user.getPasswordPlaintext())) {

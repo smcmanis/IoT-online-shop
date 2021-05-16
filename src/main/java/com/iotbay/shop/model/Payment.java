@@ -2,26 +2,29 @@ package com.iotbay.shop.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Date;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "credit_card_payments")
-public class Payment implements Serializable{
-    
+public class Payment implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     private String cardNumber;
-    
+
     @OneToOne
     @JoinColumn(name = "orderId")
     private Order order;
-   
+
     private BigDecimal paymentAmount;
-    
+
+    private Date date;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", nullable=true)
+    @JoinColumn(name = "userId", nullable = true)
     private User user;
 
     public Integer getId() {
@@ -59,6 +62,13 @@ public class Payment implements Serializable{
     public void setUser(User user) {
         this.user = user;
     }
-        
-    
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
 }
