@@ -19,7 +19,6 @@ public class CustomerViewOrderServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Check session for authenticated user
         User user = (User) request.getSession().getAttribute("user");
-        System.out.println("hihi");
 
         // Check cookie for authenticated user
         if (user == null) {

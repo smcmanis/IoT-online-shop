@@ -135,8 +135,7 @@
                             <td>${order.orderStatus}</td>
                             <td>
                                 <div class="">
-                                    <c:url value="/IoTBay/customer/order?orderId=${order.id}" var="orderUrl"/>
-                                    <a href="${orderUrl}">View Order</a>
+                                    <a href="/IoTBay/customer/order/view?orderId=${order.id}">View Order</a>
                                 </div>
                                 <div>
                                     <c:url value="/track/order?orderId=${order.id}" var="trackingUrl"/>

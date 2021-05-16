@@ -28,7 +28,7 @@ public class EmployeeDao {
         EntityManager em = getEntityManager();
         User employee = null;
         try {
-             Query query = em.createQuery("select e from Emploee e where userId like :userId")
+             Query query = em.createQuery("select e from Employee e where userId like :userId")
                     .setParameter("userId", userId);
         } finally {
             em.close();
