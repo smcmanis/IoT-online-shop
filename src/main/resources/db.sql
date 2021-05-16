@@ -64,8 +64,8 @@ CREATE TABLE carts(
 
 CREATE TABLE orders(
     id SERIAL PRIMARY KEY,
-    orderDate date default current current_date,
-    orderTime time default current current_time,
+    orderDate date default current_date,
+    orderTime time default current_time,
     orderTimestamp timestamp default current_timestamp,
     orderStatus text,
     isPaid boolean DEFAULT TRUE,
