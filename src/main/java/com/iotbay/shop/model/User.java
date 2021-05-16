@@ -31,10 +31,13 @@ public class User implements Serializable {
     @Column(name = "isAdmin")
     private boolean admin;
     
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ShipmentDetails> shipmentDetails;
+    
     private String customerType;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Address> shippingAddresses;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Address> shippingAddresses;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CreditCard> creditCards;
@@ -123,13 +126,7 @@ public class User implements Serializable {
     }
 
     
-    public List<Address> getShippingAddresses() {
-        return shippingAddresses;
-    }
 
-    public void setShippingAddresses(List<Address> shippingAddresses) {
-        this.shippingAddresses = shippingAddresses;
-    }
 
     public List<CreditCard> getCreditCards() {
         return creditCards;
@@ -153,6 +150,14 @@ public class User implements Serializable {
 
     public void setPayments(List<Payment> payments) {
         this.payments = payments;
+    }
+
+    public List<ShipmentDetails> getShipmentDetails() {
+        return shipmentDetails;
+    }
+
+    public void setShippingDetails(List<ShipmentDetails> shipmentDetails) {
+        this.shipmentDetails = shipmentDetails;
     }
     
 }

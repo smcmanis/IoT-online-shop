@@ -6,7 +6,7 @@ import com.iotbay.shop.model.Cart;
 import com.iotbay.shop.model.CreditCard;
 import com.iotbay.shop.model.Payment;
 import com.iotbay.shop.model.Order;
-import com.iotbay.shop.model.Shipping;
+import com.iotbay.shop.model.Shipment;
 import com.iotbay.shop.service.CartService;
 import com.iotbay.shop.service.ProcessOrderService;
 
@@ -34,16 +34,16 @@ public class ProcessOrderServlet extends HttpServlet {
             Payment payment = new Payment();
             
             // Get shipping details from form...
-            Shipping shipping = shippingDao.getShippingByShippingId(2); // dummy for now
+//            Shipment shipment = shipmentDao.getShippingByShippingId(2); // dummy for now
             
             // Create and initialise order (should be done in OrderService)
             Order order = new Order();
-            order.setShipping(shipping);
+//            order.setShipping(shipment);
             order.setTotalPrice(cart.getTotalPrice()); // just use cart for now, but should calculate seperatly
             
             boolean orderSuccessful = false;
             try {
-                order = processOrderService.processOrder(order, cart, payment, shipping);
+                order = processOrderService.processOrder(order, cart, payment, null);
                 orderSuccessful = true;
                 request.getSession().setAttribute("orderId", order.getId());
                 
