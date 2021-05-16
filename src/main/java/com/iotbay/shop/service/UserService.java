@@ -1,5 +1,6 @@
 package com.iotbay.shop.service;
 
+import com.iotbay.shop.dao.EmployeeDao;
 import com.iotbay.shop.dao.UserDao;
 import com.iotbay.shop.model.User;
 import javax.servlet.http.Cookie;
@@ -7,6 +8,7 @@ import javax.servlet.http.Cookie;
 public class UserService {
 
     private UserDao userDao = new UserDao();
+    private EmployeeDao employeeDao = new EmployeeDao();
     
     public boolean authenticateUserByCookies(Cookie[] cookies) {
 //        // Check user has cookies for user crednetials e.g.
@@ -34,5 +36,10 @@ public class UserService {
         userDao.updateUser(user);
     }
     
+    public boolean isUserEmployee(User user) {
+        Integer userId = user.getId();
+        User employee = employeeDao.getEmployeeByUserId(userId);
+        return employee != null;
+    }
     
 }
