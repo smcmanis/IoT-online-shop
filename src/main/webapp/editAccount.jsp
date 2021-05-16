@@ -65,7 +65,7 @@
 
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Update" class="btn btn-success btn-block btn-lg"/>
+                            <input type="submit" value="Update" class="btn btn-primary btn-block btn-lg"/>
                             <a class="btn btn-lg btn-danger btn-block pull-right" href="CancelAccountServlet">Delete</a>  
                         </div>
                     </form>        
