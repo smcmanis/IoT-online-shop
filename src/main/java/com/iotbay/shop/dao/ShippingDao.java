@@ -82,8 +82,7 @@ public class ShippingDao {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            shipping = getShippingDetailsByShippingDetailsId(shipping.getShipment_details_id());
-            em.remove(shipping);
+            em.remove(em.find(ShipmentDetails.class, shipping.getShipment_details_id()));
             em.getTransaction().commit();
         } catch (IllegalArgumentException ex) {
             System.out.println(ex);

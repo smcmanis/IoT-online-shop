@@ -49,6 +49,7 @@ public class DeleteShipmentServlet extends HttpServlet {
                 }
             }           
             if (shipmentToRemove != null) {
+                shippingDao.deleteShipping(shipmentToRemove);
                 user.getShipmentDetails().remove(shipmentToRemove);
                 userDao.updateUser(user);
             }

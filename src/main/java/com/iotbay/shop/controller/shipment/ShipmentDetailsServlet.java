@@ -55,7 +55,6 @@ public class ShipmentDetailsServlet extends HttpServlet {
             dispatcher = request.getRequestDispatcher("/index.jsp");
         } else {
             List<ShipmentDetails> shipmentDetails = user.getShipmentDetails();
-            System.out.println(shipmentDetails.size());
             session.setAttribute("shipmentDetails", shipmentDetails);
 
             dispatcher = request.getRequestDispatcher("shipmentdetails.jsp");
