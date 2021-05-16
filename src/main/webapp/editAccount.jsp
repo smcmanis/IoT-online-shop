@@ -22,7 +22,7 @@
             String updated = (String) session.getAttribute("updated");
         %>
 
-        <h1 class="ml-3">Edit User Information: <span class="message"><%=(updated != null ? updated : "")%></span></h1>
+        <h1>Edit User Information: <span class="message"><%=(updated != null ? updated : "")%></span></h1>
         <div class="signup-wrapper">
             <div class="signup-box">
                 <div class="signup-form container">

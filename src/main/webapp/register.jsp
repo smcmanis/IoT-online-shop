@@ -18,6 +18,12 @@
         
         <%@include file="common/navbar.jsp" %>
         
+        <%
+            String inActiveErr = (String) session.getAttribute("inActiveErr");
+        %>
+        
+        <p class="text-center fw-bold fs-2"><%=(inActiveErr != null ? inActiveErr : "")%></p>
+        
         <div class="signup-wrapper">
             <div class="signup-box">
                 <div class="signup-form container">

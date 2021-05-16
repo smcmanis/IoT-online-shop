@@ -22,21 +22,22 @@
 
         <%@include file="common/navbar.jsp" %>
 
-        <div class="container"> 
-            <div class="center">
-                <div class="form" method="post" >
+        <div class="signup-wrapper">
+            <div class="signup-box">
+                <div class="signup-form container">
                     <div>
                         <h1 class="mb-3">Welcome <% out.print(user.getFirstName()); %>!</h1>
                     </div>
-                    <div> Name: <% out.print(user.getFirstName() + " " + user.getLastName()); %>!</div>
-                    <div> Email: <% out.print(user.getEmail());%>!</div>
+                    <div class="fs-2"> Name: <% out.print(user.getFirstName() + " " + user.getLastName()); %>!</div>
+                    <div class="fs-2"> Email: <% out.print(user.getEmail());%>!</div>
 
                     <div class="mt-3"> 
-                         <a class="btn btn-lg btn-primary btn-block" href="editAccount.jsp">Account Settings</a>                        
-                         <a class="btn btn-lg btn-primary btn-block" href="/IoTBay/catalogue"> Proceed to store </a>
-                    </div>           
+                        <a class="btn btn-lg btn-primary btn-block mb-3" href="editAccount.jsp">Account Settings</a>                        
+                        <a class="btn btn-lg btn-primary btn-block" href="/IoTBay/catalogue"> Proceed to store </a>
+                    </div>         
                 </div>
             </div>
         </div>
+
     </body>
 </html>
