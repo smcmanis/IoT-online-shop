@@ -52,6 +52,7 @@ public class RegisterServlet extends HttpServlet {
                     user.setEmail(registerEmail);
                     user.setPasswordPlaintext(registerPassword);
                     user.setFirstName(registerFirstName);
+                    user.setActive(true);
                     user.setLastName(registerLastName);
                     userDao.addUser(user); 
                     session.setAttribute("user", user);
