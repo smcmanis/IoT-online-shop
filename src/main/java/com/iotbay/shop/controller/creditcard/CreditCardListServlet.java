@@ -7,6 +7,7 @@ import com.iotbay.shop.model.User;
 import com.iotbay.shop.service.UserService;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,10 +41,17 @@ public class CreditCardListServlet extends HttpServlet {
 
         if (user != null) { 
             List<CreditCard> creditCards = user.getCreditCards();
+            if (creditCards == null) {
+                creditCards = new LinkedList<>();
+            }
             System.out.println(creditCards.size());
             session.setAttribute("userCreditCards", creditCards);
             
             List<Payment> payments = user.getPayments();
+            if (payments == null) {
+                payments = new LinkedList<>();
+            }
+            
             System.out.println(payments.size());
             session.setAttribute("userPayments", payments);
             

@@ -50,6 +50,23 @@ public class CreditCardDao {
         return creditCardList;
     }
 
+    public CreditCard getCreditCardByCardNumber(String cardNumber) {
+        EntityManager em = getEntityManager();
+        CreditCard creditCard = null;
+        try {
+            Query q = em.createQuery("select c from User c where c.cardNumber = :cardNumber")
+                    .setParameter("cardNumber", cardNumber);
+            if (q.getResultList().size() > 0) {
+                creditCard = (CreditCard) q.getResultList().get(0);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            em.close();
+        }
+        return creditCard;
+    }
+
     public void updateCreditCard(CreditCard creditCard, Integer id) {
         EntityManager em = getEntityManager();
         try {

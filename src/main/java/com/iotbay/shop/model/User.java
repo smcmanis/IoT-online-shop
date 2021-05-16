@@ -155,6 +155,4 @@ public class User implements Serializable {
         this.payments = payments;
     }
     
-    
-    
 }

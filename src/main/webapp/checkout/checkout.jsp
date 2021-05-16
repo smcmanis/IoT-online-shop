@@ -19,12 +19,12 @@
         <%@include file="/common/navbar.jsp" %>
 
         <div class="container">
-<form class="form" method="post" action="/IoTBay/ProcessOrderServlet">
-            <div class="row">
+            <form class="form" method="post" action="/IoTBay/ProcessOrderServlet">
+                <div class="row">
 
-                <!--Shipping details-->
-                <div class="col-sm">
-                    
+                    <!--Shipping details-->
+                    <div class="col-sm">
+
                         <h2>Contact Details </h2>                  
                         <div class="form-group mb-3">
                             <input type="text" 
@@ -43,12 +43,12 @@
                                    >
                             </input>
                         </div>
-<!--                    </form>-->
-                </div>
+                        <!--                    </form>-->
+                    </div>
 
-                <!--Payment details-->
-                <div class="col-sm">
-                    <!--<form class="form">-->
+                    <!--Payment details-->
+                    <div class="col-sm">
+                        <!--<form class="form">-->
                         <h2>Payment</h2>                  
                         <div class="form-group mb-3">
                             <input type="email" 
@@ -66,60 +66,60 @@
                                    >
                             </input>
                         </div>
-<!--                    </form>-->
-                </div>
-
-                <!--Order summary-->
-                <div class="col-sm">
-                    <div class="card card-body">
-                        <h4 class="mb-3">Order total</h4>
-                        <!--Items-->
-                        <div>
-                            <table class="table">
-                                <c:forEach items="${cart.cartItems}" var="cartItem">
-                                    <tr class="align-middle">
-                                        <td>${cartItem.item.name}</td>
-                                        <td>${cartItem.quantity}</td>
-                                        <td>$${cartItem.subtotal}</td>
-                                    </tr>
-                                </c:forEach>
-                            </table>
-                        </div>
-                        <ul class="list-group">
-                            <!--Cart total-->
-                            <li class="list-group-item d-flex justify-content-between 
-                                align-items-center border-0 pb-0">
-                                ${cart.cartItems.size()} items
-                                <span>$${cart.totalPrice}</span>
-                            </li>
-                            <!--Shipping Fee etc.-->
-                            <li class="list-group-item d-flex justify-content-between 
-                                align-items-center border-0 border-bottom">
-                                Shipping Fee
-                                <span>FREE</span>
-                            </li>
-                            <!--Order total-->
-                            <li class="list-group-item d-flex justify-content-between 
-                                align-items-center mb-3 border-0">
-                                Order total (inc. GST)
-                                <span>$${cart.totalPrice}</span>
-                            </li>
-                        </ul>
-                        <div class="d-grid gap-2">
-                            <button 
-                                class="btn btn-success" type="submit">
-                                Place Your Order
-                            </button>
-
-                        </div> 
-
+                        <!--                    </form>-->
                     </div>
-                </div>
-                                         </form>
-       
-            </div>
 
-        </div
-    </body>
+                    <!--Order summary-->
+                    <div class="col-sm">
+                        <div class="card card-body">
+                            <h4 class="mb-3">Order total</h4>
+                            <!--Items-->
+                            <div>
+                                <table class="table">
+                                    <c:forEach items="${cart.cartItems}" var="cartItem">
+                                        <tr class="align-middle">
+                                            <td>${cartItem.item.name}</td>
+                                            <td>${cartItem.quantity}</td>
+                                            <td>$${cartItem.subtotal}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                            <ul class="list-group">
+                                <!--Cart total-->
+                                <li class="list-group-item d-flex justify-content-between 
+                                    align-items-center border-0 pb-0">
+                                    ${cart.cartItems.size()} items
+                                    <span>$${cart.totalPrice}</span>
+                                </li>
+                                <!--Shipping Fee etc.-->
+                                <li class="list-group-item d-flex justify-content-between 
+                                    align-items-center border-0 border-bottom">
+                                    Shipping Fee
+                                    <span>FREE</span>
+                                </li>
+                                <!--Order total-->
+                                <li class="list-group-item d-flex justify-content-between 
+                                    align-items-center mb-3 border-0">
+                                    Order total (inc. GST)
+                                    <span>$${cart.totalPrice}</span>
+                                </li>
+                            </ul>
+                            <div class="d-grid gap-2">
+                                <button 
+                                    class="btn btn-success" type="submit">
+                                    Place Your Order
+                                </button>
+
+                            </div> 
+
+                        </div>
+                    </div>
+            </form>
+
+        </div>
+
+    </div
+</body>
 
 </html>

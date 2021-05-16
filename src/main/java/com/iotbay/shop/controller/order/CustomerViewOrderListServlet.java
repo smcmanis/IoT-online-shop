@@ -26,7 +26,7 @@ public class CustomerViewOrderListServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Check session for authenticated user
         User user = (User) request.getSession().getAttribute("user");
-
+        System.out.println("hello");
         // Check cookie for authenticated user
         if (user == null) {
             // check for userCookie, and get user by id if authenticated
@@ -58,6 +58,7 @@ public class CustomerViewOrderListServlet extends HttpServlet {
                         filteredOrders.add(order);
                     }
                 }
+                
                 request.setAttribute("customerOrders", filteredOrders);
                 request.setAttribute("filterDateStart", filterDateStart);
                 request.setAttribute("filterDateEnd", filterDateEnd);
@@ -66,7 +67,8 @@ public class CustomerViewOrderListServlet extends HttpServlet {
             }
 
             request.setAttribute("customer", user);
-            request.getRequestDispatcher("/CustomerViewOrderListServlet").forward(request, response);
+            System.out.println("yay");
+            request.getRequestDispatcher("/orderList.jsp").forward(request, response);
         } else {
             // Redirect unauthenticated user to login
             response.sendRedirect("/IoTBay/login.jsp");
