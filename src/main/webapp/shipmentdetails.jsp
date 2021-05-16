@@ -26,7 +26,7 @@
             <hr>
             <div class="container text-left">
 
-                <a href="add_shipment.jsp" class="btn btn-success">Add New Shipment Details</a>
+                <a href="add_shipment.jsp" class="btn btn-primary">Add New Shipment Details</a>
             </div>
             <br>
             <table class="table table-bordered">
@@ -50,9 +50,9 @@
                             <td>${shipmentDetails.state}</td>
                             <td>${shipmentDetails.country}</td>
                             <td>
-                                <a href="/IoTBay/GetEditPageServlet?shipmentDetailsId=${shipmentDetails.shipment_details_id}" class="btn btn-success">Edit</a>
+                                <a href="/IoTBay/GetEditPageServlet?shipmentDetailsId=${shipmentDetails.shipment_details_id}" class="btn btn-primary">Edit</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="DeleteShipmentServlet?shipmentDetailsId=${shipmentDetails.shipment_details_id}" class="btn btn-success">Delete</a>                     
+                                <a href="DeleteShipmentServlet?shipmentDetailsId=${shipmentDetails.shipment_details_id}" class="btn btn-danger">Delete</a>                     
                             </td>
 
                         </tr>
