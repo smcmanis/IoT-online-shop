@@ -12,7 +12,7 @@
     <body>
         <%@include file="common/navbar.jsp" %>
         <br>
-        <a href="cim" class="btn btn-success">Back to CIM</a>
+        <a href="cim" class="btn btn-primary">Back to CIM</a>
         <div class="container   col-md-5">
 		<div class="card">
 			<div class="card-body">
@@ -63,7 +63,7 @@
                                     class="form-control"
                                     required autofocus>
 				</fieldset>
-                                <input type="submit" class="btn btn-success btn-block btn-lg">
+                                <input type="submit" class="btn btn-primary btn-block btn-lg">
 				</form>
 			</div>
 		</div>
