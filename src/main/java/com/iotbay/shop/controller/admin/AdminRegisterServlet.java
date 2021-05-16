@@ -82,7 +82,7 @@ public class AdminRegisterServlet extends HttpServlet {
                     user.setActive(true);
                     userDao.addUser(user); 
                     request.setAttribute("user", user);
-                    request.getRequestDispatcher("cimaddsuccess.jsp").include(request, response);
+                    request.getRequestDispatcher("cmiaddsuccess.jsp").include(request, response);
                 }
 
             } catch (NullPointerException ex) {

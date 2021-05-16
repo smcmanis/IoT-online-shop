@@ -52,7 +52,7 @@
                             <td>${creditCard.cardOwner}</td>
                             <td>${creditCard.cardVerificationValue}</td>
                             <td>
-                                <a href="/IoTBay/editAccount?creditCardNumber=${creditCard.cardNumber}" class="btn btn-primary mb-3">Edit</a>
+                                <a href="/IoTBay/GetEditPageServletGetUpdateCreditCardPageServlet?creditCardNumber=${creditCard.cardNumber}" class="btn btn-primary mb-3">Edit</a>
                                 <a class="btn btn-danger btn-block" href="/IoTBay/deleteCreditCard?creditCardId=${creditCard.id}">Delete</a>                     
                             </td>
 
