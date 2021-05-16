@@ -41,7 +41,7 @@
                             </input>
                         </div>
                         <div class="form-group mb-3">
-                            <button type="submit" class="btn btn-success btn-block btn-lg">
+                            <button type="submit" class="btn btn-primary btn-block btn-lg">
                                 Sign In 
                             </button>
                         </div>
