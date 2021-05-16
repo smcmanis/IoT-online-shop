@@ -47,7 +47,7 @@
         <table class="table table-bordered">
             <tr>
                 <td style="width:10%"><center>
-                <a href="cimadd.jsp" class="btn btn-success">Add new User</a>
+                <a href="cimadd.jsp" class="btn btn-primary">Add new User</a>
                 </center>
                 </td>
                 <td style="width:90%">
@@ -94,8 +94,8 @@
                                             Decativate
                                         </c:otherwise>
                                     </c:choose></td>
-                            <td> <a href="AdminEditServlet?userId=${user.id}" class="btn btn-success">Edit</a>
-                                <a href="AdminDeleteServlet?userId=${user.id}" class="btn btn-success">Delete</a>
+                            <td> <a href="AdminEditServlet?userId=${user.id}" class="btn btn-primary">Edit</a>
+                                <a href="AdminDeleteServlet?userId=${user.id}" class="btn btn-danger">Delete</a>
                                     
                             </td>
                     </tr>
