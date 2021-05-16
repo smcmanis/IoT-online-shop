@@ -7,6 +7,8 @@ import com.iotbay.shop.model.CreditCard;
 import com.iotbay.shop.model.Payment;
 import com.iotbay.shop.model.Order;
 import com.iotbay.shop.model.Shipment;
+import com.iotbay.shop.model.ShipmentDetails;
+import com.iotbay.shop.model.User;
 import com.iotbay.shop.service.CartService;
 import com.iotbay.shop.service.ProcessOrderService;
 
@@ -33,28 +35,38 @@ public class ProcessOrderServlet extends HttpServlet {
             CreditCard card = creditCardDao.getCreditCardByCreditCardId(2); // dummy for now
             Payment payment = new Payment();
             
+            User user = (User) request.getSession().getAttribute("user");
+            if (user == null) {
+                user = new User();
+            }
             // Get shipping details from form...
 //            Shipment shipment = shipmentDao.getShippingByShippingId(2); // dummy for now
+            ShipmentDetails shipmentDetails = new ShipmentDetails();
             
             // Create and initialise order (should be done in OrderService)
             Order order = new Order();
-//            order.setShipping(shipment);
+            order.setShipmentDetails(shipmentDetails);
+
             order.setTotalPrice(cart.getTotalPrice()); // just use cart for now, but should calculate seperatly
             
             boolean orderSuccessful = false;
             try {
-                order = processOrderService.processOrder(order, cart, payment, null);
+                order = processOrderService.processOrder(order, cart, payment, user);
                 orderSuccessful = true;
+                System.out.println("order successful is true");
                 request.getSession().setAttribute("orderId", order.getId());
-                
             } catch (Exception e) {
                 // deal with errors etc. should dispatch to a proper failed order servlet...
                 System.out.println(e.getMessage());
+                 System.out.println("order successful is false");
             }
             
             if (orderSuccessful) {
                 // clear cart ... 
+                
                 HttpSession session = request.getSession();
+                user.getOrders().add(order);
+                
                 cartService.retireUsedCart(cart, request.getCookies(), session);
                 request.setAttribute("order", order);
                 request.getRequestDispatcher("/orderSubmitted.jsp").forward(request, response);

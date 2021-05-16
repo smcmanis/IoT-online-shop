@@ -42,8 +42,12 @@ public class Order implements Serializable {
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToOne(mappedBy = "order")
+//    @OneToOne(mappedBy = "order")
+    @Transient
     private Shipping shipping;
+    
+    @Transient
+    private ShipmentDetails shipmentDetails;
 
     private BigDecimal totalPrice;
 
@@ -123,4 +127,13 @@ public class Order implements Serializable {
         this.shipping = shipping;
     }
 
+    public ShipmentDetails getShipmentDetails() {
+        return shipmentDetails;
+    }
+
+    public void setShipmentDetails(ShipmentDetails shipmentDetails) {
+        this.shipmentDetails = shipmentDetails;
+    }
+
+    
 }

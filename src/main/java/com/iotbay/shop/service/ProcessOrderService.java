@@ -20,6 +20,14 @@ public class ProcessOrderService {
 
     private final OrderDao orderDao = new OrderDao();
 
+    public Order processOrder(Order order, Cart cart, Payment payment) throws Exception {
+        return processOrder(order, cart, payment, new Shipping());
+    }
+
+    public Order processOrder(Order order, Cart cart, Payment payment, User customer) throws Exception {
+        return processOrder(order, cart, payment, new Shipping(), customer);
+    }
+
     public Order processOrder(Order order, Cart cart, Payment payment, Shipping shipping) throws Exception {
         User customer = cart.getUser();
         return processOrder(order, cart, payment, shipping, customer);
@@ -32,7 +40,7 @@ public class ProcessOrderService {
             // Should check each individually and throw custom exceptions for each
             throw new Exception();
         }
-        
+
 // Process the payment
         Transaction paymentTransaction = paymentService.processPayment(payment, order, cart, customer);
 
@@ -68,16 +76,15 @@ public class ProcessOrderService {
             item.setQuantity(item.getQuantity() - quantity);
             itemService.updateItem(item);
         }
-        
-        //Add date/time
 
+        //Add date/time
         orderDao.addOrder(order);
-        
+
         return order;
     }
-    
+
     public void cancelOrder(Order order) {
-        
+
     }
-    
+
 }
