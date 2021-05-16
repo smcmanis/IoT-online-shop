@@ -44,7 +44,7 @@
                                         <li>
                                             <a class="dropdown-item" href="/IoTBay/customer/order/list">My Orders</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="editAccount.jsp">My Details</a></li>
+                                        <li><a class="dropdown-item" href="/IoTBay/editAccount.jsp">My Details</a></li>
                                         <li><a class="dropdown-item" href="/IoTBay/customer/creditCards">My Payment Details</a></li>
                                     </ul>
                                 </li>

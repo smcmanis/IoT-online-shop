@@ -22,8 +22,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/register"})
 public class RegisterServlet extends HttpServlet {
+
     private UserDao userDao = new UserDao();
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -32,19 +33,19 @@ public class RegisterServlet extends HttpServlet {
         String registerPassword = request.getParameter("password");
         String registerFirstName = request.getParameter("first-name");
         String registerLastName = request.getParameter("last-name");
-        
+
         validator.clear(session);
-        
-        if(!validator.validateEmail(registerEmail)) {
+
+        if (!validator.validateEmail(registerEmail)) {
             session.setAttribute("emailErr", "Error: Email format is incorrect");
             request.getRequestDispatcher("register.jsp").include(request, response);
-        } else if(!validator.validatePassword(registerPassword)) {
+        } else if (!validator.validatePassword(registerPassword)) {
             session.setAttribute("passErr", "Error: Pass format is incorrect");
             request.getRequestDispatcher("register.jsp").include(request, response);
         } else {
-                        try {
+            try {
                 User exist = userDao.getUserByUserEmail(registerEmail);
-                if(exist != null) {
+                if (exist != null) {
                     session.setAttribute("existErr", "User already exists in the database");
                     request.getRequestDispatcher("register.jsp").include(request, response);
                 } else {
@@ -54,18 +55,18 @@ public class RegisterServlet extends HttpServlet {
                     user.setFirstName(registerFirstName);
                     user.setActive(true);
                     user.setLastName(registerLastName);
-                    userDao.addUser(user); 
+                    userDao.addUser(user);
                     session.setAttribute("user", user);
                     request.getRequestDispatcher("welcome.jsp").include(request, response);
                 }
 
-            } catch(NullPointerException ex) {
+            } catch (NullPointerException ex) {
                 System.out.println(ex.getMessage() == null ? "User does not exist" : "Welcome");
                 request.getRequestDispatcher("register.jsp").include(request, response);
             }
 
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
