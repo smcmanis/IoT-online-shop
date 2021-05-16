@@ -50,12 +50,14 @@ public class AdminEditServlet extends HttpServlet {
         String updatedFirstName = request.getParameter("first-name");
         String updatedLastName = request.getParameter("last-name");
         String updateStatus = request.getParameter("customerstatus");
+        String updateAddress = request.getParameter("address");
         // Validation
         
         user.setEmail(updatedEmail);
         user.setPasswordPlaintext(updatedPassword);
         user.setFirstName(updatedFirstName);
         user.setLastName(updatedLastName);
+        user.setAddress(updateAddress);
         if(updateStatus.equals("Active")){
             user.setActive(true);
         } 

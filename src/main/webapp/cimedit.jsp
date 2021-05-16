@@ -92,6 +92,16 @@
                                    value="${user.passwordPlaintext}"
                                    required autofocus> 
                         </fieldset>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label>Address</label>
+                            <input type="text"
+                                   placeholder="Address"
+                                   name="address"
+                                   class="form-control"
+                                   value="${user.address}"
+                                   required autofocus> 
+                        </fieldset
                         <fieldset class="form-group">
                             <label>Status</label>
                             <c:choose>

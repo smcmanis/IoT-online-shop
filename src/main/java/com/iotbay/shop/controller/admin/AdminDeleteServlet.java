@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.iotbay.shop.controller.admin;
 
+import com.iotbay.shop.dao.OrderDao;
 import com.iotbay.shop.dao.UserDao;
+import com.iotbay.shop.model.Order;
 import com.iotbay.shop.model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,34 +23,32 @@ import javax.servlet.http.HttpSession;
  *
  * @author trees
  */
-
 @WebServlet(
-    name = "AdminDeleteServlet",
-    urlPatterns={"/AdminDeleteServlet"}
+        name = "AdminDeleteServlet",
+        urlPatterns = {"/AdminDeleteServlet"}
 )
-public class AdminDeleteServlet extends HttpServlet{
+public class AdminDeleteServlet extends HttpServlet {
 
-   private UserDao userDao = new UserDao();
+    private UserDao userDao = new UserDao();
+    private OrderDao orderDao = new OrderDao();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        try {
-            Integer theId = Integer.parseInt(request.getParameter("userId"));
-            User user = userDao.getUserByUserId(theId); 
-
-            if(user != null) {
-                userDao.deleteUser(user);
-                
-                request.getRequestDispatcher("cim").include(request, response);
+        Integer theId = Integer.parseInt(request.getParameter("userId"));
+        User user = userDao.getUserByUserId(theId);
+        List<Order> orders = user.getOrders();
+        for (Order order : orders) {
+            if (order.getUser().getId() == user.getId()) {
+                order.setUser(null);
+                orderDao.updateOrder(order);
             }
-        } catch(Exception ex) {
-            System.out.println(ex.getMessage() == null ? "Item does not exist" : "Welcome");
-        }
-    }
-        
 
-    
+        }
+
+        userDao.deleteUser(user);
+        request.getRequestDispatcher("cim").include(request, response);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -56,7 +56,7 @@ public class AdminDeleteServlet extends HttpServlet{
         processRequest(request, response);
     }
 
-     @Override
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);

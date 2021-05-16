@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -24,6 +24,9 @@ public class User implements Serializable {
     private String passhash;
 
     private String salt;
+    
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "isActive")
     private boolean active;
@@ -48,7 +51,7 @@ public class User implements Serializable {
     
     @OneToMany(mappedBy = "user")
     private List<Payment> payments;
-    
+       
     public Integer getId() {
         return id;
     }
@@ -125,7 +128,13 @@ public class User implements Serializable {
         this.customerType = customerType;
     }
 
-    
+        public String getAddress(){
+        return address;
+    }
+
+    public void setAddress(String address){
+        this.address = address;
+    }
 
 
     public List<CreditCard> getCreditCards() {

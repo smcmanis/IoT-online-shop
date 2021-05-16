@@ -51,7 +51,14 @@ public class OrderDao {
     }
    
     public void updateOrder(Order order) {
-
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(order);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
     public void deleteOrder(Order order) {

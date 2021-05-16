@@ -5,6 +5,7 @@
  */
 package com.iotbay.shop.controller.admin;
 
+import com.iotbay.shop.controller.Validator;
 import com.iotbay.shop.dao.UserDao;
 import com.iotbay.shop.model.User;
 import java.io.IOException;
@@ -26,19 +27,6 @@ public class AdminRegisterServlet extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String registerEmail = request.getParameter("register-email");
-        String registerPassword = request.getParameter("register-password");
-        String registerFirstName = request.getParameter("register-first-name");
-        String registerLastName = request.getParameter("register-last-name");
-        User user = new User();
-        user.setEmail(registerEmail);
-        user.setPasswordPlaintext(registerPassword);
-        user.setFirstName(registerFirstName);
-        user.setLastName(registerLastName);
-        user.setActive(true);
-        userDao.addUser(user); 
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("cimaddsuccess.jsp").include(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -67,7 +55,43 @@ public class AdminRegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request, response);        HttpSession session = request.getSession();
+        Validator validator = new Validator();
+        String registerEmail = request.getParameter("register-email");
+        String registerPassword = request.getParameter("register-password");
+        String registerFirstName = request.getParameter("register-first-name");
+        String registerLastName = request.getParameter("register-last-name");
+        if (!validator.validateEmail(registerEmail)) {
+            session.setAttribute("status", "Error: Email format is incorrect");
+            request.getRequestDispatcher("cimadd.jsp").include(request, response);
+        } else if (!validator.validatePassword(registerPassword)) {
+            session.setAttribute("status", "Error: Pass format is incorrect");
+            request.getRequestDispatcher("cimadd.jsp").include(request, response);
+        } else {
+            try {
+                User exist = userDao.getUserByUserEmail(registerEmail);
+                if (exist != null) {
+                    session.setAttribute("status", "Email already exists in the database");
+                    request.getRequestDispatcher("cimadd.jsp").include(request, response);
+                } else {
+                    User user = new User();
+                    user.setEmail(registerEmail);
+                    user.setPasswordPlaintext(registerPassword);
+                    user.setFirstName(registerFirstName);
+                    user.setLastName(registerLastName);
+                    user.setActive(true);
+                    userDao.addUser(user); 
+                    request.setAttribute("user", user);
+                    request.getRequestDispatcher("cimaddsuccess.jsp").include(request, response);
+                }
+
+            } catch (NullPointerException ex) {
+                System.out.println(ex.getMessage() == null ? "User does not exist" : "Welcome");
+                request.getRequestDispatcher("cimadd.jsp").include(request, response);
+            }
+
+        }
+        
     }
 
     /**

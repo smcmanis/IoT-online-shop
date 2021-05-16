@@ -24,7 +24,7 @@
         <header class="header">
             <nav class="navbar bg-light navbar-expand-lg navbar-light">
                 <a class="navbar-brand d-flex align-items-center " href="/IoTBay/Main">
-                    <img src="resources/images/page/logo.png" alt="" class="logo">
+                    <img src="/resources/images/page/logo.png" alt="" class="logo">
                     IOT BAY
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@
                 </div>
             </nav>
         </header>
-        <h1>Hello Admin!</h1>
+        <center><h1>Hello ${user.firstName}!</h1></center>
         
     </body>
 </html>
