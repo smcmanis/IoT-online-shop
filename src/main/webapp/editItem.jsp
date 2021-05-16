@@ -82,7 +82,7 @@
 
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success btn-block btn-lg">
+                                <button type="submit" class="btn btn-primary btn-block btn-lg">
                                     Update Device 
                                 </button>
                             </div>
