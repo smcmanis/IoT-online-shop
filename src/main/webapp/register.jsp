@@ -70,7 +70,7 @@
                             
                         </div>
                         <div class="form-group mb-2">
-                            <input type="submit" value="Sign Up" class="btn btn-success btn-block btn-lg">
+                            <input type="submit" value="Sign Up" class="btn btn-primary btn-block btn-lg">
                         </div>
                     </form>
                     <div>
