@@ -1,6 +1,6 @@
 # IoTBay Online Store 
 
-IoTBay is a Java web application developed with Java EE 7, JSP, and Maven.
+IoTBay is a Java web application developed with Java EE 7, JSP, and Hibernate.
 
 ## Run
 
