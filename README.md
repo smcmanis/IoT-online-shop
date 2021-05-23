@@ -22,4 +22,7 @@ The official database should be automatically connected (configured in src/main/
 A local version can be initialised using the postgreSQL script at src/main/resources/db.sql, but compatability with the application cannot be guaranteed.
 
 
-
+## Assignment Responsibilities
+- Shopping cart
+- Ordering system
+- Repo management / Integration
