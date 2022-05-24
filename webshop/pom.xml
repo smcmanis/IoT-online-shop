@@ -12,7 +12,7 @@
 	<artifactId>web-shop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>web-shop</name>
-	<description>Online shop fo an IoT device store created with Spring Boot and React</description>
+	<description>Online shop for an IoT device store created with Spring Boot and React</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -27,10 +27,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -1,8 +1,15 @@
 package com.iotbay.webshop.model;
 
-public class Product {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-    private String productId;
+@Entity
+public class Product {
+    
+    @Id 
+    @GeneratedValue 
+    private Long productId;
 
     private String productName;
 
@@ -10,7 +17,15 @@ public class Product {
 
     private int stockLevel;
 
-    public String getProductId() {
+    public Product() {}
+
+    public Product(String productName, double productPrice, int stockLevel) {
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.stockLevel = stockLevel;
+    }
+
+    public Long getProductId() {
         return productId;
     }
 
